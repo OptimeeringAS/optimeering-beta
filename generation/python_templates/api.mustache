@@ -1,0 +1,220 @@
+# coding: utf-8
+
+{{>partial_header}}
+import warnings
+from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
+from typing import Any, Dict, List, Optional, Tuple, Union
+from typing_extensions import Annotated
+
+{{#imports}}
+{{import}}
+{{/imports}}
+
+from {{packageName}}.api_client import OptimeeringClient, RequestSerialized
+from {{packageName}}.api_response import ApiResponse
+from {{packageName}}.rest import RESTResponseType
+
+
+{{#operations}}
+class {{classname}}:
+    """
+    Collection of methods to interact with {{classname}}
+    """
+
+    def __init__(self, api_client=None) -> None:
+        if api_client is None:
+            api_client = OptimeeringClient.get_default()
+        self.api_client = api_client
+{{#operation}}
+
+    {{^vendorExtensions.x-optimeering-paginated-route.value}}
+    @validate_call
+    {{#asyncio}}async {{/asyncio}}def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+{{>partial_api}}
+        response_data = {{#asyncio}}await {{/asyncio}}self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        {{#asyncio}}await {{/asyncio}}response_data.read()
+        response= self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+        if type(response)!=dict:
+            response._client=self.api_client
+        return response
+    {{/vendorExtensions.x-optimeering-paginated-route.value}}
+
+    {{! THIS SECTION IS START OF METHOD FOR COMBINING PAGINATED RESPONSE}}
+    {{#vendorExtensions.x-optimeering-paginated-route.value}}
+    @validate_call
+    {{#asyncio}}async {{/asyncio}}def {{operationId}}{{>partial_api_args_pagination_removed}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+{{>partial_api_pagination_removed}}
+        response_data = {{#asyncio}}await {{/asyncio}}self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        {{#asyncio}}await {{/asyncio}}response_data.read()
+        paginated_response = self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+        if type(paginated_response)!=dict:
+            paginated_response._client=self.api_client
+        next_page = paginated_response.next_page
+
+        if next_page is None:
+            return paginated_response
+
+        # resolve extendable attribute
+        attribute_to_extend_selected: Optional[str] = None
+        if "series_id" in set(paginated_response.items[0].model_fields):
+            extendable_attribute={"datapoints","events"}
+            attribute_to_extend=extendable_attribute.intersection(set(paginated_response.items[0].model_fields))
+            if len(attribute_to_extend)==1:
+                attribute_to_extend_selected=list(attribute_to_extend)[0]
+            else:
+                raise AttributeError("Failed to resolve extendable attribute.")
+
+        while next_page is not None:
+            # Item at index#1 is URL, we overwrite the item with url in next_page
+            next_param = tuple(value if idx != 1 else next_page for idx, value in enumerate(_param))
+            next_pagination = {{#asyncio}}await {{/asyncio}}self.api_client.call_api(
+                *next_param,
+                _request_timeout=_request_timeout
+            )
+            {{#asyncio}}await {{/asyncio}}next_pagination.read()
+            next_pagination = self.api_client.response_deserialize(
+                response_data=next_pagination,
+                response_types_map=_response_types_map,
+            ).data
+            next_page = next_pagination.next_page
+
+            if attribute_to_extend_selected:
+                if next_pagination.items[0].series_id == paginated_response.items[-1].series_id:
+                    # if series id is same, extract the first item and extend to last item
+                    continued_data: List = getattr(next_pagination.items.pop(0), attribute_to_extend_selected)
+                    previous_data: List = getattr(paginated_response.items[-1], attribute_to_extend_selected)
+                    previous_data.extend(continued_data)
+            paginated_response.items.extend(next_pagination.items)
+        return paginated_response
+    {{/vendorExtensions.x-optimeering-paginated-route.value}}
+    {{! THIS SECTION IS END OF METHOD FOR COMBINING PAGINATED RESPONSE}}
+
+
+    def _{{operationId}}_serialize(
+        self,
+        {{#allParams}}
+        {{paramName}},
+        {{/allParams}}
+    ) -> RequestSerialized:
+
+        _collection_formats: Dict[str, str] = {
+            {{#allParams}}
+            {{#isArray}}
+            '{{baseName}}': '{{collectionFormat}}',
+            {{/isArray}}
+            {{/allParams}}
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+{{#pathParams}}
+        if {{paramName}} is not None:
+            _path_params['{{baseName}}'] = {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}
+{{/pathParams}}
+        # process the query parameters
+{{#queryParams}}
+        if {{paramName}} is not None:
+            {{#isDateTime}}
+            if isinstance({{paramName}}, datetime):
+                _query_params.append(
+                    (
+                        '{{baseName}}',
+                        {{paramName}}.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('{{baseName}}', {{paramName}}))
+            {{/isDateTime}}
+            {{#isDate}}
+            if isinstance({{paramName}}, date):
+                _query_params.append(
+                    (
+                        '{{baseName}}',
+                        {{paramName}}.strftime(
+                            self.api_client.configuration.date_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('{{baseName}}', {{paramName}}))
+            {{/isDate}}
+            {{^isDateTime}}{{^isDate}}
+            {{! BLOCK START: Join comman seperated attribute}}
+            {{#vendorExtensions.x-optimeering-comma-separated.data-type}}
+            {{paramName}}=",".join(str(i) for i in {{paramName}})
+            {{/vendorExtensions.x-optimeering-comma-separated.data-type}}
+            {{! BLOCK END: Join comman seperated attribute}}
+            _query_params.append(('{{baseName}}', {{paramName}}{{#isEnumRef}}.value{{/isEnumRef}}))
+            {{/isDate}}{{/isDateTime}}
+{{/queryParams}}
+        # process the header parameters
+{{#headerParams}}
+        if {{paramName}} is not None:
+            _header_params['{{baseName}}'] = {{paramName}}
+{{/headerParams}}
+        # process the form parameters
+{{#formParams}}
+        if {{paramName}} is not None:
+            {{#isFile}}
+            _files['{{{baseName}}}'] = {{paramName}}
+            {{/isFile}}
+            {{^isFile}}
+            _form_params.append(('{{{baseName}}}', {{paramName}}))
+            {{/isFile}}
+{{/formParams}}
+        # process the body parameter
+{{#bodyParam}}
+        if {{paramName}} is not None:
+            {{#isBinary}}
+            # convert to byte array if the input is a file name (str)
+            if isinstance({{paramName}}, str):
+                with open({{paramName}}, "rb") as _fp:
+                    _body_params = _fp.read()
+            else:
+                _body_params = {{paramName}}
+            {{/isBinary}}
+            {{^isBinary}}
+            _body_params = {{paramName}}
+            {{/isBinary}}
+{{/bodyParam}}
+
+        {{! INJECT AUTH OPTIMEERING}}
+        # inject azure token
+        _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        {{! INJECT AUTH OPTIMEERING}}
+
+        return self.api_client.param_serialize(
+            method='{{httpMethod}}',
+            resource_path='{{{path}}}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            collection_formats=_collection_formats,
+        )
+
+
+{{/operation}}
+{{/operations}}

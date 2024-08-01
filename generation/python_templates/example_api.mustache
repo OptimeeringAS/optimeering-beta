@@ -1,0 +1,13 @@
+:Example:
+
+        >>> from {{packageName}} import Configuration, OptimeeringClient
+        >>> configuration = Configuration(host="{{>api_host}}")
+        >>> client = OptimeeringClient(configuration=configuration)
+        {{#vendorExtensions.x-optimeering-paginated-route}}
+        >>> # Get filtered data point - replace ... with appropriate filters documented above
+        >>> response = client.{{classFilename}}.{{operationId}}(...)
+        {{/vendorExtensions.x-optimeering-paginated-route}}
+        {{^vendorExtensions.x-optimeering-paginated-route}}
+        >>> # Post data point - replace ... with correct dataformat documented above
+        >>> response = client.{{classFilename}}.{{operationId}}(...)
+        {{/vendorExtensions.x-optimeering-paginated-route}}
