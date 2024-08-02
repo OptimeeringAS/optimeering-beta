@@ -1,8 +1,9 @@
 import json
-from urllib import request
-from typing import Dict,List, Any, Iterable, Tuple
 from collections import defaultdict
-SCHEMA_URL="https://beta.optimeering.com/api/docs/openapi_public.json"
+from typing import Any, Dict, Iterable, List, Tuple
+from urllib import request
+
+SCHEMA_URL = "https://beta.optimeering.com/api/docs/openapi_public.json"
 
 
 def inject_optimeering_extensions_into_models(openapi_schema: Dict) -> None:
@@ -147,7 +148,7 @@ def remove_hyperlinks_from_docs(openapi_spec: Dict):
 def fix_openapi_extensions() -> None:
     with request.urlopen(SCHEMA_URL) as response:
         content = response.read().decode("utf8")
-        content=json.loads(content)
+        content = json.loads(content)
     remove_comma_separated_docs(content)
     remove_hyperlinks_from_docs(content)
     remove_enums_from_specs(content)

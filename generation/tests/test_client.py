@@ -1,17 +1,17 @@
 import inspect
 import json
 import unittest.mock
-
-from optimeering_beta import OptimeeringClient, Configuration
 from unittest import TestCase
+
 import optimeering_beta
-from optimeering_beta.rest import RESTClientObject, RESTResponse
+from optimeering_beta import Configuration, OptimeeringClient
 from optimeering_beta.azure_authentication import AzureAuth
+from optimeering_beta.rest import RESTClientObject, RESTResponse
 
 config = Configuration(host="Testurlhere")
 client = OptimeeringClient(config)
 
-with open("../openapi.json", "r") as file:
+with open("./generation/openapi.json", "r") as file:
     OPENAPI_SPEC = json.load(file)
 
 
@@ -49,7 +49,6 @@ def generate_data(model: str):
 
 
 class FakeResponse:
-
     def __init__(self, data):
         if "next_page" in data:
             data["next_page"] = None
@@ -60,7 +59,6 @@ class FakeResponse:
 
 
 class TestGeneratedClient(TestCase):
-
     def setUp(self):
         self.mock_azure = unittest.mock.patch.object(AzureAuth, "get_token", return_value=None)
         self.mock_azure.start()
@@ -71,8 +69,11 @@ class TestGeneratedClient(TestCase):
     def test_api_series_and_single_datapoint(self):
         """Tests calling series and getting one datapoint"""
 
-        apis_to_test = {k: v for k, v in optimeering_beta.api.__dict__.items() if k.endswith("Api")
-                        and v.__module__.startswith("optimeering_beta.api")}
+        apis_to_test = {
+            k: v
+            for k, v in optimeering_beta.api.__dict__.items()
+            if k.endswith("Api") and v.__module__.startswith("optimeering_beta.api")
+        }
 
         for api_name in apis_to_test:
             api = getattr(optimeering_beta, api_name)(api_client=client)
@@ -82,8 +83,9 @@ class TestGeneratedClient(TestCase):
                 api_method = getattr(api, method)
                 response_model_type = inspect.signature(api_method).return_annotation
                 data = generate_data(response_model_type.__name__)
-                with unittest.mock.patch.object(RESTClientObject, "request",
-                                                return_value=RESTResponse(FakeResponse(data))):
+                with unittest.mock.patch.object(
+                    RESTClientObject, "request", return_value=RESTResponse(FakeResponse(data))
+                ):
                     response = api_method()
                 assert len(response.items) > 0
 
@@ -91,8 +93,9 @@ class TestGeneratedClient(TestCase):
                 response_model_type = eval(inspect.signature(response.datapoints).return_annotation)
 
                 data = generate_data(response_model_type.__name__)
-                with unittest.mock.patch.object(RESTClientObject, "request",
-                                                return_value=RESTResponse(FakeResponse(data))):
+                with unittest.mock.patch.object(
+                    RESTClientObject, "request", return_value=RESTResponse(FakeResponse(data))
+                ):
                     datapoints = response.datapoints()
 
                 assert len(datapoints.items) == 1

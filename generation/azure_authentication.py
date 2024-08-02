@@ -13,7 +13,7 @@ from azure.identity import (
     WorkloadIdentityCredential,
 )
 
-AZURE_TENANT_ID="d23844a4-14b7-4e42-9e3a-be7fcb83625b"
+AZURE_TENANT_ID = "d23844a4-14b7-4e42-9e3a-be7fcb83625b"
 
 # Acquire the logger for azure identity
 logger = logging.getLogger("azure.identity")
