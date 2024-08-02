@@ -14,14 +14,12 @@ python_distribution(
         description="Optimeering Python Client (Beta)",
         author="Optimeering",
         classifiers=[
-            "Programming Language :: Python :: 3.7",
-            "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
         ],
     ),
-    wheel_config_settings={"--global-option": ["--python-tag", "py37.py38.py39.py310.py311"]},
+    wheel_config_settings={"--global-option": ["--python-tag", "py39.py310.py311"]},
     repositories=["@optimeering"],
     tags=["client"],
 )
