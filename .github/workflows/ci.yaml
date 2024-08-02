@@ -53,6 +53,7 @@ jobs:
           name: optimeering-beta-sdk
           path: dist/
   publish:
+    if: contains(github.ref, 'main')
     runs-on: ubuntu-latest
     environment: main
     name: Publish SDK to Pypi
