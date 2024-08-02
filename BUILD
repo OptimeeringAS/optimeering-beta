@@ -10,7 +10,7 @@ python_distribution(
     output_path="optimeering-beta",
     provides=python_artifact(
         name="optimeering_beta",
-        version="0.0.2",
+        version="0.0.1",
         description="Optimeering Python Client (Beta)",
         author="Optimeering",
         classifiers=[
@@ -20,6 +20,4 @@ python_distribution(
         ],
     ),
     wheel_config_settings={"--global-option": ["--python-tag", "py39.py310.py311"]},
-    repositories=["@optimeering"],
-    tags=["client"],
 )
