@@ -11,6 +11,8 @@ java -jar ./generation/openapi-generator-cli.jar generate \
 rm -rf .openapi-generator
 rm -rf .openapi-generator-ignore
 rm -rf ./optimeering_beta/test
+rm -rf ./optimeering_beta/docs
+rm ./optimeering_beta_README.md
 cp ./generation/azure_authentication.py ./optimeering_beta/azure_authentication.py
 pants tailor ::
 pants fix fmt ::
