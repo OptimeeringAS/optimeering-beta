@@ -1,6 +1,7 @@
 import inspect
 import json
 import unittest.mock
+from typing import Any, Dict
 from unittest import TestCase
 
 import optimeering_beta
@@ -17,7 +18,7 @@ with open("./generation/openapi.json", "r") as file:
 
 def generate_data(model: str):
     model_def = OPENAPI_SPEC["components"]["schemas"][model]
-    data = {}
+    data: Dict[str, Any] = {}
     for property_name, property in model_def["properties"].items():
         if "anyOf" in property:
             property = property["anyOf"][0]
