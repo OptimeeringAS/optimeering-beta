@@ -7,11 +7,13 @@ python_distribution(
     dependencies=[
         "//optimeering_beta:optimeering_beta",
     ],
+    long_description_path="README.md",
     output_path="optimeering-beta",
     provides=python_artifact(
         name="optimeering_beta",
         version="0.0.1",
         description="Optimeering Python Client (Beta)",
+        long_description_content_type="text/markdown",
         author="Optimeering",
         classifiers=[
             "Programming Language :: Python :: 3.9",
