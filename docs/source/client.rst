@@ -12,3 +12,7 @@ Optimeering Beta SDK
 .. automodule:: optimeering_beta.api
     :members:
     :member-order: bysource
+
+.. autoclass:: optimeering_beta.EnumParameters
+    :members:
+    :member-order: bysource

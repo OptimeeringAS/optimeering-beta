@@ -95,7 +95,7 @@ class PredictionsApi:
         :Example:
 
         >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://staging.optimeering.com/api")
+        >>> configuration = Configuration(host="https://beta.optimeering.com/api")
         >>> client = OptimeeringClient(configuration=configuration)
         >>> # Get filtered data point - replace ... with appropriate filters documented above
         >>> response = client.predictions_api.get_prediction_series(...)
@@ -276,7 +276,7 @@ class PredictionsApi:
         :Example:
 
         >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://staging.optimeering.com/api")
+        >>> configuration = Configuration(host="https://beta.optimeering.com/api")
         >>> client = OptimeeringClient(configuration=configuration)
         >>> # Get filtered data point - replace ... with appropriate filters documented above
         >>> response = client.predictions_api.get_predictions(...)
