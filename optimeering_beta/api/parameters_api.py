@@ -50,6 +50,7 @@ class ParametersApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
+        :rtype: object
 
         :Example:
 

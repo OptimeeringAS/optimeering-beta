@@ -15,7 +15,8 @@ Contents
 .. toctree::
    self
    client
-
+   filters
+   dataclasses
 
 .. note::
 

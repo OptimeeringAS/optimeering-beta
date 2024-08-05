@@ -91,6 +91,7 @@ class PredictionsApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
+        :rtype: PredsSeriesGetResponse
 
         :Example:
 
@@ -272,6 +273,7 @@ class PredictionsApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
+        :rtype: PredsDataGetResponse
 
         :Example:
 
