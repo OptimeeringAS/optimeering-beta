@@ -14,14 +14,10 @@ import sys
 
 sys.path.insert(0, pathlib.Path(__file__).parents[3].resolve().as_posix())
 
-if os.getenv("BUILD_LATEST") == "True":
-    print("Building Latest")
-    version = "latest"
-else:
-    from optimeering_beta import __version__
 
-    version = "v" + __version__.split(".")[0]
-    print(f"Building version {version}")
+from optimeering_beta import __version__
+
+version = "v" + __version__.split(".")[0]
 
 project = "Beta Python SDK"
 copyright = "2024, Optimeering AS"
