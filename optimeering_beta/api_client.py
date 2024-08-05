@@ -57,7 +57,7 @@ class OptimeeringClient:
     :Example:
 
     >>> from optimeering_beta import Configuration, OptimeeringClient
-    >>> configuration = Configuration(host="https://beta.optimeering.com/api")
+    >>> configuration = Configuration(host="https://beta.optimeering.com")
     >>> client = OptimeeringClient(configuration=configuration)
     """
 

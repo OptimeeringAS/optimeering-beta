@@ -38,7 +38,7 @@ class Configuration:
     _default = None
 
     def __init__(self,
-                host: Optional[str]=None,
+                host: Optional[str]="{{>api_host}}",
                 api_auth_url: Optional[str] = None,
                 retries=None,
                 *,

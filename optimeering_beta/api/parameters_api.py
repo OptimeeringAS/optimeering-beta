@@ -55,7 +55,7 @@ class ParametersApi:
         :Example:
 
         >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://beta.optimeering.com/api")
+        >>> configuration = Configuration(host="https://beta.optimeering.com")
         >>> client = OptimeeringClient(configuration=configuration)
         >>> # Post data point - replace ... with correct dataformat documented above
         >>> response = client.parameters_api.get_parameter_values(...)
