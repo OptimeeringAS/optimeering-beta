@@ -1,6 +1,6 @@
 [GLOBAL]
 pants_version = "2.21.0"
-build_ignore = ['.github/**']
+build_ignore = ['.github/**', "docs"]
 
 backend_packages = [
     "pants.backend.python",
@@ -34,3 +34,6 @@ use_rust_parser = true
 ignored_unowned_imports = [
   "azure.core.credentials.AccessToken",
 ]
+
+[tailor]
+ignore_paths = ["docs"]

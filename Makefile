@@ -1,7 +1,7 @@
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = docs/source
-BUILDDIR      = docs/build
+BUILDDIR      = dist/docs
 
 client-docs:
 	rm -rf $(BUILDDIR)
