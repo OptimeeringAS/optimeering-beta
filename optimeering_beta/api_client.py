@@ -46,7 +46,8 @@ class OptimeeringClient:
     the methods and models for each application are generated from the OpenAPI
     templates.
 
-    :param configuration: .Configuration object for this client
+    :param configuration: The Configuration object to use with the client
+    :type configuration: Configuration
     :param header_name: a header to pass when making calls to the API.
     :param header_value: a header value to pass when making calls to
         the API.
@@ -56,7 +57,7 @@ class OptimeeringClient:
     :Example:
 
     >>> from optimeering_beta import Configuration, OptimeeringClient
-    >>> configuration = Configuration(host="https://staging.optimeering.com/api")
+    >>> configuration = Configuration(host="https://beta.optimeering.com")
     >>> client = OptimeeringClient(configuration=configuration)
     """
 

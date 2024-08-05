@@ -91,11 +91,12 @@ class PredictionsApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
+        :rtype: PredsSeriesGetResponse
 
         :Example:
 
         >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://staging.optimeering.com/api")
+        >>> configuration = Configuration(host="https://beta.optimeering.com")
         >>> client = OptimeeringClient(configuration=configuration)
         >>> # Get filtered data point - replace ... with appropriate filters documented above
         >>> response = client.predictions_api.get_prediction_series(...)
@@ -272,11 +273,12 @@ class PredictionsApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
+        :rtype: PredsDataGetResponse
 
         :Example:
 
         >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://staging.optimeering.com/api")
+        >>> configuration = Configuration(host="https://beta.optimeering.com")
         >>> client = OptimeeringClient(configuration=configuration)
         >>> # Get filtered data point - replace ... with appropriate filters documented above
         >>> response = client.predictions_api.get_predictions(...)

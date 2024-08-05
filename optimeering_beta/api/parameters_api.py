@@ -50,11 +50,12 @@ class ParametersApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
+        :rtype: object
 
         :Example:
 
         >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://staging.optimeering.com/api")
+        >>> configuration = Configuration(host="https://beta.optimeering.com")
         >>> client = OptimeeringClient(configuration=configuration)
         >>> # Post data point - replace ... with correct dataformat documented above
         >>> response = client.parameters_api.get_parameter_values(...)
