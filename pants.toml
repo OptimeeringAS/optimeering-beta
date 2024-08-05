@@ -1,6 +1,6 @@
 [GLOBAL]
 pants_version = "2.21.0"
-build_ignore = ['.github/**', "docs"]
+build_ignore = ['.github/**', "docs/**"]
 
 backend_packages = [
     "pants.backend.python",
@@ -36,4 +36,4 @@ ignored_unowned_imports = [
 ]
 
 [tailor]
-ignore_paths = ["docs"]
+ignore_paths = ["docs/**"]
