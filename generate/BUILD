@@ -1,10 +1,7 @@
 python_sources()
 
 #### CREATE OPENAPI SCHEMA ####
-python_source(
-    name="fix-openapi-extensions",
-    source="fix_openapi_extensions.py"
-)
+python_source(name="fix-openapi-extensions", source="fix_openapi_extensions.py")
 
 # curl -L https://beta.optimeering.com/api/docs/openapi_public.json | tee >(wc -c) >(shasum -a 256) >/dev/null
 resource(
@@ -12,17 +9,14 @@ resource(
     source=http_source(
         url="https://beta.optimeering.com/api/docs/openapi_public.json",
         sha256="b8d479c9cb6ab6fa966d99f2cc452689f64101f535e9335b5bb949394a746efe",
-        len=34822
-    )
+        len=34822,
+    ),
 )
 
 adhoc_tool(
     name="run-fix-openapi-extensions",
     runnable=":fix-openapi-extensions",
-    args=[
-        "-s",
-        "openapi_public.json"
-    ],
+    args=["-s", "openapi_public.json"],
     execution_dependencies=[
         ":openapi-schema",
     ],
@@ -31,13 +25,7 @@ adhoc_tool(
 )
 
 #### CREATE GENERATOR CONFIG ####
-python_source(
-    name="create-config",
-    source="create_config.py",
-    dependencies=[
-        "//:pyproject"
-    ]
-)
+python_source(name="create-config", source="create_config.py", dependencies=["//:pyproject"])
 
 adhoc_tool(
     name="run-create-config",
@@ -47,10 +35,7 @@ adhoc_tool(
 )
 
 #### GENERATE CLIENT ####
-files(
-    name="generator-files",
-    sources=["python_templates/**", "generation_config.json"]
-)
+files(name="generator-files", sources=["python_templates/**", "generation_config.json"])
 
 # Specify JAR dependencies
 jvm_artifact(
@@ -69,7 +54,7 @@ adhoc_tool(
         "openapi.json",
         "--template-dir",
         "python_templates",
-        "--config", 
+        "--config",
         "config.json",
         "--skip-validate-spec",
         "-g",
@@ -106,5 +91,5 @@ run_shell_command(
         cp -r {chroot}/optimeering_beta ../
         rm -rf ../optimeering_beta/docs ../optimeering_beta/test
     """,
-    execution_dependencies=[":generator"]
+    execution_dependencies=[":generator"],
 )

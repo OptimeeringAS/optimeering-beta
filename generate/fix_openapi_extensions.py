@@ -1,7 +1,7 @@
+import argparse
 import json
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple
-import argparse
 
 
 def inject_optimeering_extensions_into_models(openapi_schema: Dict) -> None:
@@ -162,7 +162,7 @@ def fix_openapi_extensions(schema_path: str) -> None:
                         parameter[key] = parameter["schema"].pop(key)
     filter_schema_components(content)
     inject_optimeering_extensions_into_models(content)
-    
+
     print(json.dumps(content, indent=4, sort_keys=True))
 
 
@@ -220,12 +220,11 @@ def recursively_get_ref(dictionary: Any) -> List[str]:
 
 
 if __name__ == "__main__":
-
     # Initialize parser
     parser = argparse.ArgumentParser()
 
     # Adding optional argument
-    parser.add_argument("-s", "--Schema", help = "OpenAPI Schema file")
+    parser.add_argument("-s", "--Schema", help="OpenAPI Schema file")
 
     # Read arguments from command line
     args = parser.parse_args()

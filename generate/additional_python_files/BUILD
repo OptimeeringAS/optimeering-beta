@@ -1,9 +1,6 @@
 python_sources()
 
-files(
-    name="all-files",
-    sources=["**", "!BUILD"]
-)
+files(name="all-files", sources=["**", "!BUILD"])
 
 relocated_files(
     name="additional-python-files",

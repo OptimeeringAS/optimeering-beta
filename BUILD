@@ -24,7 +24,4 @@ python_distribution(
     wheel_config_settings={"--global-option": ["--python-tag", "py39.py310.py311"]},
 )
 
-file(
-    name="pyproject",
-    source="pyproject.toml"
-)
+file(name="pyproject", source="pyproject.toml")
