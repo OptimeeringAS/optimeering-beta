@@ -10,6 +10,10 @@ backend_packages = [
     "pants.backend.python.lint.isort",
     "pants.backend.python.typecheck.mypy",
     "pants.backend.experimental.python",
+    "pants.backend.experimental.adhoc",
+    "pants.backend.experimental.java",
+    "pants.backend.shell"
+
 ]
 
 [python]
