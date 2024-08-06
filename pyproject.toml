@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "optimeering-beta"
-version = "0.0.1"
+version = "0.0.2"
 description = "Optimeering"
 authors = ["Optimeering"]
 license = "NoLicense"
@@ -17,11 +17,8 @@ python-dateutil = ">=2.8.2"
 pydantic = ">=2"
 typing-extensions = ">=4.7.1"
 azure-identity = "^1.17.1"
-
-[tool.poetry.group.docs.dependencies]
-mkdocs-material = "^9.5.2"
-sphinx = "^7.4.7"
-sphinx-rtd-theme = "^2.0.0"
+types-toml = "^0.10.8.20240310"
+toml = "^0.10.2"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=7.2.1"

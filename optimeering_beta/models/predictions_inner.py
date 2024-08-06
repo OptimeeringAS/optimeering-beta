@@ -19,12 +19,12 @@ import pprint
 import re  # noqa: F401
 from typing import TYPE_CHECKING, Any, Dict, Optional, Set, Union
 
-from optimeering_beta.models.prediction_dict_response import PredictionDictResponse
 from optimeering_beta.models.prediction_float_model import PredictionFloatModel
+from optimeering_beta.models.predictions_dict_model import PredictionsDictModel
 from pydantic import BaseModel, ValidationError, field_validator
 from typing_extensions import Self
 
-PREDICTIONSINNER_ANY_OF_SCHEMAS = ["PredictionDictResponse", "PredictionFloatModel"]
+PREDICTIONSINNER_ANY_OF_SCHEMAS = ["PredictionFloatModel", "PredictionsDictModel"]
 
 
 class PredictionsInner(BaseModel):
@@ -32,15 +32,15 @@ class PredictionsInner(BaseModel):
     PredictionsInner
     """
 
-    # data type: PredictionDictResponse
-    anyof_schema_1_validator: Optional[PredictionDictResponse] = None
+    # data type: PredictionsDictModel
+    anyof_schema_1_validator: Optional[PredictionsDictModel] = None
     # data type: PredictionFloatModel
     anyof_schema_2_validator: Optional[PredictionFloatModel] = None
     if TYPE_CHECKING:
-        actual_instance: Optional[Union[PredictionDictResponse, PredictionFloatModel]] = None
+        actual_instance: Optional[Union[PredictionFloatModel, PredictionsDictModel]] = None
     else:
         actual_instance: Any = None
-    any_of_schemas: Set[str] = {"PredictionDictResponse", "PredictionFloatModel"}
+    any_of_schemas: Set[str] = {"PredictionFloatModel", "PredictionsDictModel"}
 
     model_config = {
         "validate_assignment": True,
@@ -61,9 +61,9 @@ class PredictionsInner(BaseModel):
     def actual_instance_must_validate_anyof(cls, v):
         instance = PredictionsInner.model_construct()  # noqa: F841
         error_messages = []
-        # validate data type: PredictionDictResponse
-        if not isinstance(v, PredictionDictResponse):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PredictionDictResponse`")
+        # validate data type: PredictionsDictModel
+        if not isinstance(v, PredictionsDictModel):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `PredictionsDictModel`")
         else:
             return v
 
@@ -76,7 +76,7 @@ class PredictionsInner(BaseModel):
         if error_messages:
             # no match
             raise ValueError(
-                "No match found when setting the actual_instance in PredictionsInner with anyOf schemas: PredictionDictResponse, PredictionFloatModel. Details: "
+                "No match found when setting the actual_instance in PredictionsInner with anyOf schemas: PredictionFloatModel, PredictionsDictModel. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -91,9 +91,9 @@ class PredictionsInner(BaseModel):
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         error_messages = []
-        # anyof_schema_1_validator: Optional[PredictionDictResponse] = None
+        # anyof_schema_1_validator: Optional[PredictionsDictModel] = None
         try:
-            instance.actual_instance = PredictionDictResponse.from_json(json_str)
+            instance.actual_instance = PredictionsDictModel.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -107,7 +107,7 @@ class PredictionsInner(BaseModel):
         if error_messages:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into PredictionsInner with anyOf schemas: PredictionDictResponse, PredictionFloatModel. Details: "
+                "No match found when deserializing the JSON string into PredictionsInner with anyOf schemas: PredictionFloatModel, PredictionsDictModel. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -123,7 +123,7 @@ class PredictionsInner(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], PredictionDictResponse, PredictionFloatModel]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], PredictionFloatModel, PredictionsDictModel]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

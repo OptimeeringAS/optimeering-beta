@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.0"
+__version__ = "0.0.2"
 
 # import apis into sdk package
 from optimeering_beta.api.parameters_api import ParametersApi
@@ -38,8 +38,8 @@ from optimeering_beta.models.end import End
 from optimeering_beta.models.enum_parameters import EnumParameters
 from optimeering_beta.models.http_validation_error import HTTPValidationError
 from optimeering_beta.models.location_inner import LocationInner
-from optimeering_beta.models.prediction_dict_response import PredictionDictResponse
 from optimeering_beta.models.prediction_float_model import PredictionFloatModel
+from optimeering_beta.models.predictions_dict_model import PredictionsDictModel
 from optimeering_beta.models.predictions_inner import PredictionsInner
 from optimeering_beta.models.preds_created_series import PredsCreatedSeries
 from optimeering_beta.models.preds_data_get_response import PredsDataGetResponse
@@ -66,8 +66,8 @@ __all__ = [
     "EnumParameters",
     "HTTPValidationError",
     "LocationInner",
-    "PredictionDictResponse",
     "PredictionFloatModel",
+    "PredictionsDictModel",
     "PredictionsInner",
     "PredsCreatedSeries",
     "PredsDataGetResponse",

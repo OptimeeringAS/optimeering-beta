@@ -15,8 +15,10 @@
 //     "pydantic>=2",
 //     "pytest>=7.2.1",
 //     "python-dateutil>=2.8.2",
+//     "toml<0.11.0,>=0.10.2",
 //     "tox>=3.9.0",
 //     "types-python-dateutil>=2.8.19.14",
+//     "types-toml<0.11.0,>=0.10.8.20240310",
 //     "typing-extensions>=4.7.1",
 //     "urllib3>=1.25.3"
 //   ],
@@ -852,13 +854,13 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "2e416edcc62471a64cea09353f4e7bdba32aeb079b6e360554c659a122b1bc6a",
-              "url": "https://files.pythonhosted.org/packages/dc/43/d5147aadaa52558e94e024811f2f9543b4bd7203b3a9659eeb5dff9c61b3/flake8-7.1.0-py2.py3-none-any.whl"
+              "hash": "597477df7860daa5aa0fdd84bf5208a043ab96b8e96ab708770ae0364dd03213",
+              "url": "https://files.pythonhosted.org/packages/d9/42/65004373ac4617464f35ed15931b30d764f53cdd30cc78d5aea349c8c050/flake8-7.1.1-py2.py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "48a07b626b55236e0fb4784ee69a465fbf59d79eec1f5b4785c3d3bc57d17aa5",
-              "url": "https://files.pythonhosted.org/packages/4e/34/64f8a43736d9862ced7dd0ea5c3ed99815b8ff4b826a4f3bfd3a1b0639b1/flake8-7.1.0.tar.gz"
+              "hash": "049d058491e228e03e67b390f311bbf88fce2dbaa8fa673e7aea87b7198b8d38",
+              "url": "https://files.pythonhosted.org/packages/37/72/e8d66150c4fcace3c0a450466aa3480506ba2cae7b61e100a2613afc3907/flake8-7.1.1.tar.gz"
             }
           ],
           "project_name": "flake8",
@@ -868,7 +870,7 @@
             "pyflakes<3.3.0,>=3.2.0"
           ],
           "requires_python": ">=3.8.1",
-          "version": "7.1.0"
+          "version": "7.1.1"
         },
         {
           "artifacts": [
@@ -1176,19 +1178,19 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "949a39f6b86c3e1515ba1787c2022131d165a8ad271b11370a8819aa070269e4",
-              "url": "https://files.pythonhosted.org/packages/55/c4/bf8ede2d1641e0a2e027c6d0c7060e00332851ea772cc5cee42a4a207707/pycodestyle-2.12.0-py2.py3-none-any.whl"
+              "hash": "46f0fb92069a7c28ab7bb558f05bfc0110dac69a0cd23c61ea0040283a9d78b3",
+              "url": "https://files.pythonhosted.org/packages/3a/d8/a211b3f85e99a0daa2ddec96c949cac6824bd305b040571b82a03dd62636/pycodestyle-2.12.1-py2.py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "442f950141b4f43df752dd303511ffded3a04c2b6fb7f65980574f0c31e6e79c",
-              "url": "https://files.pythonhosted.org/packages/10/56/52d8283e1a1c85695291040192776931782831e21117c84311cbdd63f70c/pycodestyle-2.12.0.tar.gz"
+              "hash": "6838eae08bbce4f6accd5d5572075c63626a15ee3e6f842df996bf62f6d73521",
+              "url": "https://files.pythonhosted.org/packages/43/aa/210b2c9aedd8c1cbeea31a50e42050ad56187754b34eb214c46709445801/pycodestyle-2.12.1.tar.gz"
             }
           ],
           "project_name": "pycodestyle",
           "requires_dists": [],
           "requires_python": ">=3.8",
-          "version": "2.12.0"
+          "version": "2.12.1"
         },
         {
           "artifacts": [
@@ -1745,6 +1747,24 @@
           "artifacts": [
             {
               "algorithm": "sha256",
+              "hash": "806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b",
+              "url": "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl"
+            },
+            {
+              "algorithm": "sha256",
+              "hash": "b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f",
+              "url": "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz"
+            }
+          ],
+          "project_name": "toml",
+          "requires_dists": [],
+          "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.6",
+          "version": "0.10.2"
+        },
+        {
+          "artifacts": [
+            {
+              "algorithm": "sha256",
               "hash": "939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
               "url": "https://files.pythonhosted.org/packages/97/75/10a9ebee3fd790d20926a90a2547f0bf78f371b2f13aa822c759680ca7b9/tomli-2.0.1-py3-none-any.whl"
             },
@@ -1763,29 +1783,29 @@
           "artifacts": [
             {
               "algorithm": "sha256",
-              "hash": "61e101061b977b46cf00093d4319438055290ad0009f84497a07bf2d2d7a06d0",
-              "url": "https://files.pythonhosted.org/packages/fc/e3/c7cef497affffb0fefb6a2bfa6764f087ef99344ea1d20d64c9018207a34/tox-4.16.0-py3-none-any.whl"
+              "hash": "82ef41e7e54182e2143daf0b2920d9030c2e1c4291e12091ebad66860c7be7a4",
+              "url": "https://files.pythonhosted.org/packages/7e/43/3a87fb8cc2c516b424c752ffb2177510f969b1e192a5b7a8ccc7a6fcafd6/tox-4.17.0-py3-none-any.whl"
             },
             {
               "algorithm": "sha256",
-              "hash": "43499656f9949edb681c0f907f86fbfee98677af9919d8b11ae5ad77cb800748",
-              "url": "https://files.pythonhosted.org/packages/b7/7e/94a8cc264b9d2674d6ce7dccaa7cebe66d0f4262d6423ab9797b071d31d5/tox-4.16.0.tar.gz"
+              "hash": "b1e2e1dfbfdc174d9be95ae78ec2c4d2cf4800d4c15571deddb197a2c90d2de6",
+              "url": "https://files.pythonhosted.org/packages/9a/41/287d083a3b430ca9f7590f867d3899de4ed6638e6ae8006c9775d412ca24/tox-4.17.0.tar.gz"
             }
           ],
           "project_name": "tox",
           "requires_dists": [
             "build[virtualenv]>=1.2.1; extra == \"testing\"",
-            "cachetools>=5.3.3",
+            "cachetools>=5.4",
             "chardet>=5.2",
             "colorama>=0.4.6",
             "covdefaults>=2.3; extra == \"testing\"",
             "detect-test-pollution>=1.2; extra == \"testing\"",
             "devpi-process>=1; extra == \"testing\"",
-            "diff-cover>=9.1; extra == \"testing\"",
+            "diff-cover>=9.1.1; extra == \"testing\"",
             "distlib>=0.3.8; extra == \"testing\"",
             "filelock>=3.15.4",
             "flaky>=3.8.1; extra == \"testing\"",
-            "furo>=2024.5.6; extra == \"docs\"",
+            "furo>=2024.7.18; extra == \"docs\"",
             "hatch-vcs>=0.4; extra == \"testing\"",
             "hatchling>=1.25; extra == \"testing\"",
             "packaging>=24.1",
@@ -1796,14 +1816,14 @@
             "pytest-cov>=5; extra == \"testing\"",
             "pytest-mock>=3.14; extra == \"testing\"",
             "pytest-xdist>=3.6.1; extra == \"testing\"",
-            "pytest>=8.2.2; extra == \"testing\"",
+            "pytest>=8.3.2; extra == \"testing\"",
             "re-assert>=1.1; extra == \"testing\"",
-            "setuptools>=70.2; extra == \"testing\"",
+            "setuptools>=70.3; extra == \"testing\"",
             "sphinx-argparse-cli>=1.16; extra == \"docs\"",
-            "sphinx-autodoc-typehints!=1.23.4,>=2.2.2; extra == \"docs\"",
+            "sphinx-autodoc-typehints>=2.2.3; extra == \"docs\"",
             "sphinx-copybutton>=0.5.2; extra == \"docs\"",
             "sphinx-inline-tabs>=2023.4.21; extra == \"docs\"",
-            "sphinx>=7.3.7; extra == \"docs\"",
+            "sphinx>=7.4.7; extra == \"docs\"",
             "sphinxcontrib-towncrier>=0.2.1a0; extra == \"docs\"",
             "time-machine>=2.14.2; implementation_name != \"pypy\" and extra == \"testing\"",
             "tomli>=2.0.1; python_version < \"3.11\"",
@@ -1812,7 +1832,7 @@
             "wheel>=0.43; extra == \"testing\""
           ],
           "requires_python": ">=3.8",
-          "version": "4.16.0"
+          "version": "4.17.0"
         },
         {
           "artifacts": [
@@ -1831,6 +1851,24 @@
           "requires_dists": [],
           "requires_python": ">=3.8",
           "version": "2.9.0.20240316"
+        },
+        {
+          "artifacts": [
+            {
+              "algorithm": "sha256",
+              "hash": "627b47775d25fa29977d9c70dc0cbab3f314f32c8d8d0c012f2ef5de7aaec05d",
+              "url": "https://files.pythonhosted.org/packages/da/a2/d32ab58c0b216912638b140ab2170ee4b8644067c293b170e19fba340ccc/types_toml-0.10.8.20240310-py3-none-any.whl"
+            },
+            {
+              "algorithm": "sha256",
+              "hash": "3d41501302972436a6b8b239c850b26689657e25281b48ff0ec06345b8830331",
+              "url": "https://files.pythonhosted.org/packages/86/47/3e4c75042792bff8e90d7991aa5c51812cc668828cc6cce711e97f63a607/types-toml-0.10.8.20240310.tar.gz"
+            }
+          ],
+          "project_name": "types-toml",
+          "requires_dists": [],
+          "requires_python": ">=3.8",
+          "version": "0.10.8.20240310"
         },
         {
           "artifacts": [
@@ -1933,8 +1971,10 @@
     "pydantic>=2",
     "pytest>=7.2.1",
     "python-dateutil>=2.8.2",
+    "toml<0.11.0,>=0.10.2",
     "tox>=3.9.0",
     "types-python-dateutil>=2.8.19.14",
+    "types-toml<0.11.0,>=0.10.8.20240310",
     "typing-extensions>=4.7.1",
     "urllib3>=1.25.3"
   ],
