@@ -2,13 +2,13 @@ import json
 
 import toml
 
-pyprojet = toml.load("../pyproject.toml")
+pyproject = toml.load("../pyproject.toml")
 
 config = {
-    "packageName": "optimeering_beta",
-    "projectName": "Optimeering Python Client",
+    "packageName": pyproject["tool"]["poetry"]["packageName"],
+    "projectName": pyproject["tool"]["poetry"]["description"],
     "generateSourceCodeOnly": True,
-    "packageVersion": pyprojet["tool"]["poetry"]["version"],
+    "packageVersion": pyproject["tool"]["poetry"]["version"],
 }
 
 print(json.dumps(config))
