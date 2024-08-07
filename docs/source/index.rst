@@ -4,7 +4,11 @@ Getting Started
 Installation
 ^^^^^^^^^^^^
 
-To install this package follow this instructions at `Optimeering Artifact Registry <https://docs.hawkai.site/developer_setup/optimeering-artifacts/>`_ docs.
+To install this package:
+
+.. code-block:: bash
+
+   pip install optimeering-beta
 
 .. contents::
    :local:
@@ -17,7 +21,3 @@ Contents
    client
    filters
    dataclasses
-
-.. note::
-
-   This project is under active development.

@@ -5,7 +5,7 @@ import toml
 pyproject = toml.load("../pyproject.toml")
 
 config = {
-    "packageName": pyproject["tool"]["poetry"]["packageName"],
+    "packageName": pyproject["tool"]["poetry"]["name"],
     "projectName": pyproject["tool"]["poetry"]["description"],
     "generateSourceCodeOnly": True,
     "packageVersion": pyproject["tool"]["poetry"]["version"],
