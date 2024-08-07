@@ -14,7 +14,8 @@ import sys
 
 sys.path.insert(0, pathlib.Path(__file__).parents[3].resolve().as_posix())
 
-version = re.search(r'^__version__\s*=\s*"(.*)"', open("../../optimeering_beta/__init__.py").read(), re.M).group(1)
+with open("../../optimeering_beta/__init__.py") as file:
+    version = re.search(r'^__version__\s*=\s*"(.*)"', file.read(), re.M).group(1)
 
 project = "Beta Python SDK"
 copyright = "2024, Optimeering AS"
