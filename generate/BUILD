@@ -35,7 +35,7 @@ adhoc_tool(
 )
 
 #### GENERATE CLIENT ####
-files(name="generator-files", sources=["python_templates/**", "generation_config.json"])
+files(name="generator-files", sources=["python_templates/**"])
 
 # Specify JAR dependencies
 jvm_artifact(
