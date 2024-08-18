@@ -1,16 +1,5 @@
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = docs/source
-BUILDDIR      = dist/docs
-
-generate-client:
+package:
 	pants run generate:generate-client
-	pants tailor optimeering_beta/*
-	pants fix fmt optimeering_beta/*
-
-client-docs:
-	rm -rf $(BUILDDIR)
-	sphinx-build -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-open-client-docs:
-	open $(BUILDDIR)/html/index.html
+	pants tailor ::
+	pants fmt fix ::
+	pants run docs:build-docs
