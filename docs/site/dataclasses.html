@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Classes &mdash; Optimeering Beta Python Client 0.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=6e83718d" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e3a6060d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/js/versions.js?v=82844bb5"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Filters" href="filters.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Optimeering Beta Python Client
+              <img src="_static/logo_transparent.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Optimeering Beta SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.items"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.items</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.next_page"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.next_page</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.model_config"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.model_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.to_str"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.to_json"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.from_json"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.to_dict"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.from_dict"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.series_ids"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.series_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.datapoints"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.datapoints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.model_computed_fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.model_fields"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.model_fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsSeriesGetResponse.model_post_init"><code class="docutils literal notranslate"><span class="pre">PredsSeriesGetResponse.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.items"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.items</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.next_page"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.next_page</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.model_config"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.model_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.to_str"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.to_json"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.from_json"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.to_dict"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.from_dict"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.model_computed_fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.model_fields"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.model_fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.PredsDataGetResponse.model_post_init"><code class="docutils literal notranslate"><span class="pre">PredsDataGetResponse.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Optimeering Beta Python Client</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Data Classes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dataclasses.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-classes">
+<h1>Data Classes<a class="headerlink" href="#data-classes" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">PredsSeriesGetResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.items">
+<span class="sig-name descname"><span class="pre">items</span></span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.next_page">
+<span class="sig-name descname"><span class="pre">next_page</span></span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.next_page" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'populate_by_name':</span> <span class="pre">True,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></em><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.to_str" title="Link to this definition"></a></dt>
+<dd><p>Returns the string representation of the model using alias</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.to_json" title="Link to this definition"></a></dt>
+<dd><p>Returns the JSON representation of the model using alias</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.from_json" title="Link to this definition"></a></dt>
+<dd><p>Create an instance of PredsSeriesGetResponse from a JSON string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Return the dictionary representation of the model using alias.</p>
+<p>This has the following differences from calling pydantic’s
+<cite>self.model_dump(by_alias=True)</cite>:</p>
+<ul class="simple">
+<li><p><cite>None</cite> is only added to the output dict for nullable fields that
+were set at model initialization. Other fields with value <cite>None</cite>
+are ignored.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create an instance of PredsSeriesGetResponse from a dict</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.series_ids">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">series_ids</span></span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.series_ids" title="Link to this definition"></a></dt>
+<dd><p>Returns all the series ids included in the response</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.datapoints">
+<span class="sig-name descname"><span class="pre">datapoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_history</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.datapoints" title="Link to this definition"></a></dt>
+<dd><p>Returns data points associated with</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> – The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 format (eg - ‘2024-05-15T06:00:00+00:00’). Also supports delta formats (e.g. H+1,D-1,W-1)</p></li>
+<li><p><strong>end</strong> – The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 format (eg - ‘2024-05-15T08:00:00+00:00’). Also supports delta formats (e.g. H+1,D-1,W-1)</p></li>
+<li><p><strong>include_history</strong> – Include historical data into the response. Defaults to False. This argument has no effect if the underlying API does not support getting history.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'items':</span> <span class="pre">FieldInfo(annotation=List[PredsCreatedSeries],</span> <span class="pre">required=True),</span> <span class="pre">'next_page':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[str,</span> <span class="pre">Strict(strict=True)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None,</span> <span class="pre">description='The</span> <span class="pre">next</span> <span class="pre">page</span> <span class="pre">of</span> <span class="pre">results</span> <span class="pre">(if</span> <span class="pre">available).')}</span></em><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsSeriesGetResponse.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsSeriesGetResponse.model_post_init" title="Link to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">PredsDataGetResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_page</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.items">
+<span class="sig-name descname"><span class="pre">items</span></span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.next_page">
+<span class="sig-name descname"><span class="pre">next_page</span></span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.next_page" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'populate_by_name':</span> <span class="pre">True,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></em><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.to_str" title="Link to this definition"></a></dt>
+<dd><p>Returns the string representation of the model using alias</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.to_json" title="Link to this definition"></a></dt>
+<dd><p>Returns the JSON representation of the model using alias</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.from_json" title="Link to this definition"></a></dt>
+<dd><p>Create an instance of PredsDataGetResponse from a JSON string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Return the dictionary representation of the model using alias.</p>
+<p>This has the following differences from calling pydantic’s
+<cite>self.model_dump(by_alias=True)</cite>:</p>
+<ul class="simple">
+<li><p><cite>None</cite> is only added to the output dict for nullable fields that
+were set at model initialization. Other fields with value <cite>None</cite>
+are ignored.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create an instance of PredsDataGetResponse from a dict</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'items':</span> <span class="pre">FieldInfo(annotation=List[PredsSingleSeriesDataCreated],</span> <span class="pre">required=True),</span> <span class="pre">'next_page':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[str,</span> <span class="pre">Strict(strict=True)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None,</span> <span class="pre">description='The</span> <span class="pre">next</span> <span class="pre">page</span> <span class="pre">of</span> <span class="pre">results</span> <span class="pre">(if</span> <span class="pre">available).')}</span></em><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.PredsDataGetResponse.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.PredsDataGetResponse.model_post_init" title="Link to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="filters.html" class="btn btn-neutral float-left" title="Filters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Optimeering AS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"></span>
+    <span id="current-version"></span>
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div id="version-list" class="rst-other-versions">
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
