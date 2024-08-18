@@ -74,3 +74,17 @@ jobs:
         with:
           packages-dir: dist/optimeering-beta/
           skip-existing: true
+      - name: Setup azcopy
+        run: |
+          curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          sudo apt-get update
+          sudo apt-get install azcopy
+  
+      - name: Copy SDK Docs
+        run: |
+          VERSION=$(cat optimeering_beta/__init__.py  | grep -E '^__version__ = ".*"$' | cut -d '"' -f 2 | cut -d "." -f 1 | xargs -I {} echo v{})
+  
+          azcopy copy "docs/site" "https://optimeeringdocs.file.core.windows.net/betapythonsdk/latest${{ secrets.DOCS_SAS_TOKEN }}" --recursive --as-subdir=false
+          azcopy copy "docs/site" "https://optimeeringdocs.file.core.windows.net/betapythonsdk/$VERSION${{ secrets.DOCS_SAS_TOKEN }}" --recursive --as-subdir=false
