@@ -6,23 +6,13 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import os
+import toml
+pyproject = toml.load("../../pyproject.toml")
 
-# This resloves the /src directory and adds to the python path so sphinx can find optimeering.client etc.
-import pathlib
-import sys
-
-sys.path.insert(0, pathlib.Path(__file__).parents[3].resolve().as_posix())
-
-
-from optimeering_beta import __version__
-
-version = "v" + __version__.split(".")[0]
-
-project = "Beta Python SDK"
+project = pyproject["tool"]["poetry"]["description"]
 copyright = "2024, Optimeering AS"
-author = "Scott Melhop"
-release = version
+author = pyproject["tool"]["poetry"]["authors"][0]
+release = pyproject["tool"]["poetry"]["version"]
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
