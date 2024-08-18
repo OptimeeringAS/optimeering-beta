@@ -19,9 +19,6 @@ release = pyproject["tool"]["poetry"]["version"]
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx.ext.autosectionlabel"]
 
-templates_path = ["_templates"]
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -29,10 +26,5 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 html_logo = "logo_transparent.svg"
 html_favicon = "favicon.ico"
-
-html_js_files = [
-    "js/versions.js",
-]
-
 
 autodoc_typehints = "none"
