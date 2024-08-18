@@ -29,7 +29,7 @@ class EnumParameters(str, Enum):
     allowed enum values
     """
     AREA = "area"
-    MARKET = "market"
+    PRODUCT = "product"
     STATISTIC = "statistic"
     UNIT_TYPE = "unit_type"
 

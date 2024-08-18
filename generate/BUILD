@@ -3,20 +3,20 @@ python_sources()
 #### CREATE OPENAPI SCHEMA ####
 python_source(name="fix-openapi-extensions", source="fix_openapi_extensions.py")
 
-# curl -L https://beta.optimeering.com/api/docs/openapi_public.json | tee >(wc -c) >(shasum -a 256) >/dev/null
+# curl -L https://beta.optimeering.com/api/docs/openapi.json | tee >(wc -c) >(shasum -a 256) >/dev/null
 resource(
     name="openapi-schema",
     source=http_source(
-        url="https://beta.optimeering.com/api/docs/openapi_public.json",
-        sha256="b8d479c9cb6ab6fa966d99f2cc452689f64101f535e9335b5bb949394a746efe",
-        len=34822,
+        url="https://beta.optimeering.com/api/docs/openapi.json",
+        sha256="e8de09b6e507ec69e1cd2c73b55ff56e5a26dd4067b637c701f5842ce2414cf1",
+        len=33461,
     ),
 )
 
 adhoc_tool(
     name="run-fix-openapi-extensions",
     runnable=":fix-openapi-extensions",
-    args=["-s", "openapi_public.json"],
+    args=["-s", "openapi.json"],
     execution_dependencies=[
         ":openapi-schema",
     ],

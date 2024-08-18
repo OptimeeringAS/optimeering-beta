@@ -22,17 +22,17 @@ from datetime import datetime
 from typing import Any, ClassVar, Dict, Iterable, List, Optional, Set
 
 import optimeering_beta
-from optimeering_beta.models.preds_created_series import PredsCreatedSeries
+from optimeering_beta.models.predictions_created_series import PredictionsCreatedSeries
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing_extensions import Self
 
 
-class PredsSeriesGetResponse(BaseModel):
+class PredictionsSeriesGetResponse(BaseModel):
     """
-    PredsSeriesGetResponse
+    PredictionsSeriesGetResponse
     """  # noqa: E501
 
-    items: List[PredsCreatedSeries]
+    items: List[PredictionsCreatedSeries]
     next_page: Optional[StrictStr] = Field(default=None, description="The next page of results (if available).")
     _client: Any = None
     __properties: ClassVar[List[str]] = ["items", "next_page"]
@@ -54,7 +54,7 @@ class PredsSeriesGetResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredsSeriesGetResponse from a JSON string"""
+        """Create an instance of PredictionsSeriesGetResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,7 +85,7 @@ class PredsSeriesGetResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredsSeriesGetResponse from a dict"""
+        """Create an instance of PredictionsSeriesGetResponse from a dict"""
         if obj is None:
             return None
 
@@ -94,7 +94,7 @@ class PredsSeriesGetResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "items": [PredsCreatedSeries.from_dict(_item) for _item in obj["items"]]
+                "items": [PredictionsCreatedSeries.from_dict(_item) for _item in obj["items"]]
                 if obj.get("items") is not None
                 else None,
                 "next_page": obj.get("next_page"),
@@ -117,7 +117,7 @@ class PredsSeriesGetResponse(BaseModel):
         start: Optional[datetime | StrictStr] = None,
         end: Optional[datetime | StrictStr] = None,
         include_history: Optional[StrictBool] = None,
-    ) -> optimeering_beta.models.PredsDataGetResponse:
+    ) -> optimeering_beta.models.PredictionsDataGetResponse:
         """
         Returns data points associated with
 

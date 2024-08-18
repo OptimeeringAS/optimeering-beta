@@ -19,17 +19,17 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from optimeering_beta.models.preds_single_event_data_created import PredsSingleEventDataCreated
+from optimeering_beta.models.predictions_single_event_data_created import PredictionsSingleEventDataCreated
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing_extensions import Self
 
 
-class PredsSingleSeriesDataCreated(BaseModel):
+class PredictionsSingleSeriesDataCreated(BaseModel):
     """
-    PredsSingleSeriesDataCreated
+    PredictionsSingleSeriesDataCreated
     """  # noqa: E501
 
-    events: List[PredsSingleEventDataCreated]
+    events: List[PredictionsSingleEventDataCreated]
     series_id: StrictInt = Field(description="Identifier for the series id.")
     __properties: ClassVar[List[str]] = ["events", "series_id"]
 
@@ -50,7 +50,7 @@ class PredsSingleSeriesDataCreated(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredsSingleSeriesDataCreated from a JSON string"""
+        """Create an instance of PredictionsSingleSeriesDataCreated from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,7 +81,7 @@ class PredsSingleSeriesDataCreated(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredsSingleSeriesDataCreated from a dict"""
+        """Create an instance of PredictionsSingleSeriesDataCreated from a dict"""
         if obj is None:
             return None
 
@@ -90,7 +90,7 @@ class PredsSingleSeriesDataCreated(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "events": [PredsSingleEventDataCreated.from_dict(_item) for _item in obj["events"]]
+                "events": [PredictionsSingleEventDataCreated.from_dict(_item) for _item in obj["events"]]
                 if obj.get("events") is not None
                 else None,
                 "series_id": obj.get("series_id"),

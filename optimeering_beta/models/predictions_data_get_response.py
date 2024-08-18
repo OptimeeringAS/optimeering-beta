@@ -19,17 +19,17 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from optimeering_beta.models.preds_single_series_data_created import PredsSingleSeriesDataCreated
+from optimeering_beta.models.predictions_single_series_data_created import PredictionsSingleSeriesDataCreated
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing_extensions import Self
 
 
-class PredsDataGetResponse(BaseModel):
+class PredictionsDataGetResponse(BaseModel):
     """
-    PredsDataGetResponse
+    PredictionsDataGetResponse
     """  # noqa: E501
 
-    items: List[PredsSingleSeriesDataCreated]
+    items: List[PredictionsSingleSeriesDataCreated]
     next_page: Optional[StrictStr] = Field(default=None, description="The next page of results (if available).")
     __properties: ClassVar[List[str]] = ["items", "next_page"]
 
@@ -50,7 +50,7 @@ class PredsDataGetResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredsDataGetResponse from a JSON string"""
+        """Create an instance of PredictionsDataGetResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,7 +81,7 @@ class PredsDataGetResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredsDataGetResponse from a dict"""
+        """Create an instance of PredictionsDataGetResponse from a dict"""
         if obj is None:
             return None
 
@@ -90,7 +90,7 @@ class PredsDataGetResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "items": [PredsSingleSeriesDataCreated.from_dict(_item) for _item in obj["items"]]
+                "items": [PredictionsSingleSeriesDataCreated.from_dict(_item) for _item in obj["items"]]
                 if obj.get("items") is not None
                 else None,
                 "next_page": obj.get("next_page"),
