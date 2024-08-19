@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "optimeering_beta"
-version = "0.0.2"
+name = "optimeering-beta"
+version = "0.0.3"
 description = "Optimeering Beta Python Client"
 authors = ["Optimeering"]
 license = "NoLicense"

@@ -14,8 +14,8 @@
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from optimeering_beta.api_client import OptimeeringClient, RequestSerialized
-from optimeering_beta.models.preds_data_get_response import PredsDataGetResponse
-from optimeering_beta.models.preds_series_get_response import PredsSeriesGetResponse
+from optimeering_beta.models.predictions_data_get_response import PredictionsDataGetResponse
+from optimeering_beta.models.predictions_series_get_response import PredictionsSeriesGetResponse
 from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
@@ -33,18 +33,14 @@ class PredictionsApi:
     @validate_call
     def get_prediction_series(
         self,
-        name: Annotated[
-            Optional[List[StrictStr]],
-            Field(description="Name of the series to retrieve. If not specified, will return all series."),
-        ] = None,
         area: Annotated[
             Optional[List[StrictStr]],
             Field(description="The name of the area (eg - NO3, SE4, or FI). If not specified, will return all areas."),
         ] = None,
-        market: Annotated[
+        product: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="The market for which series should be retrieved. If not specified, will return series for all markets."
+                description="The product for which series should be retrieved. If not specified, will return series for all products."
             ),
         ] = None,
         statistic: Annotated[
@@ -68,17 +64,15 @@ class PredictionsApi:
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
-    ) -> PredsSeriesGetResponse:
+    ) -> PredictionsSeriesGetResponse:
         """Get Series
 
         Returns the prediction series
 
-        :param name: Name of the series to retrieve. If not specified, will return all series.
-        :type name: List[StrictStr]
         :param area: The name of the area (eg - NO3, SE4, or FI). If not specified, will return all areas.
         :type area: List[StrictStr]
-        :param market: The market for which series should be retrieved. If not specified, will return series for all markets.
-        :type market: List[StrictStr]
+        :param product: The product for which series should be retrieved. If not specified, will return series for all products.
+        :type product: List[StrictStr]
         :param statistic: Statistic type (eg. 'size', 'direction', or 'quantile'). If not specified, will return series for all statistic types.
         :type statistic: List[StrictStr]
         :param id: ID of the series to retrieve. If not specified, will return all series.
@@ -91,7 +85,7 @@ class PredictionsApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
-        :rtype: PredsSeriesGetResponse
+        :rtype: PredictionsSeriesGetResponse
 
         :Example:
 
@@ -104,9 +98,8 @@ class PredictionsApi:
         """  # noqa: E501
 
         _param = self._get_prediction_series_serialize(
-            name=name,
             area=area,
-            market=market,
+            product=product,
             statistic=statistic,
             id=id,
             unit_type=unit_type,
@@ -115,7 +108,7 @@ class PredictionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PredsSeriesGetResponse",
+            "200": "PredictionsSeriesGetResponse",
             "422": "HTTPValidationError",
         }
         response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
@@ -163,9 +156,8 @@ class PredictionsApi:
 
     def _get_prediction_series_serialize(
         self,
-        name,
         area,
-        market,
+        product,
         statistic,
         id,
         unit_type,
@@ -183,17 +175,13 @@ class PredictionsApi:
 
         # process the path parameters
         # process the query parameters
-        if name is not None:
-            name = ",".join(str(i) for i in name)
-            _query_params.append(("name", name))
-
         if area is not None:
             area = ",".join(str(i) for i in area)
             _query_params.append(("area", area))
 
-        if market is not None:
-            market = ",".join(str(i) for i in market)
-            _query_params.append(("market", market))
+        if product is not None:
+            product = ",".join(str(i) for i in product)
+            _query_params.append(("product", product))
 
         if statistic is not None:
             statistic = ",".join(str(i) for i in statistic)
@@ -256,7 +244,7 @@ class PredictionsApi:
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
-    ) -> PredsDataGetResponse:
+    ) -> PredictionsDataGetResponse:
         """Get Predictions
 
         Returns predictions
@@ -273,7 +261,7 @@ class PredictionsApi:
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
-        :rtype: PredsDataGetResponse
+        :rtype: PredictionsDataGetResponse
 
         :Example:
 
@@ -294,7 +282,7 @@ class PredictionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PredsDataGetResponse",
+            "200": "PredictionsDataGetResponse",
             "422": "HTTPValidationError",
         }
         response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)

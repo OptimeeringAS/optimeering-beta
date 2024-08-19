@@ -24,9 +24,9 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing_extensions import Self
 
 
-class PredsCreatedSeries(BaseModel):
+class PredictionsCreatedSeries(BaseModel):
     """
-    PredsCreatedSeries
+    PredictionsCreatedSeries
     """  # noqa: E501
 
     area: StrictStr = Field(description="Areas to be filtered. E.g. NO1, NO2")
@@ -34,8 +34,7 @@ class PredsCreatedSeries(BaseModel):
     description: Optional[StrictStr] = None
     id: StrictInt
     latest_event_time: Optional[datetime] = None
-    market: StrictStr = Field(description="Market type for the series")
-    name: StrictStr = Field(description="Unique name for the series")
+    product: StrictStr = Field(description="Product name for the series")
     statistic: StrictStr = Field(description="Type of statistics.")
     unit_type: StrictStr = Field(description="Unit type for the series")
     __properties: ClassVar[List[str]] = [
@@ -44,8 +43,7 @@ class PredsCreatedSeries(BaseModel):
         "description",
         "id",
         "latest_event_time",
-        "market",
-        "name",
+        "product",
         "statistic",
         "unit_type",
     ]
@@ -67,7 +65,7 @@ class PredsCreatedSeries(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredsCreatedSeries from a JSON string"""
+        """Create an instance of PredictionsCreatedSeries from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -101,7 +99,7 @@ class PredsCreatedSeries(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredsCreatedSeries from a dict"""
+        """Create an instance of PredictionsCreatedSeries from a dict"""
         if obj is None:
             return None
 
@@ -115,8 +113,7 @@ class PredsCreatedSeries(BaseModel):
                 "description": obj.get("description"),
                 "id": obj.get("id"),
                 "latest_event_time": obj.get("latest_event_time"),
-                "market": obj.get("market"),
-                "name": obj.get("name"),
+                "product": obj.get("product"),
                 "statistic": obj.get("statistic"),
                 "unit_type": obj.get("unit_type"),
             }
