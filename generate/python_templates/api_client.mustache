@@ -10,6 +10,7 @@ import mimetypes
 import os
 import re
 import tempfile
+from pydantic import TypeAdapter
 
 from urllib.parse import quote
 from typing import Tuple, Optional, List, Dict, Union
@@ -377,7 +378,9 @@ class OptimeeringClient:
             )
         elif isinstance(obj, (datetime.datetime, datetime.date)):
             return obj.isoformat()
-
+        elif isinstance(obj, datetime.timedelta):
+            duration= TypeAdapter(datetime.timedelta).dump_python(obj,mode="json")
+            return duration
         elif isinstance(obj, dict):
             obj_dict = obj
         else:
