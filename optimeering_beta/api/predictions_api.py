@@ -135,9 +135,14 @@ class PredictionsApi:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
         while next_page is not None:
-            # Item at index#1 is URL, we overwrite the item with url in next_page
-            next_param = tuple(value if idx != 1 else next_page for idx, value in enumerate(_param))
-            next_pagination = self.api_client.call_api(*next_param, _request_timeout=_request_timeout)
+            next_pagination = self.api_client.call_api(
+                method=_param[0],
+                url=next_page,
+                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                body=_param[3],
+                post_params=_param[4],
+                _request_timeout=_request_timeout,
+            )
             next_pagination.read()
             next_pagination = self.api_client.response_deserialize(
                 response_data=next_pagination,
@@ -309,9 +314,14 @@ class PredictionsApi:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
         while next_page is not None:
-            # Item at index#1 is URL, we overwrite the item with url in next_page
-            next_param = tuple(value if idx != 1 else next_page for idx, value in enumerate(_param))
-            next_pagination = self.api_client.call_api(*next_param, _request_timeout=_request_timeout)
+            next_pagination = self.api_client.call_api(
+                method=_param[0],
+                url=next_page,
+                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                body=_param[3],
+                post_params=_param[4],
+                _request_timeout=_request_timeout,
+            )
             next_pagination.read()
             next_pagination = self.api_client.response_deserialize(
                 response_data=next_pagination,
