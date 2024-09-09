@@ -28,7 +28,7 @@ START_ANY_OF_SCHEMAS = ["datetime", "str"]
 
 class Start(BaseModel):
     """
-    The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+    The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
     """
 
     # data type: str

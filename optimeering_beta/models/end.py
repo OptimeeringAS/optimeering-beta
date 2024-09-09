@@ -28,7 +28,7 @@ END_ANY_OF_SCHEMAS = ["datetime", "str"]
 
 class End(BaseModel):
     """
-    The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+    The last datetime to fetch (exclusive). Defaults to '2999-12-30 00:00:00+0000'. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
     """
 
     # data type: str
