@@ -11,6 +11,7 @@ __version__ = "{{packageVersion}}"
 {{/apis}}{{/apiInfo}}
 # import OptimeeringClient
 from {{packageName}}.api_response import ApiResponse
+from {{packageName}}.azure_authentication import AzureAuth
 from {{packageName}}.api_client import OptimeeringClient
 from {{packageName}}.configuration import Configuration
 from {{packageName}}.exceptions import OpenApiException
@@ -38,6 +39,7 @@ __import__('sys').setrecursionlimit({{{.}}})
 __all__=[
 {{#apiInfo}}{{#apis}}"{{classname}}",{{/apis}}{{/apiInfo}}
 "ApiResponse",
+"AzureAuth",
 "OptimeeringClient",
 "Configuration",
 "OpenApiException",

@@ -17,10 +17,10 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from datetime import datetime
-from typing import TYPE_CHECKING, Any, Dict, Optional, Set, Union
+from datetime import datetime, timedelta
+from typing import Any, Dict, Optional, Set, Union
 
-from pydantic import BaseModel, StrictStr, ValidationError, field_validator
+from pydantic import BaseModel, ValidationError, field_validator
 from typing_extensions import Self
 
 END_ANY_OF_SCHEMAS = ["datetime", "str"]
@@ -28,17 +28,15 @@ END_ANY_OF_SCHEMAS = ["datetime", "str"]
 
 class End(BaseModel):
     """
-    The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+    The last datetime to fetch (exclusive). Defaults to '2999-12-30 00:00:00+0000'. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
     """
 
     # data type: str
-    anyof_schema_1_validator: Optional[StrictStr] = None
+    anyof_schema_1_validator: Optional[timedelta] = None
+
     # data type: datetime
     anyof_schema_2_validator: Optional[datetime] = None
-    if TYPE_CHECKING:
-        actual_instance: Optional[Union[datetime, str]] = None
-    else:
-        actual_instance: Any = None
+    actual_instance: Any = None
     any_of_schemas: Set[str] = {"datetime", "str"}
 
     model_config = {
@@ -54,7 +52,7 @@ class End(BaseModel):
                 raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
-            super().__init__(**kwargs)
+            super().__init__(actual_instance=kwargs)
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_anyof(cls, v):

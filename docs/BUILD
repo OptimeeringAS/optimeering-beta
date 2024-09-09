@@ -14,7 +14,7 @@ run_shell_command(
     execution_dependencies=[":generate-site"],
     command="""rm -rf docs/site
     mkdir docs/site
-    cp -r {chroot}/generated-site/html/ docs/site
+    cp -r {chroot}/generated-site/html/. docs/site
     """,
     workdir="",
 )

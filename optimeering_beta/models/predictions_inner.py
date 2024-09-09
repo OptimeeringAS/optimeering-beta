@@ -17,7 +17,7 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from typing import TYPE_CHECKING, Any, Dict, Optional, Set, Union
+from typing import Any, Dict, Optional, Set, Union
 
 from optimeering_beta.models.prediction_float_model import PredictionFloatModel
 from optimeering_beta.models.predictions_dict_model import PredictionsDictModel
@@ -36,10 +36,7 @@ class PredictionsInner(BaseModel):
     anyof_schema_1_validator: Optional[PredictionsDictModel] = None
     # data type: PredictionFloatModel
     anyof_schema_2_validator: Optional[PredictionFloatModel] = None
-    if TYPE_CHECKING:
-        actual_instance: Optional[Union[PredictionFloatModel, PredictionsDictModel]] = None
-    else:
-        actual_instance: Any = None
+    actual_instance: Any = None
     any_of_schemas: Set[str] = {"PredictionFloatModel", "PredictionsDictModel"}
 
     model_config = {
@@ -55,23 +52,29 @@ class PredictionsInner(BaseModel):
                 raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
-            super().__init__(**kwargs)
+            super().__init__(actual_instance=kwargs)
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_anyof(cls, v):
         instance = PredictionsInner.model_construct()  # noqa: F841
         error_messages = []
         # validate data type: PredictionsDictModel
-        if not isinstance(v, PredictionsDictModel):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PredictionsDictModel`")
-        else:
-            return v
+        try:
+            return PredictionsDictModel.validate(v)
+        except ValidationError:
+            if not isinstance(v, PredictionsDictModel):
+                error_messages.append(f"Error! Input type `{type(v)}` is not `PredictionsDictModel`")
+            else:
+                return v
 
         # validate data type: PredictionFloatModel
-        if not isinstance(v, PredictionFloatModel):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PredictionFloatModel`")
-        else:
-            return v
+        try:
+            return PredictionFloatModel.validate(v)
+        except ValidationError:
+            if not isinstance(v, PredictionFloatModel):
+                error_messages.append(f"Error! Input type `{type(v)}` is not `PredictionFloatModel`")
+            else:
+                return v
 
         if error_messages:
             # no match

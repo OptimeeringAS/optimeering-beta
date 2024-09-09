@@ -33,14 +33,20 @@ class PredictionsApi:
     @validate_call
     def get_prediction_series(
         self,
-        area: Annotated[
-            Optional[List[StrictStr]],
-            Field(description="The name of the area (eg - NO3, SE4, or FI). If not specified, will return all areas."),
+        id: Annotated[
+            Optional[List[StrictInt]],
+            Field(description="ID of the series to retrieve. If not specified, will return all series."),
         ] = None,
         product: Annotated[
             Optional[List[StrictStr]],
             Field(
                 description="The product for which series should be retrieved. If not specified, will return series for all products."
+            ),
+        ] = None,
+        unit_type: Annotated[
+            Optional[List[StrictStr]],
+            Field(
+                description="Unit type (eq. 'volumes', 'price', or 'price_spread'). If not specified, will return series for all unit types."
             ),
         ] = None,
         statistic: Annotated[
@@ -49,15 +55,9 @@ class PredictionsApi:
                 description="Statistic type (eg. 'size', 'direction', or 'quantile'). If not specified, will return series for all statistic types."
             ),
         ] = None,
-        id: Annotated[
-            Optional[List[StrictInt]],
-            Field(description="ID of the series to retrieve. If not specified, will return all series."),
-        ] = None,
-        unit_type: Annotated[
+        area: Annotated[
             Optional[List[StrictStr]],
-            Field(
-                description="Unit type (eq. 'volumes', 'price', or 'price_spread'). If not specified, will return series for all unit types."
-            ),
+            Field(description="The name of the area (eg - NO3, SE4, or FI). If not specified, will return all areas."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -69,16 +69,16 @@ class PredictionsApi:
 
         Returns the prediction series
 
-        :param area: The name of the area (eg - NO3, SE4, or FI). If not specified, will return all areas.
-        :type area: List[StrictStr]
-        :param product: The product for which series should be retrieved. If not specified, will return series for all products.
-        :type product: List[StrictStr]
-        :param statistic: Statistic type (eg. 'size', 'direction', or 'quantile'). If not specified, will return series for all statistic types.
-        :type statistic: List[StrictStr]
         :param id: ID of the series to retrieve. If not specified, will return all series.
         :type id: List[StrictInt]
+        :param product: The product for which series should be retrieved. If not specified, will return series for all products.
+        :type product: List[StrictStr]
         :param unit_type: Unit type (eq. 'volumes', 'price', or 'price_spread'). If not specified, will return series for all unit types.
         :type unit_type: List[StrictStr]
+        :param statistic: Statistic type (eg. 'size', 'direction', or 'quantile'). If not specified, will return series for all statistic types.
+        :type statistic: List[StrictStr]
+        :param area: The name of the area (eg - NO3, SE4, or FI). If not specified, will return all areas.
+        :type area: List[StrictStr]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -98,11 +98,11 @@ class PredictionsApi:
         """  # noqa: E501
 
         _param = self._get_prediction_series_serialize(
-            area=area,
-            product=product,
-            statistic=statistic,
             id=id,
+            product=product,
             unit_type=unit_type,
+            statistic=statistic,
+            area=area,
             limit=None,
             offset=None,
         )
@@ -135,9 +135,14 @@ class PredictionsApi:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
         while next_page is not None:
-            # Item at index#1 is URL, we overwrite the item with url in next_page
-            next_param = tuple(value if idx != 1 else next_page for idx, value in enumerate(_param))
-            next_pagination = self.api_client.call_api(*next_param, _request_timeout=_request_timeout)
+            next_pagination = self.api_client.call_api(
+                method=_param[0],
+                url=next_page,
+                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                body=_param[3],
+                post_params=_param[4],
+                _request_timeout=_request_timeout,
+            )
             next_pagination.read()
             next_pagination = self.api_client.response_deserialize(
                 response_data=next_pagination,
@@ -156,11 +161,11 @@ class PredictionsApi:
 
     def _get_prediction_series_serialize(
         self,
-        area,
-        product,
-        statistic,
         id,
+        product,
         unit_type,
+        statistic,
+        area,
         limit,
         offset,
     ) -> RequestSerialized:
@@ -175,25 +180,25 @@ class PredictionsApi:
 
         # process the path parameters
         # process the query parameters
-        if area is not None:
-            area = ",".join(str(i) for i in area)
-            _query_params.append(("area", area))
+        if id is not None:
+            id = ",".join(str(i) for i in id)
+            _query_params.append(("id", id))
 
         if product is not None:
             product = ",".join(str(i) for i in product)
             _query_params.append(("product", product))
 
+        if unit_type is not None:
+            unit_type = ",".join(str(i) for i in unit_type)
+            _query_params.append(("unit_type", unit_type))
+
         if statistic is not None:
             statistic = ",".join(str(i) for i in statistic)
             _query_params.append(("statistic", statistic))
 
-        if id is not None:
-            id = ",".join(str(i) for i in id)
-            _query_params.append(("id", id))
-
-        if unit_type is not None:
-            unit_type = ",".join(str(i) for i in unit_type)
-            _query_params.append(("unit_type", unit_type))
+        if area is not None:
+            area = ",".join(str(i) for i in area)
+            _query_params.append(("area", area))
 
         if limit is not None:
             _query_params.append(("limit", limit))
@@ -230,13 +235,13 @@ class PredictionsApi:
         start: Annotated[
             Optional[Any],
             Field(
-                description="The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)"
+                description="The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)"
             ),
         ] = None,
         end: Annotated[
             Optional[Any],
             Field(
-                description="The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)"
+                description="The last datetime to fetch (exclusive). Defaults to '2999-12-30 00:00:00+0000'. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)"
             ),
         ] = None,
         _request_timeout: Union[
@@ -251,9 +256,9 @@ class PredictionsApi:
 
         :param series_id: Series ID to filter. If not specified, will return all series.
         :type series_id: List[StrictInt]
-        :param start: The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+        :param start: The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
         :type start: Start
-        :param end: The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+        :param end: The last datetime to fetch (exclusive). Defaults to '2999-12-30 00:00:00+0000'. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
         :type end: End
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -309,9 +314,14 @@ class PredictionsApi:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
         while next_page is not None:
-            # Item at index#1 is URL, we overwrite the item with url in next_page
-            next_param = tuple(value if idx != 1 else next_page for idx, value in enumerate(_param))
-            next_pagination = self.api_client.call_api(*next_param, _request_timeout=_request_timeout)
+            next_pagination = self.api_client.call_api(
+                method=_param[0],
+                url=next_page,
+                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                body=_param[3],
+                post_params=_param[4],
+                _request_timeout=_request_timeout,
+            )
             next_pagination.read()
             next_pagination = self.api_client.response_deserialize(
                 response_data=next_pagination,

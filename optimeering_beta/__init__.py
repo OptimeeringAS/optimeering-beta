@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 # import apis into sdk package
 from optimeering_beta.api.parameters_api import ParametersApi
@@ -23,6 +23,7 @@ from optimeering_beta.api_client import OptimeeringClient
 
 # import OptimeeringClient
 from optimeering_beta.api_response import ApiResponse
+from optimeering_beta.azure_authentication import AzureAuth
 from optimeering_beta.configuration import Configuration
 from optimeering_beta.exceptions import (
     ApiAttributeError,
@@ -54,6 +55,7 @@ __all__ = [
     "ParametersApi",
     "PredictionsApi",
     "ApiResponse",
+    "AzureAuth",
     "OptimeeringClient",
     "Configuration",
     "OpenApiException",

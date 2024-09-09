@@ -143,12 +143,10 @@ def remove_hyperlinks_from_docs(openapi_spec: Dict):
                         ].replace(hyperlink_doc, "")
 
 
-def fix_openapi_extensions(schema_path: str) -> None:
-    with open(schema_path, "r") as file:
-        content = json.load(file)
-    remove_comma_separated_docs(content)
-    remove_hyperlinks_from_docs(content)
-    remove_enums_from_specs(content)
+def move_optimeering_extensions_out_of_schema(content):
+    """
+    Logic for moving extension out of schema
+    """
     for _, methods in content["paths"].items():
         for _, method_definition in methods.items():
             if "parameters" not in method_definition:
@@ -160,6 +158,48 @@ def fix_openapi_extensions(schema_path: str) -> None:
                 for key in list(parameter["schema"]):
                     if key.startswith("x-"):
                         parameter[key] = parameter["schema"].pop(key)
+
+
+def add_py_data_type_for_duration_type(content):
+    """
+    Adds optimeering extensions for parameters with type `duration`
+    """
+    for path, path_desc in content["paths"].items():
+        for route, route_desc in path_desc.items():
+            if "parameters" not in route_desc:
+                continue
+            for parameter in route_desc["parameters"]:
+                if "schema" not in parameter:
+                    continue
+                if "anyOf" not in parameter["schema"]:
+                    continue
+                has_duration = False
+                is_optional = False
+                duration_idx = None
+                for any_idx, any_of in enumerate(parameter["schema"]["anyOf"]):
+                    if (any_of.get("type") == "string") and (any_of.get("format") == "duration"):
+                        has_duration = True
+                        duration_idx = any_idx
+                    if any_of.get("type") == "null":
+                        is_optional = True
+
+                if has_duration:
+                    parameter["schema"]["anyOf"][duration_idx]["x-optimeering-bypass-py-typing"] = {
+                        "type": "timedelta",
+                        "is_optional": is_optional,
+                    }
+
+
+def fix_openapi_extensions(schema_path: str) -> None:
+    with open(schema_path, "r") as file:
+        content = json.load(file)
+
+    remove_comma_separated_docs(content)
+    remove_hyperlinks_from_docs(content)
+    remove_enums_from_specs(content)
+
+    move_optimeering_extensions_out_of_schema(content)
+    add_py_data_type_for_duration_type(content)
     filter_schema_components(content)
     inject_optimeering_extensions_into_models(content)
 
@@ -232,4 +272,4 @@ if __name__ == "__main__":
     if args.Schema:
         fix_openapi_extensions(args.Schema)
     else:
-        print(json.dumps({"error": f"No file present at {args.Schema}"}))
+        raise FileNotFoundError

@@ -3,6 +3,7 @@ from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
+from datetime import timedelta
 {{#vendorExtensions.x-py-other-imports}}
 {{{.}}}
 {{/vendorExtensions.x-py-other-imports}}
@@ -22,12 +23,19 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
 {{#composedSchemas.anyOf}}
     # data type: {{{dataType}}}
-    {{vendorExtensions.x-py-name}}: {{{vendorExtensions.x-py-typing}}}
+    {{vendorExtensions.x-py-name}}: {{!
+        LOGIC FOR BYPASS BELOW
+        }}{{#vendorExtensions.x-optimeering-bypass-py-typing.type}}{{!
+            DEAL WITH OPTIONAL
+            }}{{#vendorExtensions.x-optimeering-bypass-py-typing.is_optional}}Optional[{{/vendorExtensions.x-optimeering-bypass-py-typing.is_optional}}{{!
+                }}{{.}}{{! <--- Actual type here
+             DEAL WITH OPTIONAL
+            }}{{#vendorExtensions.x-optimeering-bypass-py-typing.is_optional}}]=None{{/vendorExtensions.x-optimeering-bypass-py-typing.is_optional}}
+        {{/vendorExtensions.x-optimeering-bypass-py-typing.type}}{{!
+        LOGIC WHEN NO BYPASS NEEDED BELOW
+        }}{{^vendorExtensions.x-optimeering-bypass-py-typing.type}}{{{vendorExtensions.x-py-typing}}}{{/vendorExtensions.x-optimeering-bypass-py-typing.type}}
 {{/composedSchemas.anyOf}}
-    if TYPE_CHECKING:
-        actual_instance: Optional[Union[{{#anyOf}}{{{.}}}{{^-last}}, {{/-last}}{{/anyOf}}]] = None
-    else:
-        actual_instance: Any = None
+    actual_instance: Any = None
     any_of_schemas: Set[str] = { {{#anyOf}}"{{.}}"{{^-last}}, {{/-last}}{{/anyOf}} }
 
     model_config = {
@@ -51,7 +59,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
                 raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
-            super().__init__(**kwargs)
+            super().__init__(actual_instance=kwargs)
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
@@ -80,10 +88,13 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             error_messages.append(str(e))
         {{/isPrimitiveType}}
         {{^isPrimitiveType}}
-        if not isinstance(v, {{{dataType}}}):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`")
-        else:
-            return v
+        try:
+            return {{{dataType}}}.validate(v)
+        except ValidationError:
+            if not isinstance(v, {{{dataType}}}):
+                error_messages.append(f"Error! Input type `{type(v)}` is not `{{{dataType}}}`")
+            else:
+                return v
 
         {{/isPrimitiveType}}
         {{/isContainer}}
