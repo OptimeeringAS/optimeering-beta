@@ -25,3 +25,7 @@ python_distribution(
 )
 
 file(name="pyproject", source="pyproject.toml")
+
+python_sources(
+    name="0",
+)
