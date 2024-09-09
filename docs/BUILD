@@ -2,7 +2,7 @@ files(name="source", sources=["source/**"])
 
 shell_command(
     name="generate-site",
-    execution_dependencies=[":source", "//optimeering_beta:optimeering_beta", "//:pyproject"],
+    execution_dependencies=[":source", "//optimeering_beta:optimeering_beta","//:pyproject"],
     tools=["sphinx-build"],
     command="sphinx-build -M html docs/source generated-site",
     output_files=["generated-site/**"],

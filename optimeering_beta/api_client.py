@@ -33,7 +33,7 @@ from optimeering_beta.api_response import T as ApiResponseT
 from optimeering_beta.azure_authentication import AzureAuth
 from optimeering_beta.configuration import Configuration
 from optimeering_beta.exceptions import ApiException, ApiValueError
-from pydantic import SecretStr
+from pydantic import SecretStr, TypeAdapter
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 
@@ -86,7 +86,7 @@ class OptimeeringClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = "OpenAPI-Generator/0.0.3/python"
+        self.user_agent = "OpenAPI-Generator/0.0.4/python"
         self.client_side_validation = configuration.client_side_validation
 
         self._application_collection: Dict[str, Any] = {}
@@ -322,7 +322,9 @@ class OptimeeringClient:
             return tuple(self.sanitize_for_serialization(sub_obj) for sub_obj in obj)
         elif isinstance(obj, (datetime.datetime, datetime.date)):
             return obj.isoformat()
-
+        elif isinstance(obj, datetime.timedelta):
+            duration = TypeAdapter(datetime.timedelta).dump_python(obj, mode="json")
+            return duration
         elif isinstance(obj, dict):
             obj_dict = obj
         else:
@@ -410,7 +412,7 @@ class OptimeeringClient:
         else:
             return self.__deserialize_model(data, klass)
 
-    def parameters_to_tuples(self, params, collection_formats):
+    def parameters_to_tuples(self, params: Union[Dict, Tuple[Tuple[str, Any]]], collection_formats: Optional[Dict]):
         """Get parameters as list of tuples, formatting collections.
 
         :param params: Parameters as dict or list of two-tuples
@@ -439,7 +441,7 @@ class OptimeeringClient:
                 new_params.append((k, v))
         return new_params
 
-    def parameters_to_url_query(self, params, collection_formats):
+    def parameters_to_url_query(self, params: Union[Dict, Tuple[Tuple[str, Any]]], collection_formats: Optional[Dict]):
         """Get parameters as list of tuples, formatting collections.
 
         :param params: Parameters as dict or list of two-tuples

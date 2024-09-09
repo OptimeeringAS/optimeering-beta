@@ -17,7 +17,7 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from typing import TYPE_CHECKING, Any, Dict, Optional, Set, Union
+from typing import Any, Dict, Optional, Set, Union
 
 from pydantic import BaseModel, StrictInt, StrictStr, ValidationError, field_validator
 from typing_extensions import Self
@@ -34,10 +34,7 @@ class LocationInner(BaseModel):
     anyof_schema_1_validator: Optional[StrictStr] = None
     # data type: int
     anyof_schema_2_validator: Optional[StrictInt] = None
-    if TYPE_CHECKING:
-        actual_instance: Optional[Union[int, str]] = None
-    else:
-        actual_instance: Any = None
+    actual_instance: Any = None
     any_of_schemas: Set[str] = {"int", "str"}
 
     model_config = {
@@ -53,7 +50,7 @@ class LocationInner(BaseModel):
                 raise ValueError("If a position argument is used, keyword arguments cannot be used.")
             super().__init__(actual_instance=args[0])
         else:
-            super().__init__(**kwargs)
+            super().__init__(actual_instance=kwargs)
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_anyof(cls, v):
