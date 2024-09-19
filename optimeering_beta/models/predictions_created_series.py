@@ -20,6 +20,9 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
+from optimeering_beta.models.enum_product import EnumProduct
+from optimeering_beta.models.enum_statistic import EnumStatistic
+from optimeering_beta.models.enum_unit_type import EnumUnitType
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing_extensions import Self
 
@@ -34,9 +37,9 @@ class PredictionsCreatedSeries(BaseModel):
     description: Optional[StrictStr] = None
     id: StrictInt
     latest_event_time: Optional[datetime] = None
-    product: StrictStr = Field(description="Product name for the series")
-    statistic: StrictStr = Field(description="Type of statistics.")
-    unit_type: StrictStr = Field(description="Unit type for the series")
+    product: EnumProduct
+    statistic: EnumStatistic
+    unit_type: EnumUnitType
     __properties: ClassVar[List[str]] = [
         "area",
         "created_at",
