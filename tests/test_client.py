@@ -5,7 +5,7 @@ from typing import Any, Dict
 from unittest import TestCase
 
 import optimeering_beta
-from optimeering_beta import Configuration, OptimeeringClient
+from optimeering_beta import Configuration, OptimeeringClient, EnumProduct, EnumStatistic, EnumUnitType
 from optimeering_beta.azure_authentication import AzureAuth
 from optimeering_beta.rest import RESTClientObject, RESTResponse
 
@@ -22,7 +22,7 @@ def generate_data(model: str):
     for property_name, property in model_def["properties"].items():
         if "anyOf" in property:
             property = property["anyOf"][0]
-        property_type = property["type"]
+        property_type = property.get("type")
         if property_type == "string":
             if property.get("format") == "date-time":
                 data[property_name] = "2000-01-01T00:00:00+00:00"
@@ -44,6 +44,14 @@ def generate_data(model: str):
             if property.get("additionalProperties", {}).get("type") == "number":
                 data[property_name] = {"mock_key": 1}
                 continue
+        elif property_name in ["product", "statistic", "unit_type"]:
+            values = {
+                "product": EnumProduct.AFRR_CM_DOWN,
+                "statistic": EnumStatistic.CONDITIONAL_INDEX,
+                "unit_type": EnumUnitType.CAPACITY
+            }
+            data[property_name] = values[property_name]
+            continue
 
         raise TypeError(f"Unsupported type {property_type}")
     return data
@@ -69,7 +77,6 @@ class TestGeneratedClient(TestCase):
 
     def test_api_series_and_single_datapoint(self):
         """Tests calling series and getting one datapoint"""
-
         apis_to_test = {
             k: v
             for k, v in optimeering_beta.api.__dict__.items()
