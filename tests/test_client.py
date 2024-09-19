@@ -5,7 +5,7 @@ from typing import Any, Dict
 from unittest import TestCase
 
 import optimeering_beta
-from optimeering_beta import Configuration, OptimeeringClient, EnumProduct, EnumStatistic, EnumUnitType
+from optimeering_beta import Configuration, EnumProduct, EnumStatistic, EnumUnitType, OptimeeringClient
 from optimeering_beta.azure_authentication import AzureAuth
 from optimeering_beta.rest import RESTClientObject, RESTResponse
 
@@ -48,7 +48,7 @@ def generate_data(model: str):
             values = {
                 "product": EnumProduct.AFRR_CM_DOWN,
                 "statistic": EnumStatistic.CONDITIONAL_INDEX,
-                "unit_type": EnumUnitType.CAPACITY
+                "unit_type": EnumUnitType.CAPACITY,
             }
             data[property_name] = values[property_name]
             continue
