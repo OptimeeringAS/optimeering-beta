@@ -68,14 +68,18 @@ def remove_enums_from_specs(openapi_specs: Dict):
         if component_name.startswith("Enum") and "enum" in component_definition:
             continue
         for property_name, property_definition in component_definition.get("properties", {}).items():
-            for descriptor_type in ("allOf", "anyOf"):
-                multi_schema = property_definition.get(descriptor_type, {})
-                for ref_idx, ref_def in enumerate(multi_schema):
-                    if ref_def.get("$ref", "").startswith("#/components/schemas/Enum"):
-                        enum_component_name = ref_def.get("$ref", "").replace("#/components/schemas/", "")
-                        enum_reference_collection[enum_component_name].append(
-                            (component_name, property_name, descriptor_type, ref_idx)
-                        )
+            if property_definition.get("$ref", "").startswith("#/components/schemas/Enum"):
+                enum_component_name = property_definition["$ref"].replace("#/components/schemas/", "")
+                enum_reference_collection[enum_component_name].append((component_name, property_name, None, None))
+            else:
+                for descriptor_type in ("allOf", "anyOf"):
+                    multi_schema = property_definition.get(descriptor_type, {})
+                    for ref_idx, ref_def in enumerate(multi_schema):
+                        if ref_def.get("$ref", "").startswith("#/components/schemas/Enum"):
+                            enum_component_name = ref_def.get("$ref", "").replace("#/components/schemas/", "")
+                            enum_reference_collection[enum_component_name].append(
+                                (component_name, property_name, descriptor_type, ref_idx)
+                            )
     # Filter the `enum_reference_collection` to ensure only actual enums are passed
     enum_reference_collection = {
         k: v for k, v in enum_reference_collection.items() if "enum" in openapi_specs["components"]["schemas"][k]
@@ -90,6 +94,16 @@ def remove_enums_from_specs(openapi_specs: Dict):
         for enum_ref in enum_references:
             replace_comp_name, property_name, descriptor_type, descriptor_idx = enum_ref
             openapi_specs["components"]["schemas"][replace_comp_name]["properties"][property_name]["title"] = title
+
+            if descriptor_type is None:
+                # any of and all of not found
+                # ref found instead # delete ref
+                replace_schemas = openapi_specs["components"]["schemas"][replace_comp_name]["properties"][property_name]
+                del replace_schemas["$ref"]
+                # add ref from component type
+                replace_schemas["type"] = origin_type
+                continue
+
             replace_schemas = openapi_specs["components"]["schemas"][replace_comp_name]["properties"][property_name][
                 descriptor_type
             ]

@@ -69,7 +69,6 @@ class TestGeneratedClient(TestCase):
 
     def test_api_series_and_single_datapoint(self):
         """Tests calling series and getting one datapoint"""
-
         apis_to_test = {
             k: v
             for k, v in optimeering_beta.api.__dict__.items()

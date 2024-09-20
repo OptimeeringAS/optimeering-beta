@@ -99,6 +99,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.api.PredictionsApi"><code class="docutils literal notranslate"><span class="pre">PredictionsApi</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.api.PredictionsApi.get_latest_predictions"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.get_latest_predictions()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.api.PredictionsApi.get_prediction_series"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.get_prediction_series()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.api.PredictionsApi.get_predictions"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.get_predictions()</span></code></a></li>
 </ul>
@@ -647,6 +648,40 @@ timeout. It can also be a pair (tuple) of
 <dt class="sig sig-object py" id="optimeering_beta.api.PredictionsApi">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.api.</span></span><span class="sig-name descname"><span class="pre">PredictionsApi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.PredictionsApi" title="Link to this definition"></a></dt>
 <dd><p>Collection of methods to interact with PredictionsApi</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.api.PredictionsApi.get_latest_predictions">
+<span class="sig-name descname"><span class="pre">get_latest_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_event_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.PredictionsApi.get_latest_predictions" title="Link to this definition"></a></dt>
+<dd><p>Get Latest Predictions</p>
+<p>Returns latest predictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_event_time</strong> (<em>MaxEventTime</em>) – If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - ‘2024-05-15T06:00:00+00:00’, ‘P1H’, ‘-P1W1D’, etc.)</p></li>
+<li><p><strong>series_id</strong> (<em>List</em><em>[</em><em>StrictInt</em><em>]</em>) – Series ID to filter. If not specified, will return all series.</p></li>
+<li><p><strong>_request_timeout</strong> (<em>int</em><em>, </em><em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>optional</em>) – timeout setting for this request. If one
+number provided, it will be total request
+timeout. It can also be a pair (tuple) of
+(connection, read) timeouts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the result object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PredictionsDataGetResponse</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get filtered data point - replace ... with appropriate filters documented above</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predictions_api</span><span class="o">.</span><span class="n">get_latest_predictions</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="optimeering_beta.api.PredictionsApi.get_prediction_series">
 <span class="sig-name descname"><span class="pre">get_prediction_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.PredictionsApi.get_prediction_series" title="Link to this definition"></a></dt>

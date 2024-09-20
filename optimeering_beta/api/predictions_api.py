@@ -31,6 +31,160 @@ class PredictionsApi:
         self.api_client = api_client
 
     @validate_call
+    def get_latest_predictions(
+        self,
+        max_event_time: Annotated[
+            Optional[Any],
+            Field(
+                description="If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)"
+            ),
+        ] = None,
+        series_id: Annotated[
+            Optional[List[StrictInt]],
+            Field(description="Series ID to filter. If not specified, will return all series."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
+        ] = None,
+    ) -> PredictionsDataGetResponse:
+        """Get Latest Predictions
+
+        Returns latest predictions
+
+        :param max_event_time: If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+        :type max_event_time: MaxEventTime
+        :param series_id: Series ID to filter. If not specified, will return all series.
+        :type series_id: List[StrictInt]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :return: Returns the result object.
+        :rtype: PredictionsDataGetResponse
+
+        :Example:
+
+        >>> from optimeering_beta import Configuration, OptimeeringClient
+        >>> configuration = Configuration(host="https://beta.optimeering.com")
+        >>> client = OptimeeringClient(configuration=configuration)
+        >>> # Get filtered data point - replace ... with appropriate filters documented above
+        >>> response = client.predictions_api.get_latest_predictions(...)
+
+        """  # noqa: E501
+
+        _param = self._get_latest_predictions_serialize(
+            max_event_time=max_event_time,
+            series_id=series_id,
+            limit=None,
+            offset=None,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "PredictionsDataGetResponse",
+            "422": "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
+        response_data.read()
+        paginated_response = self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+        if type(paginated_response) != dict:
+            paginated_response._client = self.api_client
+        next_page = paginated_response.next_page
+
+        if next_page is None:
+            return paginated_response
+
+        # resolve extendable attribute
+        attribute_to_extend_selected: Optional[str] = None
+        if "series_id" in set(paginated_response.items[0].model_fields):
+            extendable_attribute = {"datapoints", "events"}
+            attribute_to_extend = extendable_attribute.intersection(set(paginated_response.items[0].model_fields))
+            if len(attribute_to_extend) == 1:
+                attribute_to_extend_selected = list(attribute_to_extend)[0]
+            else:
+                raise AttributeError("Failed to resolve extendable attribute.")
+
+        while next_page is not None:
+            next_pagination = self.api_client.call_api(
+                method=_param[0],
+                url=next_page,
+                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                body=_param[3],
+                post_params=_param[4],
+                _request_timeout=_request_timeout,
+            )
+            next_pagination.read()
+            next_pagination = self.api_client.response_deserialize(
+                response_data=next_pagination,
+                response_types_map=_response_types_map,
+            ).data
+            next_page = next_pagination.next_page
+
+            if attribute_to_extend_selected:
+                if next_pagination.items[0].series_id == paginated_response.items[-1].series_id:
+                    # if series id is same, extract the first item and extend to last item
+                    continued_data: List = getattr(next_pagination.items.pop(0), attribute_to_extend_selected)
+                    previous_data: List = getattr(paginated_response.items[-1], attribute_to_extend_selected)
+                    previous_data.extend(continued_data)
+            paginated_response.items.extend(next_pagination.items)
+        return paginated_response
+
+    def _get_latest_predictions_serialize(
+        self,
+        max_event_time,
+        series_id,
+        limit,
+        offset,
+    ) -> RequestSerialized:
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if max_event_time is not None:
+            _query_params.append(("max_event_time", max_event_time))
+
+        if series_id is not None:
+            series_id = ",".join(str(i) for i in series_id)
+            _query_params.append(("series_id", series_id))
+
+        if limit is not None:
+            _query_params.append(("limit", limit))
+
+        if offset is not None:
+            _query_params.append(("offset", offset))
+
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # inject azure token
+        _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/api/predictions/latest",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            collection_formats=_collection_formats,
+        )
+
+    @validate_call
     def get_prediction_series(
         self,
         id: Annotated[
