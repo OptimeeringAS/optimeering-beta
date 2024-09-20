@@ -37,9 +37,6 @@ from optimeering_beta.exceptions import (
 # import models into sdk package
 from optimeering_beta.models.end import End
 from optimeering_beta.models.enum_parameters import EnumParameters
-from optimeering_beta.models.enum_product import EnumProduct
-from optimeering_beta.models.enum_statistic import EnumStatistic
-from optimeering_beta.models.enum_unit_type import EnumUnitType
 from optimeering_beta.models.http_validation_error import HTTPValidationError
 from optimeering_beta.models.location_inner import LocationInner
 from optimeering_beta.models.max_event_time import MaxEventTime
@@ -70,9 +67,6 @@ __all__ = [
     "ApiException",
     "End",
     "EnumParameters",
-    "EnumProduct",
-    "EnumStatistic",
-    "EnumUnitType",
     "HTTPValidationError",
     "LocationInner",
     "MaxEventTime",
