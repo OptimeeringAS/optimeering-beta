@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.0.4"
+__version__ = "0.0.6"
 
 # import apis into sdk package
 from optimeering_beta.api.access_api import AccessApi
