@@ -101,8 +101,11 @@ class ParametersApi:
         # process the form parameters
         # process the body parameter
 
-        # inject azure token
-        _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        if self.api_client.configuration.api_key is None:
+            # inject azure token
+            _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        else:
+            _header_params["apikey"] = self.api_client.configuration.api_key
 
         return self.api_client.param_serialize(
             method="GET",
