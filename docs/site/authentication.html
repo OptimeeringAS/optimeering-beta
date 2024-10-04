@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authentication &mdash; Optimeering Beta Python Client 0.0.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=6e83718d" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8c5712d9"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Optimeering Beta Python Client
+              <img src="_static/logo_transparent.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Optimeering Beta SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclasses.html">Data Classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Optimeering Beta Python Client</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Authentication</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/authentication.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="authentication">
+<h1>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h1>
+<p>The client can be authenticated against the API using either OAuth (personal credentials) or API Keys.</p>
+<section id="oauth-authentication">
+<h2>OAuth Authentication<a class="headerlink" href="#oauth-authentication" title="Link to this heading"></a></h2>
+<section id="pre-requisites">
+<h3>Pre requisites<a class="headerlink" href="#pre-requisites" title="Link to this heading"></a></h3>
+<p>The Azure CLI simplifies the process of acquiring an access token that can be used when making requests.
+Follow <a class="reference external" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli/">How to install the Azure CLI</a> if you haven’t installed it yet.</p>
+</section>
+<section id="signing-in-with-the-azure-cli">
+<h3>Signing in with the Azure CLI<a class="headerlink" href="#signing-in-with-the-azure-cli" title="Link to this heading"></a></h3>
+<p>In your terminal run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">az login --scope api://beta.optimeering.com/.default --allow-no-subscriptions</span>
+</pre></div>
+</div>
+</section>
+<section id="configuring-the-client">
+<h3>Configuring the Client<a class="headerlink" href="#configuring-the-client" title="Link to this heading"></a></h3>
+<p>The client will automatically use the credentials gained from the step above, so all you have to do is create it with the default configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optipyclient</span> <span class="kn">import</span> <span class="n">OptimeeringClient</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="api-key-authentication">
+<h2>API Key Authentication<a class="headerlink" href="#api-key-authentication" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Pre requisites<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>You will need to first generate an API Key. The easiest way to do that is by using the <a class="reference external" href="https://beta.optimeering.com/api/docs/auth/#/access/create_api_key/">/api/access/apikey/create</a></p>
+</section>
+<section id="id2">
+<h3>Configuring the Client<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">optipyclient</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;SecretKeyHere&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Optimeering AS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

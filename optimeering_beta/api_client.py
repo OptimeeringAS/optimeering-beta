@@ -59,6 +59,9 @@ class OptimeeringClient:
     >>> from optimeering_beta import Configuration, OptimeeringClient
     >>> configuration = Configuration(host="https://beta.optimeering.com")
     >>> client = OptimeeringClient(configuration=configuration)
+
+    >>> configuration_with_api_key = Configuration(api_key="SecretKeyHere")
+    >>> client_with_api_key = OptimeeringClient(configuration=configuration_with_api_key)
     """
 
     PRIMITIVE_TYPES = (float, bool, bytes, str, int)
@@ -677,6 +680,17 @@ class OptimeeringClient:
     @property
     def token(self) -> str:
         return AzureAuth().get_token(uri=self.configuration.api_auth_url)
+
+    @property
+    def access_api(self) -> _api.AccessApi:
+        """
+        Collection of methods to interact with AccessApi
+        """
+        api = self._application_collection.get("access_api", None)
+        if api is None:
+            api = _api.AccessApi(api_client=self)
+            self._application_collection["access_api"] = api
+        return api
 
     @property
     def parameters_api(self) -> _api.ParametersApi:

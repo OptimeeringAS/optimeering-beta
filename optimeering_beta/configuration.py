@@ -54,6 +54,7 @@ class Configuration:
         self,
         host: Optional[str] = "https://beta.optimeering.com",
         api_auth_url: Optional[str] = None,
+        api_key: Optional[str] = None,
         retries=None,
         *,
         debug: Optional[bool] = None,
@@ -63,6 +64,7 @@ class Configuration:
         self.api_auth_url = (
             f"api://{urlparse(self._base_path).netloc}/.default" if api_auth_url is None else api_auth_url
         )
+        self.api_key = api_key
 
         self.logger = {}
         """Logging Settings

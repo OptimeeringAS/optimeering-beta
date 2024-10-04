@@ -109,11 +109,17 @@ class PredictionsApi:
             else:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
+        api_key_configured = self.api_client.configuration.api_key is not None
+        if api_key_configured:
+            auth_header = {"apikey": self.api_client.configuration.api_key}
         while next_page is not None:
+            if not api_key_configured:
+                auth_header = {"Authorization": f"Bearer {self.api_client.token}"}
+
             next_pagination = self.api_client.call_api(
                 method=_param[0],
                 url=next_page,
-                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                header_params={**_param[2], **auth_header},
                 body=_param[3],
                 post_params=_param[4],
                 _request_timeout=_request_timeout,
@@ -169,8 +175,11 @@ class PredictionsApi:
         # process the form parameters
         # process the body parameter
 
-        # inject azure token
-        _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        if self.api_client.configuration.api_key is None:
+            # inject azure token
+            _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        else:
+            _header_params["apikey"] = self.api_client.configuration.api_key
 
         return self.api_client.param_serialize(
             method="GET",
@@ -288,11 +297,17 @@ class PredictionsApi:
             else:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
+        api_key_configured = self.api_client.configuration.api_key is not None
+        if api_key_configured:
+            auth_header = {"apikey": self.api_client.configuration.api_key}
         while next_page is not None:
+            if not api_key_configured:
+                auth_header = {"Authorization": f"Bearer {self.api_client.token}"}
+
             next_pagination = self.api_client.call_api(
                 method=_param[0],
                 url=next_page,
-                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                header_params={**_param[2], **auth_header},
                 body=_param[3],
                 post_params=_param[4],
                 _request_timeout=_request_timeout,
@@ -364,8 +379,11 @@ class PredictionsApi:
         # process the form parameters
         # process the body parameter
 
-        # inject azure token
-        _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        if self.api_client.configuration.api_key is None:
+            # inject azure token
+            _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        else:
+            _header_params["apikey"] = self.api_client.configuration.api_key
 
         return self.api_client.param_serialize(
             method="GET",
@@ -467,11 +485,17 @@ class PredictionsApi:
             else:
                 raise AttributeError("Failed to resolve extendable attribute.")
 
+        api_key_configured = self.api_client.configuration.api_key is not None
+        if api_key_configured:
+            auth_header = {"apikey": self.api_client.configuration.api_key}
         while next_page is not None:
+            if not api_key_configured:
+                auth_header = {"Authorization": f"Bearer {self.api_client.token}"}
+
             next_pagination = self.api_client.call_api(
                 method=_param[0],
                 url=next_page,
-                header_params={**_param[2], "Authorization": f"Bearer {self.api_client.token}"},
+                header_params={**_param[2], **auth_header},
                 body=_param[3],
                 post_params=_param[4],
                 _request_timeout=_request_timeout,
@@ -531,8 +555,11 @@ class PredictionsApi:
         # process the form parameters
         # process the body parameter
 
-        # inject azure token
-        _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        if self.api_client.configuration.api_key is None:
+            # inject azure token
+            _header_params["Authorization"] = f"Bearer {self.api_client.token}"
+        else:
+            _header_params["apikey"] = self.api_client.configuration.api_key
 
         return self.api_client.param_serialize(
             method="GET",

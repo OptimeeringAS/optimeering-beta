@@ -24,31 +24,18 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing_extensions import Self
 
 
-class PredictionsCreatedSeries(BaseModel):
+class AccessKeyPostResponse(BaseModel):
     """
-    PredictionsCreatedSeries
+    AccessKeyPostResponse
     """  # noqa: E501
 
-    area: StrictStr = Field(description="Areas to be filtered. E.g. NO1, NO2")
-    created_at: datetime
-    description: Optional[StrictStr] = None
-    id: StrictInt
-    latest_event_time: Optional[datetime] = None
-    product: StrictStr = Field(description="Product name for the series")
-    statistic: StrictStr = Field(description="Type of statistics.")
-    unit: StrictStr = Field(description="The unit for the series.")
-    unit_type: StrictStr = Field(description="Unit type for the series")
-    __properties: ClassVar[List[str]] = [
-        "area",
-        "created_at",
-        "description",
-        "id",
-        "latest_event_time",
-        "product",
-        "statistic",
-        "unit",
-        "unit_type",
-    ]
+    apikey: StrictStr = Field(description="API key")
+    created_at: datetime = Field(description="Time stamp at which key was created.")
+    description: StrictStr = Field(description="Description for the Access key.")
+    expires_at: datetime = Field(description="Duration after which key expires.")
+    id: StrictInt = Field(description="ID of the access key")
+    owner_id: StrictStr = Field(description="Creator of the access key.")
+    __properties: ClassVar[List[str]] = ["apikey", "created_at", "description", "expires_at", "id", "owner_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -67,7 +54,7 @@ class PredictionsCreatedSeries(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsCreatedSeries from a JSON string"""
+        """Create an instance of AccessKeyPostResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -87,21 +74,11 @@ class PredictionsCreatedSeries(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if description (nullable) is None
-        # and model_fields_set contains the field
-        if self.description is None and "description" in self.model_fields_set:
-            _dict["description"] = None
-
-        # set to None if latest_event_time (nullable) is None
-        # and model_fields_set contains the field
-        if self.latest_event_time is None and "latest_event_time" in self.model_fields_set:
-            _dict["latest_event_time"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsCreatedSeries from a dict"""
+        """Create an instance of AccessKeyPostResponse from a dict"""
         if obj is None:
             return None
 
@@ -110,15 +87,21 @@ class PredictionsCreatedSeries(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "area": obj.get("area"),
+                "apikey": obj.get("apikey"),
                 "created_at": obj.get("created_at"),
                 "description": obj.get("description"),
+                "expires_at": obj.get("expires_at"),
                 "id": obj.get("id"),
-                "latest_event_time": obj.get("latest_event_time"),
-                "product": obj.get("product"),
-                "statistic": obj.get("statistic"),
-                "unit": obj.get("unit"),
-                "unit_type": obj.get("unit_type"),
+                "owner_id": obj.get("owner_id"),
             }
         )
         return _obj
+
+    def __iter__(self):
+        """Iteration method for generated models"""
+        if isinstance(self, list):
+            return (i for i in self)
+        elif "items" in self.model_fields:
+            return iter(self.items)
+        else:
+            raise AttributeError("This object does not support iteration.")

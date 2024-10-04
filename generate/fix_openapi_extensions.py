@@ -117,6 +117,7 @@ def remove_enums_from_specs(openapi_specs: Dict):
                     "type"
                 ] = origin_type
             else:
+                # Delete reference and set type from the component
                 del replace_schemas[descriptor_idx]["$ref"]
                 replace_schemas[descriptor_idx]["type"] = origin_type
 

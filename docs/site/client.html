@@ -90,8 +90,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.select_header_accept"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.select_header_accept()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.select_header_content_type"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.select_header_content_type()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.update_params_for_auth"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.update_params_for_auth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.access_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.access_api</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.parameters_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.parameters_api</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.predictions_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.predictions_api</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.api.AccessApi"><code class="docutils literal notranslate"><span class="pre">AccessApi</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.api.AccessApi.create_api_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.create_api_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.api.AccessApi.delete_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.delete_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.api.AccessApi.list_my_keys"><code class="docutils literal notranslate"><span class="pre">AccessApi.list_my_keys()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.api.ParametersApi"><code class="docutils literal notranslate"><span class="pre">ParametersApi</span></code></a><ul>
@@ -138,7 +145,7 @@
 <h1>Optimeering Beta SDK<a class="headerlink" href="#optimeering-beta-sdk" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="optimeering_beta.Configuration">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://beta.optimeering.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_auth_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://beta.optimeering.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_auth_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration" title="Link to this definition"></a></dt>
 <dd><p>This class contains various settings of the API client.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -353,6 +360,10 @@ to the API</p></li>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">configuration_with_api_key</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;SecretKeyHere&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client_with_api_key</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration_with_api_key</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py property">
@@ -593,6 +604,12 @@ deserialized object, or string of class name.</p></li>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.access_api">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">access_api</span></span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.access_api" title="Link to this definition"></a></dt>
+<dd><p>Collection of methods to interact with AccessApi</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.parameters_api">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters_api</span></span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.parameters_api" title="Link to this definition"></a></dt>
 <dd><p>Collection of methods to interact with ParametersApi</p>
@@ -607,6 +624,108 @@ deserialized object, or string of class name.</p></li>
 </dd></dl>
 
 <dl class="py class" id="module-optimeering_beta.api">
+<dt class="sig sig-object py" id="optimeering_beta.api.AccessApi">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.api.</span></span><span class="sig-name descname"><span class="pre">AccessApi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.AccessApi" title="Link to this definition"></a></dt>
+<dd><p>Collection of methods to interact with AccessApi</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.api.AccessApi.create_api_key">
+<span class="sig-name descname"><span class="pre">create_api_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">access_post_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.AccessApi.create_api_key" title="Link to this definition"></a></dt>
+<dd><p>Post Access</p>
+<p>Creates a new access key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>access_post_key</strong> (<em>AccessPostKey</em>) – (required)</p></li>
+<li><p><strong>_request_timeout</strong> (<em>int</em><em>, </em><em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>optional</em>) – timeout setting for this request. If one
+number provided, it will be total request
+timeout. It can also be a pair (tuple) of
+(connection, read) timeouts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the result object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AccessKeyPostResponse</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Post data point - replace ... with correct dataformat documented above</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_api</span><span class="o">.</span><span class="n">create_api_key</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.api.AccessApi.delete_key">
+<span class="sig-name descname"><span class="pre">delete_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.AccessApi.delete_key" title="Link to this definition"></a></dt>
+<dd><p>Drop Key</p>
+<p>Deletes an api key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – (required)</p></li>
+<li><p><strong>_request_timeout</strong> (<em>int</em><em>, </em><em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>optional</em>) – timeout setting for this request. If one
+number provided, it will be total request
+timeout. It can also be a pair (tuple) of
+(connection, read) timeouts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the result object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Post data point - replace ... with correct dataformat documented above</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_api</span><span class="o">.</span><span class="n">delete_key</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.api.AccessApi.list_my_keys">
+<span class="sig-name descname"><span class="pre">list_my_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.AccessApi.list_my_keys" title="Link to this definition"></a></dt>
+<dd><p>Get Access</p>
+<p>Lists all the keys owned by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_request_timeout</strong> (<em>int</em><em>, </em><em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>optional</em>) – timeout setting for this request. If one
+number provided, it will be total request
+timeout. It can also be a pair (tuple) of
+(connection, read) timeouts.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the result object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[AccessKeyCreated]</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get filtered data point - replace ... with appropriate filters documented above</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_api</span><span class="o">.</span><span class="n">list_my_keys</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="optimeering_beta.api.ParametersApi">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.api.</span></span><span class="sig-name descname"><span class="pre">ParametersApi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.api.ParametersApi" title="Link to this definition"></a></dt>
 <dd><p>Collection of methods to interact with ParametersApi</p>
