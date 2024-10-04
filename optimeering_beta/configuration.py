@@ -39,13 +39,19 @@ class Configuration:
     """This class contains various settings of the API client.
 
     :param host: Base url.
-    :param api_auth_url: URL for Authentication
+    :param api_auth_url: URL for Authentication.
     :param retries: Number of retries for API requests.
+    :param api_key: API Key to use for Authentication.
 
     :Example:
 
     >>> from optimeering_beta import Configuration, OptimeeringClient
     >>> configuration = Configuration(host="https://beta.optimeering.com")
+
+    :API Key Example:
+
+    >>> from optimeering_beta import Configuration, OptimeeringClient
+    >>> configuration = Configuration(host="https://beta.optimeering.com", api_key="your api key")
     """
 
     _default = None
