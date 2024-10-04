@@ -682,6 +682,17 @@ class OptimeeringClient:
         return AzureAuth().get_token(uri=self.configuration.api_auth_url)
 
     @property
+    def access_api(self) -> _api.AccessApi:
+        """
+        Collection of methods to interact with AccessApi
+        """
+        api = self._application_collection.get("access_api", None)
+        if api is None:
+            api = _api.AccessApi(api_client=self)
+            self._application_collection["access_api"] = api
+        return api
+
+    @property
     def parameters_api(self) -> _api.ParametersApi:
         """
         Collection of methods to interact with ParametersApi

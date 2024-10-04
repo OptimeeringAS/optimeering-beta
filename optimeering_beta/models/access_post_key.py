@@ -20,35 +20,18 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing_extensions import Self
 
 
-class PredictionsCreatedSeries(BaseModel):
+class AccessPostKey(BaseModel):
     """
-    PredictionsCreatedSeries
+    AccessPostKey
     """  # noqa: E501
 
-    area: StrictStr = Field(description="Areas to be filtered. E.g. NO1, NO2")
-    created_at: datetime
-    description: Optional[StrictStr] = None
-    id: StrictInt
-    latest_event_time: Optional[datetime] = None
-    product: StrictStr = Field(description="Product name for the series")
-    statistic: StrictStr = Field(description="Type of statistics.")
-    unit: StrictStr = Field(description="The unit for the series.")
-    unit_type: StrictStr = Field(description="Unit type for the series")
-    __properties: ClassVar[List[str]] = [
-        "area",
-        "created_at",
-        "description",
-        "id",
-        "latest_event_time",
-        "product",
-        "statistic",
-        "unit",
-        "unit_type",
-    ]
+    description: StrictStr = Field(description="Description for the Access key.")
+    expires_at: Optional[datetime] = None
+    __properties: ClassVar[List[str]] = ["description", "expires_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -67,7 +50,7 @@ class PredictionsCreatedSeries(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsCreatedSeries from a JSON string"""
+        """Create an instance of AccessPostKey from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -87,38 +70,21 @@ class PredictionsCreatedSeries(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if description (nullable) is None
+        # set to None if expires_at (nullable) is None
         # and model_fields_set contains the field
-        if self.description is None and "description" in self.model_fields_set:
-            _dict["description"] = None
-
-        # set to None if latest_event_time (nullable) is None
-        # and model_fields_set contains the field
-        if self.latest_event_time is None and "latest_event_time" in self.model_fields_set:
-            _dict["latest_event_time"] = None
+        if self.expires_at is None and "expires_at" in self.model_fields_set:
+            _dict["expires_at"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsCreatedSeries from a dict"""
+        """Create an instance of AccessPostKey from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "area": obj.get("area"),
-                "created_at": obj.get("created_at"),
-                "description": obj.get("description"),
-                "id": obj.get("id"),
-                "latest_event_time": obj.get("latest_event_time"),
-                "product": obj.get("product"),
-                "statistic": obj.get("statistic"),
-                "unit": obj.get("unit"),
-                "unit_type": obj.get("unit_type"),
-            }
-        )
+        _obj = cls.model_validate({"description": obj.get("description"), "expires_at": obj.get("expires_at")})
         return _obj

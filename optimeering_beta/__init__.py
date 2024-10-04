@@ -17,6 +17,7 @@
 __version__ = "0.0.4"
 
 # import apis into sdk package
+from optimeering_beta.api.access_api import AccessApi
 from optimeering_beta.api.parameters_api import ParametersApi
 from optimeering_beta.api.predictions_api import PredictionsApi
 from optimeering_beta.api_client import OptimeeringClient
@@ -35,6 +36,9 @@ from optimeering_beta.exceptions import (
 )
 
 # import models into sdk package
+from optimeering_beta.models.access_key_created import AccessKeyCreated
+from optimeering_beta.models.access_key_post_response import AccessKeyPostResponse
+from optimeering_beta.models.access_post_key import AccessPostKey
 from optimeering_beta.models.end import End
 from optimeering_beta.models.enum_parameters import EnumParameters
 from optimeering_beta.models.http_validation_error import HTTPValidationError
@@ -53,6 +57,7 @@ from optimeering_beta.models.validation_error import ValidationError
 
 # add to __all__
 __all__ = [
+    "AccessApi",
     "ParametersApi",
     "PredictionsApi",
     "ApiResponse",
@@ -65,6 +70,9 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "AccessKeyCreated",
+    "AccessKeyPostResponse",
+    "AccessPostKey",
     "End",
     "EnumParameters",
     "HTTPValidationError",
