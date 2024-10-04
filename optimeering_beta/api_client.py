@@ -59,6 +59,9 @@ class OptimeeringClient:
     >>> from optimeering_beta import Configuration, OptimeeringClient
     >>> configuration = Configuration(host="https://beta.optimeering.com")
     >>> client = OptimeeringClient(configuration=configuration)
+
+    >>> configuration_with_api_key = Configuration(api_key="SecretKeyHere")
+    >>> client_with_api_key = OptimeeringClient(configuration=configuration_with_api_key)
     """
 
     PRIMITIVE_TYPES = (float, bool, bytes, str, int)
