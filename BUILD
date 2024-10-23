@@ -11,7 +11,7 @@ python_distribution(
     output_path="optimeering-beta",
     provides=python_artifact(
         name="optimeering_beta",
-        version="0.0.6",
+        version="0.0.7",
         description="Optimeering Python Client (Beta)",
         long_description_content_type="text/markdown",
         author="Optimeering",

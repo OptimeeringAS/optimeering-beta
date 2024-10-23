@@ -20,7 +20,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from optimeering_beta.models.predictions_inner import PredictionsInner
+from optimeering_beta.models.predictions_values import PredictionsValues
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing_extensions import Self
 
@@ -33,7 +33,7 @@ class PredictionsSingleEventDataCreated(BaseModel):
     created_at: datetime = Field(description="The timestamp at which datapoint was registered")
     event_time: datetime = Field(description="Timestamp for when datapoint was generated.")
     id: StrictInt = Field(description="Unique Identifier for the resource type.")
-    predictions: List[PredictionsInner]
+    predictions: List[PredictionsValues]
     __properties: ClassVar[List[str]] = ["created_at", "event_time", "id", "predictions"]
 
     model_config = ConfigDict(
@@ -96,7 +96,7 @@ class PredictionsSingleEventDataCreated(BaseModel):
                 "created_at": obj.get("created_at"),
                 "event_time": obj.get("event_time"),
                 "id": obj.get("id"),
-                "predictions": [PredictionsInner.from_dict(_item) for _item in obj["predictions"]]
+                "predictions": [PredictionsValues.from_dict(_item) for _item in obj["predictions"]]
                 if obj.get("predictions") is not None
                 else None,
             }

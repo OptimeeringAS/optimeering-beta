@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 # import apis into sdk package
 from optimeering_beta.api.access_api import AccessApi
@@ -44,14 +44,12 @@ from optimeering_beta.models.enum_parameters import EnumParameters
 from optimeering_beta.models.http_validation_error import HTTPValidationError
 from optimeering_beta.models.location_inner import LocationInner
 from optimeering_beta.models.max_event_time import MaxEventTime
-from optimeering_beta.models.prediction_float_model import PredictionFloatModel
 from optimeering_beta.models.predictions_created_series import PredictionsCreatedSeries
 from optimeering_beta.models.predictions_data_get_response import PredictionsDataGetResponse
-from optimeering_beta.models.predictions_dict_model import PredictionsDictModel
-from optimeering_beta.models.predictions_inner import PredictionsInner
 from optimeering_beta.models.predictions_series_get_response import PredictionsSeriesGetResponse
 from optimeering_beta.models.predictions_single_event_data_created import PredictionsSingleEventDataCreated
 from optimeering_beta.models.predictions_single_series_data_created import PredictionsSingleSeriesDataCreated
+from optimeering_beta.models.predictions_values import PredictionsValues
 from optimeering_beta.models.start import Start
 from optimeering_beta.models.validation_error import ValidationError
 
@@ -78,14 +76,12 @@ __all__ = [
     "HTTPValidationError",
     "LocationInner",
     "MaxEventTime",
-    "PredictionFloatModel",
     "PredictionsCreatedSeries",
     "PredictionsDataGetResponse",
-    "PredictionsDictModel",
-    "PredictionsInner",
     "PredictionsSeriesGetResponse",
     "PredictionsSingleEventDataCreated",
     "PredictionsSingleSeriesDataCreated",
+    "PredictionsValues",
     "Start",
     "ValidationError",
 ]
