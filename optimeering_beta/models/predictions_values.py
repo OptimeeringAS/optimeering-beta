@@ -24,13 +24,13 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing_extensions import Self
 
 
-class PredictionFloatModel(BaseModel):
+class PredictionsValues(BaseModel):
     """
-    PredictionFloatModel
+    PredictionsValues
     """  # noqa: E501
 
     prediction_for: datetime = Field(description="The time prediction is made for.'")
-    value: Union[StrictFloat, StrictInt]
+    value: Dict[str, Union[StrictFloat, StrictInt]]
     __properties: ClassVar[List[str]] = ["prediction_for", "value"]
 
     model_config = ConfigDict(
@@ -50,7 +50,7 @@ class PredictionFloatModel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionFloatModel from a JSON string"""
+        """Create an instance of PredictionsValues from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +74,7 @@ class PredictionFloatModel(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionFloatModel from a dict"""
+        """Create an instance of PredictionsValues from a dict"""
         if obj is None:
             return None
 
