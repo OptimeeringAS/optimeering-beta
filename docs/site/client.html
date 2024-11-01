@@ -145,14 +145,15 @@
 <h1>Optimeering Beta SDK<a class="headerlink" href="#optimeering-beta-sdk" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="optimeering_beta.Configuration">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://beta.optimeering.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_auth_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://beta.optimeering.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_auth_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration" title="Link to this definition"></a></dt>
 <dd><p>This class contains various settings of the API client.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>host</strong> – Base url.</p></li>
-<li><p><strong>api_auth_url</strong> – URL for Authentication</p></li>
+<li><p><strong>api_auth_url</strong> – URL for Authentication.</p></li>
 <li><p><strong>retries</strong> – Number of retries for API requests.</p></li>
+<li><p><strong>api_key</strong> – API Key to use for Authentication.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Example<span class="colon">:</span></dt>
@@ -160,6 +161,14 @@
 </dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">API Key Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">optimeering_beta</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;your api key&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py attribute">
