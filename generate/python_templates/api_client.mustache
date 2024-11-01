@@ -285,6 +285,13 @@ class OptimeeringClient:
         """
 
         try:
+            # inject auth headers
+            if (token:=self.configuration.token) is not None:
+                header_params["Authorization"]=f"Bearer {token}"
+            elif (api_key:=self.configuration.api_key) is not None:
+                header_params["apikey"]=api_key
+            else:
+                header_params["Authorization"]=f"Bearer {self.token}"
             # perform request and return response
             response_data = {{#asyncio}}await {{/asyncio}}{{#tornado}}yield {{/tornado}}self.rest_client.request(
                 method, url,
