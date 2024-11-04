@@ -42,7 +42,6 @@ class Configuration:
     :param api_auth_url: URL for Authentication.
     :param retries: Number of retries for API requests.
     :param api_key: API Key to use for Authentication.
-    :param token: Token to use for Authentication.
 
     :Example:
 
@@ -53,11 +52,6 @@ class Configuration:
 
     >>> from optimeering_beta import Configuration, OptimeeringClient
     >>> configuration = Configuration(host="https://beta.optimeering.com", api_key="your api key")
-
-    :Token Example:
-
-    >>> from optimeering_beta import Configuration, OptimeeringClient
-    >>> configuration = Configuration(host="https://beta.optimeering.com", token="your token")
     """
 
     _default = None
@@ -66,10 +60,9 @@ class Configuration:
         self,
         host: Optional[str] = "https://beta.optimeering.com",
         api_auth_url: Optional[str] = None,
-        *,
         api_key: Optional[str] = None,
-        token: Optional[str] = None,
         retries=None,
+        *,
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""
@@ -77,14 +70,7 @@ class Configuration:
         self.api_auth_url = (
             f"api://{urlparse(self._base_path).netloc}/.default" if api_auth_url is None else api_auth_url
         )
-
-        # Check auth conflict
-        auth_parameters = (api_key, token)
-        if sum((auth_param is not None) for auth_param in auth_parameters) > 1:
-            raise Exception("Only a single mode of authorization can be used.")
-
         self.api_key = api_key
-        self.token = token
 
         self.logger = {}
         """Logging Settings
@@ -302,7 +288,7 @@ class Configuration:
             "OS: {env}\n"
             "Python Version: {pyversion}\n"
             "Version of the API: 0.1.0\n"
-            "SDK Package Version: 0.0.4".format(env=sys.platform, pyversion=sys.version)
+            "SDK Package Version: 0.0.7".format(env=sys.platform, pyversion=sys.version)
         )
 
     @property

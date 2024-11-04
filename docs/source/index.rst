@@ -18,6 +18,6 @@ Contents
 ^^^^^^^^
 .. toctree::
    self
+   authentication
    client
    filters
-   dataclasses
