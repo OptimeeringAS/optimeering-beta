@@ -42,6 +42,7 @@ class Configuration:
     :param api_auth_url: URL for Authentication.
     :param retries: Number of retries for API requests.
     :param api_key: API Key to use for Authentication.
+    :param token: Token to use for Authentication.
 
     :Example:
 
@@ -52,6 +53,11 @@ class Configuration:
 
     >>> from optimeering_beta import Configuration, OptimeeringClient
     >>> configuration = Configuration(host="https://beta.optimeering.com", api_key="your api key")
+
+    :Token Example:
+
+    >>> from optimeering_beta import Configuration, OptimeeringClient
+    >>> configuration = Configuration(host="https://beta.optimeering.com", token="your token")
     """
 
     _default = None
