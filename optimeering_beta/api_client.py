@@ -233,6 +233,13 @@ class OptimeeringClient:
         """
 
         try:
+            # inject auth headers
+            if (token := self.configuration.token) is not None:
+                header_params["Authorization"] = f"Bearer {token}"
+            elif (api_key := self.configuration.api_key) is not None:
+                header_params["apikey"] = api_key
+            else:
+                header_params["Authorization"] = f"Bearer {self.token}"
             # perform request and return response
             response_data = self.rest_client.request(
                 method,
