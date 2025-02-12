@@ -14,11 +14,12 @@
 
 from __future__ import annotations
 
-import json
 import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
+import orjson
+from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.predictions_single_series_data_created import PredictionsSingleSeriesDataCreated
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing_extensions import Self
@@ -27,6 +28,11 @@ from typing_extensions import Self
 class PredictionsDataGetResponse(BaseModel):
     """
     PredictionsDataGetResponse
+
+    :param items:
+    :type items: List[PredictionsSingleSeriesDataCreated]
+    :param next_page: The next page of results (if available).
+    :type next_page: str
     """  # noqa: E501
 
     items: List[PredictionsSingleSeriesDataCreated]
@@ -46,12 +52,12 @@ class PredictionsDataGetResponse(BaseModel):
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
         # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of PredictionsDataGetResponse from a JSON string"""
-        return cls.from_dict(json.loads(json_str))
+        return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
         """Return the dictionary representation of the model using alias.
@@ -73,9 +79,9 @@ class PredictionsDataGetResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in items (list)
         _items = []
         if self.items:
-            for _item in self.items:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_items in self.items:
+                if _item_items:
+                    _items.append(_item_items.to_dict())
             _dict["items"] = _items
         return _dict
 
@@ -98,11 +104,29 @@ class PredictionsDataGetResponse(BaseModel):
         )
         return _obj
 
-    def __iter__(self):
-        """Iteration method for generated models"""
-        if isinstance(self, list):
-            return (i for i in self)
-        elif "items" in self.model_fields:
-            return iter(self.items)
-        else:
-            raise AttributeError("This object does not support iteration.")
+    def __len__(self):
+        if "items" in self.model_fields:
+            return sum(len(i) for i in self.items)
+        elif "datapoints" in self.model_fields:
+            return sum(len(i) for i in self.datapoints)
+        elif "predictions" in self.model_fields:
+            return sum(len(i) for i in self.predictions)
+        elif "entities" in self.model_fields:
+            return sum(len(i) for i in self.entities)
+        elif "capacity_restrictions" in self.model_fields:
+            return sum(len(i) for i in self.capacity_restrictions)
+        return 1
+
+    @require_pandas
+    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+        """
+        Converts the object into a pandas dataframe.
+
+        :param unpack_value_method:
+            Determines how values are unpacked. Should be one of the following:
+                1. retain_original: Do not unpack the values.
+                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
+                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
+        :type unpack_value_method: str
+        """
+        return pydantic_to_pandas(self, unpack_value_method)

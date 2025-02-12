@@ -14,6 +14,7 @@
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from optimeering_beta.api_client import OptimeeringClient, RequestSerialized
+from optimeering_beta.logger import log_function_timing, suggest_series_id_optimization
 from optimeering_beta.models.predictions_data_get_response import PredictionsDataGetResponse
 from optimeering_beta.models.predictions_series_get_response import PredictionsSeriesGetResponse
 from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
@@ -31,6 +32,8 @@ class PredictionsApi:
         self.api_client = api_client
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def get_latest_predictions(
         self,
         max_event_time: Annotated[
@@ -92,8 +95,6 @@ class PredictionsApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(paginated_response) != dict:
-            paginated_response._client = self.api_client
         next_page = paginated_response.next_page
 
         if next_page is None:
@@ -132,6 +133,7 @@ class PredictionsApi:
                     previous_data: List = getattr(paginated_response.items[-1], attribute_to_extend_selected)
                     previous_data.extend(continued_data)
             paginated_response.items.extend(next_pagination.items)
+
         return paginated_response
 
     def _get_latest_predictions_serialize(
@@ -182,6 +184,8 @@ class PredictionsApi:
         )
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def get_prediction_series(
         self,
         id: Annotated[
@@ -268,8 +272,6 @@ class PredictionsApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(paginated_response) != dict:
-            paginated_response._client = self.api_client
         next_page = paginated_response.next_page
 
         if next_page is None:
@@ -308,6 +310,7 @@ class PredictionsApi:
                     previous_data: List = getattr(paginated_response.items[-1], attribute_to_extend_selected)
                     previous_data.extend(continued_data)
             paginated_response.items.extend(next_pagination.items)
+
         return paginated_response
 
     def _get_prediction_series_serialize(
@@ -374,6 +377,8 @@ class PredictionsApi:
         )
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def get_predictions(
         self,
         series_id: Annotated[
@@ -444,8 +449,6 @@ class PredictionsApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(paginated_response) != dict:
-            paginated_response._client = self.api_client
         next_page = paginated_response.next_page
 
         if next_page is None:
@@ -484,6 +487,7 @@ class PredictionsApi:
                     previous_data: List = getattr(paginated_response.items[-1], attribute_to_extend_selected)
                     previous_data.extend(continued_data)
             paginated_response.items.extend(next_pagination.items)
+
         return paginated_response
 
     def _get_predictions_serialize(

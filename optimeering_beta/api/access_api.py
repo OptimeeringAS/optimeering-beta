@@ -14,6 +14,7 @@
 from typing import Dict, List, Optional, Tuple, Union
 
 from optimeering_beta.api_client import OptimeeringClient, RequestSerialized
+from optimeering_beta.logger import log_function_timing, suggest_series_id_optimization
 from optimeering_beta.models.access_key_created import AccessKeyCreated
 from optimeering_beta.models.access_key_post_response import AccessKeyPostResponse
 from optimeering_beta.models.access_post_key import AccessPostKey
@@ -32,6 +33,8 @@ class AccessApi:
         self.api_client = api_client
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def create_api_key(
         self,
         access_post_key: AccessPostKey,
@@ -79,8 +82,6 @@ class AccessApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(response) != dict:
-            response._client = self.api_client
         return response
 
     def _create_api_key_serialize(
@@ -117,6 +118,8 @@ class AccessApi:
         )
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def delete_key(
         self,
         id: StrictInt,
@@ -164,8 +167,6 @@ class AccessApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(response) != dict:
-            response._client = self.api_client
         return response
 
     def _delete_key_serialize(
@@ -203,6 +204,8 @@ class AccessApi:
         )
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def list_my_keys(
         self,
         _request_timeout: Union[
@@ -244,8 +247,6 @@ class AccessApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(paginated_response) != dict:
-            paginated_response._client = self.api_client
         next_page = paginated_response.next_page
 
         if next_page is None:
@@ -284,6 +285,7 @@ class AccessApi:
                     previous_data: List = getattr(paginated_response.items[-1], attribute_to_extend_selected)
                     previous_data.extend(continued_data)
             paginated_response.items.extend(next_pagination.items)
+
         return paginated_response
 
     def _list_my_keys_serialize(
