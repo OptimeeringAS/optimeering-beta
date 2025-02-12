@@ -10,7 +10,14 @@
         :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
         {{^vendorExtensions.x-optimeering-comma-separated.data-type}}
         {{! DEFAULT CASE FROM OPENAPI GENERATOR}}
-        :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
+        :type {{paramName}}: {{!
+        }}{{#vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+            }}{{{vendorExtensions.x-optimeering-alternate-typing.type}}}{{!
+        }}{{/vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+        }}{{^vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+            }}{{dataType}}{{!
+        }}{{/vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+        }}{{#optional}}, optional{{/optional}}
         {{/vendorExtensions.x-optimeering-comma-separated.data-type}}
         {{#vendorExtensions.x-optimeering-comma-separated.data-type}}
         {{! OPTIMEERING PYTHON TYPE OVERWRITE}}

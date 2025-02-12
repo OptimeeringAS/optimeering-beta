@@ -1,0 +1,13 @@
+    @require_pandas
+    def to_pandas(self,unpack_value_method:str)->"pd.DataFrame": # type: ignore[name-defined]
+        """
+        Converts the object into a pandas dataframe.
+
+        :param unpack_value_method:
+            Determines how values are unpacked. Should be one of the following:
+                1. retain_original: Do not unpack the values.
+                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
+                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
+        :type unpack_value_method: str
+        """
+        return pydantic_to_pandas(self,unpack_value_method)
