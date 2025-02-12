@@ -43,7 +43,7 @@ jvm_artifact(
     name="openapi-generator",
     group="org.openapitools",
     artifact="openapi-generator-cli",
-    version="7.7.0",
+    version="7.10.0",
 )
 
 adhoc_tool(
