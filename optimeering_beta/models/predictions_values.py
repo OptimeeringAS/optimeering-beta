@@ -14,12 +14,13 @@
 
 from __future__ import annotations
 
-import json
 import pprint
 import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
+import orjson
+from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing_extensions import Self
 
@@ -27,6 +28,11 @@ from typing_extensions import Self
 class PredictionsValues(BaseModel):
     """
     PredictionsValues
+
+    :param prediction_for: The time prediction is made for.'
+    :type prediction_for: datetime
+    :param value:
+    :type value: Dict[str, float]
     """  # noqa: E501
 
     prediction_for: datetime = Field(description="The time prediction is made for.'")
@@ -46,12 +52,12 @@ class PredictionsValues(BaseModel):
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
         # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of PredictionsValues from a JSON string"""
-        return cls.from_dict(json.loads(json_str))
+        return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
         """Return the dictionary representation of the model using alias.
@@ -83,3 +89,30 @@ class PredictionsValues(BaseModel):
 
         _obj = cls.model_validate({"prediction_for": obj.get("prediction_for"), "value": obj.get("value")})
         return _obj
+
+    def __len__(self):
+        if "items" in self.model_fields:
+            return sum(len(i) for i in self.items)
+        elif "datapoints" in self.model_fields:
+            return sum(len(i) for i in self.datapoints)
+        elif "predictions" in self.model_fields:
+            return sum(len(i) for i in self.predictions)
+        elif "entities" in self.model_fields:
+            return sum(len(i) for i in self.entities)
+        elif "capacity_restrictions" in self.model_fields:
+            return sum(len(i) for i in self.capacity_restrictions)
+        return 1
+
+    @require_pandas
+    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+        """
+        Converts the object into a pandas dataframe.
+
+        :param unpack_value_method:
+            Determines how values are unpacked. Should be one of the following:
+                1. retain_original: Do not unpack the values.
+                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
+                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
+        :type unpack_value_method: str
+        """
+        return pydantic_to_pandas(self, unpack_value_method)

@@ -14,6 +14,7 @@
 from typing import Dict, List, Optional, Tuple, Union
 
 from optimeering_beta.api_client import OptimeeringClient, RequestSerialized
+from optimeering_beta.logger import log_function_timing, suggest_series_id_optimization
 from optimeering_beta.models.enum_parameters import EnumParameters
 from pydantic import Field, StrictFloat, validate_call
 from typing_extensions import Annotated
@@ -30,6 +31,8 @@ class ParametersApi:
         self.api_client = api_client
 
     @validate_call
+    @log_function_timing
+    @suggest_series_id_optimization
     def get_parameter_values(
         self,
         param: EnumParameters,
@@ -76,8 +79,6 @@ class ParametersApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-        if type(response) != dict:
-            response._client = self.api_client
         return response
 
     def _get_parameter_values_serialize(

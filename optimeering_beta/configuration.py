@@ -18,8 +18,10 @@ import logging
 import multiprocessing
 import sys
 from logging import FileHandler
-from typing import Optional
+from typing import Optional, Union
 from urllib.parse import urlparse
+
+import urllib3
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {
     "multipleOf",
@@ -40,7 +42,9 @@ class Configuration:
 
     :param host: Base url.
     :param api_auth_url: URL for Authentication.
-    :param retries: Number of retries for API requests.
+    :param retries:
+        Number of retries for API requests.
+        Also supports a urllib Retry object. Documentation: https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry
     :param api_key: API Key to use for Authentication.
     :param token: Token to use for Authentication.
 
@@ -69,7 +73,7 @@ class Configuration:
         *,
         api_key: Optional[str] = None,
         token: Optional[str] = None,
-        retries=None,
+        retries: Optional[Union[int, urllib3.Retry]] = None,
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""

@@ -14,12 +14,12 @@
 
 from __future__ import annotations
 
-import json
 import pprint
 import re  # noqa: F401
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional, Set, Union
 
+import orjson
 from pydantic import BaseModel, ValidationError, field_validator
 from typing_extensions import Self
 
@@ -84,7 +84,7 @@ class End(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Dict[str, Any]) -> Self:
-        return cls.from_json(json.dumps(obj))
+        return cls.from_json(orjson.dumps(obj).decode())
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
@@ -97,7 +97,7 @@ class End(BaseModel):
         # deserialize data into str
         try:
             # validation
-            instance.anyof_schema_1_validator = json.loads(json_str)
+            instance.anyof_schema_1_validator = orjson.loads(json_str)
             # assign value to actual_instance
             instance.actual_instance = instance.anyof_schema_1_validator
             return instance
@@ -106,7 +106,7 @@ class End(BaseModel):
         # deserialize data into datetime
         try:
             # validation
-            instance.anyof_schema_2_validator = json.loads(json_str)
+            instance.anyof_schema_2_validator = orjson.loads(json_str)
             # assign value to actual_instance
             instance.actual_instance = instance.anyof_schema_2_validator
             return instance
@@ -130,7 +130,7 @@ class End(BaseModel):
         if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
             return self.actual_instance.to_json()
         else:
-            return json.dumps(self.actual_instance)
+            return orjson.dumps(self.actual_instance).decode()
 
     def to_dict(self) -> Optional[Union[Dict[str, Any], datetime, str]]:
         """Returns the dict representation of the actual instance"""

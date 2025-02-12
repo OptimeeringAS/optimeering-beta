@@ -13,12 +13,14 @@
 
 
 import io
-import json
 import re
 import ssl
+from time import perf_counter
 
+import orjson
 import urllib3
 from optimeering_beta.exceptions import ApiException, ApiValueError
+from optimeering_beta.logger import OPTIMEERING_LOGGER
 
 SUPPORTED_SOCKS_PROXIES = {"socks5", "socks5h", "socks4", "socks4a"}
 RESTResponseType = urllib3.HTTPResponse
@@ -131,6 +133,8 @@ class RESTClientObject:
         headers = headers or {}
 
         timeout = None
+        request_init_time = perf_counter()
+
         if _request_timeout:
             if isinstance(_request_timeout, (int, float)):
                 timeout = urllib3.Timeout(total=_request_timeout)
@@ -145,7 +149,7 @@ class RESTClientObject:
                 if not content_type or re.search("json", content_type, re.IGNORECASE):
                     request_body = None
                     if body is not None:
-                        request_body = json.dumps(body)
+                        request_body = orjson.dumps(body)
                     r = self.pool_manager.request(
                         method, url, body=request_body, timeout=timeout, headers=headers, preload_content=False
                     )
@@ -165,7 +169,7 @@ class RESTClientObject:
                     # overwritten.
                     del headers["Content-Type"]
                     # Ensures that dict objects are serialized
-                    post_params = [(a, json.dumps(b)) if isinstance(b, dict) else (a, b) for a, b in post_params]
+                    post_params = [(a, orjson.dumps(b)) if isinstance(b, dict) else (a, b) for a, b in post_params]
                     r = self.pool_manager.request(
                         method,
                         url,
@@ -182,7 +186,7 @@ class RESTClientObject:
                     r = self.pool_manager.request(
                         method, url, body=body, timeout=timeout, headers=headers, preload_content=False
                     )
-                elif headers["Content-Type"] == "text/plain" and isinstance(body, bool):
+                elif headers["Content-Type"].startswith("text/") and isinstance(body, bool):
                     request_body = "true" if body else "false"
                     r = self.pool_manager.request(
                         method, url, body=request_body, preload_content=False, timeout=timeout, headers=headers
@@ -201,5 +205,9 @@ class RESTClientObject:
         except urllib3.exceptions.SSLError as e:
             msg = "\n".join([type(e).__name__, str(e)])
             raise ApiException(status=0, reason=msg)
+        else:
+            OPTIMEERING_LOGGER.debug(
+                f"Received response with id {r.headers.get('x-request-id')} in {perf_counter()-request_init_time} seconds."
+            )
 
         return RESTResponse(r)

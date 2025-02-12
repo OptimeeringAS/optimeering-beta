@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 import datetime
-import json
+import decimal
 import mimetypes
 import os
 import re
@@ -26,6 +26,7 @@ from urllib.parse import quote
 
 import optimeering_beta.api as _api
 import optimeering_beta.models
+import orjson
 from dateutil.parser import parse
 from optimeering_beta import rest
 from optimeering_beta.api_response import ApiResponse
@@ -73,6 +74,7 @@ class OptimeeringClient:
         "bool": bool,
         "date": datetime.date,
         "datetime": datetime.datetime,
+        "decimal": decimal.Decimal,
         "object": object,
     }
     _pool = None
@@ -84,7 +86,7 @@ class OptimeeringClient:
         self.configuration = configuration
 
         self.rest_client = rest.RESTClientObject(configuration)
-        self.default_headers = {}
+        self.default_headers = {"accept-encoding": "gzip"}
         if header_name is not None:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
@@ -311,6 +313,7 @@ class OptimeeringClient:
         If obj is SecretStr, return obj.get_secret_value()
         If obj is str, int, long, float, bool, return directly.
         If obj is datetime.datetime, datetime.date convert to string in iso8601 format.
+        If obj is decimal.Decimal return string representation.
         If obj is list, sanitize each element in the list.
         If obj is dict, return the dict.
         If obj is OpenAPI model, return the properties dict.
@@ -332,6 +335,8 @@ class OptimeeringClient:
             return tuple(self.sanitize_for_serialization(sub_obj) for sub_obj in obj)
         elif isinstance(obj, (datetime.datetime, datetime.date)):
             return obj.isoformat()
+        elif isinstance(obj, decimal.Decimal):
+            return str(obj)
         elif isinstance(obj, datetime.timedelta):
             duration = TypeAdapter(datetime.timedelta).dump_python(obj, mode="json")
             return duration
@@ -364,15 +369,15 @@ class OptimeeringClient:
         # fetch data from response object
         if content_type is None:
             try:
-                data = json.loads(response_text)
+                data = orjson.loads(response_text)
             except ValueError:
                 data = response_text
-        elif content_type.startswith("application/json"):
+        elif re.match(r"^application/(json|[\w!#$&.+-^_]+\+json)\s*(;|$)", content_type, re.IGNORECASE):
             if response_text == "":
                 data = ""
             else:
-                data = json.loads(response_text)
-        elif content_type.startswith("text/plain"):
+                data = orjson.loads(response_text)
+        elif re.match(r"^text\/[a-z.+-]+\s*(;|$)", content_type, re.IGNORECASE):
             data = response_text
         else:
             raise ApiException(status=0, reason="Unsupported content type: {0}".format(content_type))
@@ -417,6 +422,8 @@ class OptimeeringClient:
             return self.__deserialize_date(data)
         elif klass == datetime.datetime:
             return self.__deserialize_datetime(data)
+        elif klass == decimal.Decimal:
+            return decimal.Decimal(data)
         elif issubclass(klass, Enum):
             return self.__deserialize_enum(data, klass)
         else:
@@ -467,12 +474,12 @@ class OptimeeringClient:
             if isinstance(v, (int, float)):
                 v = str(v)
             if isinstance(v, dict):
-                v = json.dumps(v)
+                v = orjson.dumps(v)
 
             if k in collection_formats:
                 collection_format = collection_formats[k]
                 if collection_format == "multi":
-                    new_params.extend((k, str(value)) for value in v)
+                    new_params.extend((k, quote(str(value))) for value in v)
                 else:
                     if collection_format == "ssv":
                         delimiter = " "
@@ -488,7 +495,10 @@ class OptimeeringClient:
 
         return "&".join(["=".join(map(str, item)) for item in new_params])
 
-    def files_parameters(self, files: Dict[str, Union[str, bytes]]):
+    def files_parameters(
+        self,
+        files: Dict[str, Union[str, bytes, List[str], List[bytes], Tuple[str, bytes]]],
+    ):
         """Builds form parameters.
 
         :param files: File parameters.
@@ -503,6 +513,12 @@ class OptimeeringClient:
             elif isinstance(v, bytes):
                 filename = k
                 filedata = v
+            elif isinstance(v, tuple):
+                filename, filedata = v
+            elif isinstance(v, list):
+                for file_param in v:
+                    params.extend(self.files_parameters({k: file_param}))
+                continue
             else:
                 raise ValueError("Unsupported file value")
             mimetype = mimetypes.guess_type(filename)[0] or "application/octet-stream"
@@ -681,8 +697,15 @@ class OptimeeringClient:
         :param klass: class literal.
         :return: model object.
         """
+        # inject client
+        klass_obj = klass.from_dict(data)
+        if hasattr(klass, "_client"):
+            klass_obj._client = self
+            if "items" in klass.model_fields:
+                for i in klass_obj.items:
+                    i._client = self
 
-        return klass.from_dict(data)
+        return klass_obj
 
     @property
     def token(self) -> str:
@@ -692,6 +715,8 @@ class OptimeeringClient:
     def access_api(self) -> _api.AccessApi:
         """
         Collection of methods to interact with AccessApi
+
+        :rtype: AccessApi
         """
         api = self._application_collection.get("access_api", None)
         if api is None:
@@ -703,6 +728,8 @@ class OptimeeringClient:
     def parameters_api(self) -> _api.ParametersApi:
         """
         Collection of methods to interact with ParametersApi
+
+        :rtype: ParametersApi
         """
         api = self._application_collection.get("parameters_api", None)
         if api is None:
@@ -714,6 +741,8 @@ class OptimeeringClient:
     def predictions_api(self) -> _api.PredictionsApi:
         """
         Collection of methods to interact with PredictionsApi
+
+        :rtype: PredictionsApi
         """
         api = self._application_collection.get("predictions_api", None)
         if api is None:

@@ -6,6 +6,7 @@ python_distribution(
     name="optimeering_beta",
     dependencies=[
         "//optimeering_beta:optimeering_beta",
+        ":root#orjson",
     ],
     long_description_path="README.md",
     output_path="optimeering-beta",
