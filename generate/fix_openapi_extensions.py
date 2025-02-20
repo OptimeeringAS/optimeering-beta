@@ -3,6 +3,22 @@ import json
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple
 
+KEYS_DEFINING_SERIES_LIST_IN_RESPONSE = ("items",)
+UNFILTERABLE_PROPERTIES = ("description",)
+TYPE_MAPPING = {"string": "str", "integer": "int", "number": "float", "boolean": "bool"}
+
+POLYMORPHISM_EXTENSION_KEY = "x-optimeering-direct-polymorphism"
+
+
+def allow_component_polymorphism(method_names: List[str]) -> Dict:
+    """Extension for inheritance of type casting methods of children classes"""
+    return {
+        "x-optimeering-component-polymorphism": {
+            "description": f"This extension denotes that this component is iterable and each item can be directly converted to some other class (Refer to '{POLYMORPHISM_EXTENSION_KEY}' in referred component).",
+            "component-polymorphism": method_names,
+        }
+    }
+
 
 def inject_optimeering_extensions_into_models(openapi_schema: Dict) -> None:
     """
@@ -48,14 +64,84 @@ def inject_optimeering_extensions_into_models(openapi_schema: Dict) -> None:
                     "response-model-name": datapoint_model,
                     "api-name": api_name,
                 }
+
+                # Check if repsonse is a collection of series id
+                # if it is, add datapoint info to the referenced component
+                for key in KEYS_DEFINING_SERIES_LIST_IN_RESPONSE:
+                    series_component_ref = (
+                        component_reference.get("properties", {}).get("items", {}).get(key, {}).get("$ref")
+                    )
+                    if series_component_ref is None:
+                        continue
+                    series_component_name = series_component_ref.replace("#/components/schemas/", "")
+                    series_component = openapi_schema["components"]["schemas"][series_component_name]
+                    series_component["x-optimeering-datapoint-info"] = {
+                        "description": "This extension links responses of series API routes "
+                        "to the API routes that return their datapoints.",
+                        "operation-id": datapoint_operation_id,
+                        "response-model-name": datapoint_model,
+                        "api-name": api_name,
+                    }
+
             # Inject iterable functionality
             component_reference["x-optimeering-iterable"] = {
-                "description": "This extension denotes that the response is iterable.",
-                "value": True,
+                "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                "iterable": True,
+                "filterable": False,
             }
 
+            item_reference_name = (
+                component_reference.get("properties", {})
+                .get("items", {})
+                .get("items", {})
+                .get("$ref", "")
+                .replace("#/components/schemas/", "")
+            )
 
-def remove_enums_from_specs(openapi_specs: Dict):
+            if item_reference_name:
+                item_reference = openapi_schema["components"]["schemas"][item_reference_name]
+
+                # add filter extension
+                child_component_properties = [
+                    {"name": prop_name, "type": TYPE_MAPPING[prop_description["type"]]}
+                    for prop_name, prop_description in item_reference.get("properties", {}).items()
+                    if (
+                        prop_name not in UNFILTERABLE_PROPERTIES
+                        # removes multi type properties [ideally we want to check for nulls values]
+                        and "anyOf" not in prop_description
+                        # remove all date types from filter
+                        and prop_description.get("format") != "date-time"
+                        # remove properties that are iterable
+                        and "items" not in prop_description
+                    )
+                ]
+                if len(child_component_properties):
+                    component_reference["x-optimeering-iterable"]["filterable"] = True
+                    component_reference["x-optimeering-iterable"]["filter_properties"] = child_component_properties
+
+                # Inject polymorphism
+                polymorphism_extension = item_reference.get(POLYMORPHISM_EXTENSION_KEY)
+                if polymorphism_extension is not None:
+                    openapi_schema["components"]["schemas"][response_component_name] = {
+                        **component_reference,
+                        **allow_component_polymorphism([i["method_name"] for i in polymorphism_extension["values"]]),
+                    }
+
+
+def replace_sdk_docstring(openapi_spec: Dict):
+    for _, path_description in openapi_spec["paths"].items():
+        for _, method_description in path_description.items():
+            sdk_doc_string = method_description.get("x-optimeering-sdk-docstring")
+            if sdk_doc_string:
+                method_description["description"] = sdk_doc_string
+
+    for _, schema_value in openapi_spec["components"]["schemas"].items():
+        sdk_doc_string = schema_value.get("x-optimeering-sdk-docstring")
+        if sdk_doc_string:
+            schema_value["description"] = sdk_doc_string
+
+
+def remove_and_replace_referenced_enums_in_component(openapi_specs: Dict):
     """
     Replace all enum references with type defination
     :param openapi_specs:
@@ -141,13 +227,14 @@ def remove_comma_separated_docs(openapi_spec: Dict):
 
 def remove_hyperlinks_from_docs(openapi_spec: Dict):
     """Remove hyper links for allowed values in documentation"""
-    for _, path_definition in openapi_spec["paths"].items():
+    for path, path_definition in openapi_spec["paths"].items():
+        _, _, api_name, _ = path.split("/", 3)
         for method, method_definition in path_definition.items():
             if method != "get":
                 continue
             for parameter_definition in method_definition.get("parameters", []):
                 if "x-optimeering-allowed-parameter-values" in parameter_definition.get("schema", {}):
-                    hyperlink_doc = f" List of available values [here](/api/parameters/{parameter_definition['schema']['x-optimeering-allowed-parameter-values']['parameter-name']})."
+                    hyperlink_doc = f" List of available values [here](/api/{api_name}/parameters/{parameter_definition['schema']['x-optimeering-allowed-parameter-values']['parameter-name']})."
                     if "description" in parameter_definition:
                         parameter_definition["description"] = parameter_definition["description"].replace(
                             hyperlink_doc, ""
@@ -164,15 +251,19 @@ def move_optimeering_extensions_out_of_schema(content):
     """
     for _, methods in content["paths"].items():
         for _, method_definition in methods.items():
-            if "parameters" not in method_definition:
-                continue
-            parameters = method_definition["parameters"]
+            parameters = method_definition.get("parameters", [])
             for parameter in parameters:
                 if "schema" not in parameter:
                     continue
                 for key in list(parameter["schema"]):
                     if key.startswith("x-"):
                         parameter[key] = parameter["schema"].pop(key)
+            body_schema = (
+                method_definition.get("requestBody", {}).get("content", {}).get("application/json", {}).get("schema")
+            )
+            if body_schema:
+                extensions = {k: v for k, v in body_schema.items() if k.startswith("x-")}
+                method_definition["requestBody"] = {**method_definition["requestBody"], **extensions}
 
 
 def add_py_data_type_for_duration_type(content):
@@ -205,20 +296,50 @@ def add_py_data_type_for_duration_type(content):
                     }
 
 
+def add_silent_type_cast_extension_to_route(content):
+    for path, path_descriptions in content.get("paths").items():
+        for method, method_description in path_descriptions.items():
+            if "x-optimeering-alternate-typing" in str(method_description):
+                method_description["x-optimeering-route-supports-alternate-datatypes"] = {
+                    "description": "This extension denotes that the route supports multiple datatypes for one or more of its paramters."
+                }
+
+
 def fix_openapi_extensions(schema_path: str) -> None:
     with open(schema_path, "r") as file:
         content = json.load(file)
 
+    replace_sdk_docstring(content)
     remove_comma_separated_docs(content)
     remove_hyperlinks_from_docs(content)
-    remove_enums_from_specs(content)
+    remove_and_replace_referenced_enums_in_component(content)
+    remove_parameter_enums(content)
 
     move_optimeering_extensions_out_of_schema(content)
+    add_silent_type_cast_extension_to_route(content)
     add_py_data_type_for_duration_type(content)
     filter_schema_components(content)
     inject_optimeering_extensions_into_models(content)
 
     print(json.dumps(content, indent=4, sort_keys=True))
+
+
+def remove_parameter_enums(openapi_doc: Dict):
+    for path, path_description in openapi_doc["paths"].items():
+        try:
+            _, api, app_name, route, _ = path.split("/", 4)
+        except ValueError:
+            continue
+        if api == "api" and route == "parameters":
+            for _, method_description in path_description.items():
+                for param_description in method_description.get("parameters", []):
+                    expected_enum_name = f"Enum{app_name.capitalize()}Parameters"
+                    component_reference = param_description.get("schema", {}).get("$ref")
+                    if component_reference == f"#/components/schemas/{expected_enum_name}":
+                        enum_component_type = openapi_doc["components"]["schemas"][expected_enum_name]["type"]
+                        del openapi_doc["components"]["schemas"][expected_enum_name]
+                        del param_description["schema"]["$ref"]
+                        param_description["schema"]["type"] = enum_component_type
 
 
 def resolve_schema_ref_in_schema(schema_components: Dict, schema_name_list: List[str]):

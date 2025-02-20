@@ -21,14 +21,13 @@ from typing import Any, Dict, Optional, Set, Union
 
 import orjson
 from pydantic import BaseModel, ValidationError, field_validator
-from typing_extensions import Self
 
 END_ANY_OF_SCHEMAS = ["datetime", "str"]
 
 
 class End(BaseModel):
     """
-    The last datetime to fetch (exclusive). Defaults to '2999-12-30 00:00:00+0000'. Should be specified in ISO 8601 datetime or duration format (eg - '2024-05-15T06:00:00+00:00', 'P1H', '-P1W1D', etc.)
+    The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
     """
 
     # data type: str
@@ -83,11 +82,11 @@ class End(BaseModel):
             return v
 
     @classmethod
-    def from_dict(cls, obj: Dict[str, Any]) -> Self:
+    def from_dict(cls, obj: Dict[str, Any]) -> End:
         return cls.from_json(orjson.dumps(obj).decode())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> End:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         if json_str is None:

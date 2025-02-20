@@ -1,5 +1,5 @@
     @require_pandas
-    def to_pandas(self,unpack_value_method:str)->"pd.DataFrame": # type: ignore[name-defined]
+    def to_pandas(self,unpack_value_method:Optional[str]=None)->"pd.DataFrame": # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

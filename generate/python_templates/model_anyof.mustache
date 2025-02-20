@@ -11,7 +11,7 @@ from datetime import timedelta
 {{{.}}}
 {{/vendorExtensions.x-py-model-imports}}
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
-from typing_extensions import Literal, Self
+from typing import Literal
 from pydantic import Field
 
 {{#lambda.uppercase}}{{{classname}}}{{/lambda.uppercase}}_ANY_OF_SCHEMAS = [{{#anyOf}}"{{.}}"{{^-last}}, {{/-last}}{{/anyOf}}]
@@ -106,11 +106,11 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             return v
 
     @classmethod
-    def from_dict(cls, obj: Dict[str, Any]) -> Self:
+    def from_dict(cls, obj: Dict[str, Any]) -> {{classname}}:
         return cls.from_json(orjson.dumps(obj).decode())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> {{classname}}:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         {{#isNullable}}

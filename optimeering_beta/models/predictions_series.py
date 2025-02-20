@@ -18,30 +18,59 @@ import inspect
 import pprint
 import re  # noqa: F401
 from datetime import datetime
-from typing import Any, ClassVar, Dict, Iterable, List, Optional, Set
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 import optimeering_beta
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
-from optimeering_beta.models.predictions_created_series import PredictionsCreatedSeries
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing_extensions import Self
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 
 
-class PredictionsSeriesGetResponse(BaseModel):
+class PredictionsSeries(BaseModel):
     """
-    PredictionsSeriesGetResponse
+    A :any:`PredictionsSeries` is used for indexing a series of :any:`PredictionsData`.
 
-    :param items:
-    :type items: List[PredictionsCreatedSeries]
-    :param next_page: The next page of results (if available).
-    :type next_page: str
+    :param area: Areas to be filtered. E.g. NO1, NO2
+    :type area: str
+    :param created_at:
+    :type created_at: datetime
+    :param description:
+    :type description: str
+    :param id:
+    :type id: int
+    :param latest_event_time:
+    :type latest_event_time: datetime
+    :param product: Product name for the series
+    :type product: str
+    :param statistic: Type of statistics.
+    :type statistic: str
+    :param unit: The unit for the series.
+    :type unit: str
+    :param unit_type: Unit type for the series
+    :type unit_type: str
     """  # noqa: E501
 
-    items: List[PredictionsCreatedSeries]
-    next_page: Optional[StrictStr] = Field(default=None, description="The next page of results (if available).")
+    area: StrictStr = Field(description="Areas to be filtered. E.g. NO1, NO2")
+    created_at: datetime
+    description: Optional[StrictStr] = None
+    id: StrictInt
+    latest_event_time: Optional[datetime] = None
+    product: StrictStr = Field(description="Product name for the series")
+    statistic: StrictStr = Field(description="Type of statistics.")
+    unit: StrictStr = Field(description="The unit for the series.")
+    unit_type: StrictStr = Field(description="Unit type for the series")
     _client: Any = None
-    __properties: ClassVar[List[str]] = ["items", "next_page"]
+    __properties: ClassVar[List[str]] = [
+        "area",
+        "created_at",
+        "description",
+        "id",
+        "latest_event_time",
+        "product",
+        "statistic",
+        "unit",
+        "unit_type",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -59,8 +88,8 @@ class PredictionsSeriesGetResponse(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsSeriesGetResponse from a JSON string"""
+    def from_json(cls, json_str: str) -> Optional[PredictionsSeries]:
+        """Create an instance of PredictionsSeries from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,18 +109,21 @@ class PredictionsSeriesGetResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in items (list)
-        _items = []
-        if self.items:
-            for _item_items in self.items:
-                if _item_items:
-                    _items.append(_item_items.to_dict())
-            _dict["items"] = _items
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict["description"] = None
+
+        # set to None if latest_event_time (nullable) is None
+        # and model_fields_set contains the field
+        if self.latest_event_time is None and "latest_event_time" in self.model_fields_set:
+            _dict["latest_event_time"] = None
+
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsSeriesGetResponse from a dict"""
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[PredictionsSeries]:
+        """Create an instance of PredictionsSeries from a dict"""
         if obj is None:
             return None
 
@@ -100,10 +132,15 @@ class PredictionsSeriesGetResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "items": [PredictionsCreatedSeries.from_dict(_item) for _item in obj["items"]]
-                if obj.get("items") is not None
-                else None,
-                "next_page": obj.get("next_page"),
+                "area": obj.get("area"),
+                "created_at": obj.get("created_at"),
+                "description": obj.get("description"),
+                "id": obj.get("id"),
+                "latest_event_time": obj.get("latest_event_time"),
+                "product": obj.get("product"),
+                "statistic": obj.get("statistic"),
+                "unit": obj.get("unit"),
+                "unit_type": obj.get("unit_type"),
             }
         )
         return _obj
@@ -121,24 +158,14 @@ class PredictionsSeriesGetResponse(BaseModel):
             return sum(len(i) for i in self.capacity_restrictions)
         return 1
 
-    @property
-    def series_ids(self) -> List[int]:
-        """Returns all the series ids included in the response"""
-        iterate_over: Iterable
-        if "items" in self.model_fields:
-            iterate_over = self.items
-        else:
-            iterate_over = self
-        return list({getattr(i, "id") for i in iterate_over})
-
     def datapoints(
         self,
         start: Optional[datetime | StrictStr] = None,
         end: Optional[datetime | StrictStr] = None,
         include_history: Optional[StrictBool] = None,
-    ) -> optimeering_beta.models.PredictionsDataGetResponse:
+    ) -> optimeering_beta.models.PredictionsDataList:
         """
-        Returns data points associated with
+        Returns data points for the current series.
 
         :param start: The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 format (eg - '2024-05-15T06:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
         :param end: The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 format (eg - '2024-05-15T08:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
@@ -146,7 +173,7 @@ class PredictionsSeriesGetResponse(BaseModel):
         """
         if self._client is None:
             raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
-        method_for_operation = optimeering_beta.PredictionsApi(api_client=self._client).get_predictions
+        method_for_operation = optimeering_beta.PredictionsApi(api_client=self._client).retrieve
 
         extra_params: Dict[str, Any] = {}
         valid_arguments = list(inspect.signature(method_for_operation).parameters.keys())
@@ -161,7 +188,7 @@ class PredictionsSeriesGetResponse(BaseModel):
             raise NotImplementedError("This class does not support this feature.")
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

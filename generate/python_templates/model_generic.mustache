@@ -12,7 +12,6 @@ import inspect
 {{{.}}}
 {{/vendorExtensions.x-py-model-imports}}
 from typing import Optional, Set
-from typing_extensions import Self
 
 {{! Inject datapoints attribute}}
 from typing import Iterable
@@ -29,7 +28,6 @@ if TYPE_CHECKING:
 {{#mappedModels}}
     from {{packageName}}.models.{{model.classVarName}} import {{modelName}}
 {{/mappedModels}}
-
 {{/discriminator}}
 {{/hasChildren}}
 
@@ -142,7 +140,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[{{^hasChildren}}Self{{/hasChildren}}{{#hasChildren}}{{#discriminator}}Union[{{#mappedModels}}{{{modelName}}}{{^-last}}, {{/-last}}{{/mappedModels}}]{{/discriminator}}{{^discriminator}}Self{{/discriminator}}{{/hasChildren}}]:
+    def from_json(cls, json_str: str) -> Optional[{{^hasChildren}}{{classname}}{{/hasChildren}}{{#hasChildren}}{{#discriminator}}Union[{{#mappedModels}}{{{modelName}}}{{^-last}}, {{/-last}}{{/mappedModels}}]{{/discriminator}}{{^discriminator}}{{classname}}{{/discriminator}}{{/hasChildren}}]:
         """Create an instance of {{{classname}}} from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
@@ -265,7 +263,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
     {{#hasChildren}}
     @classmethod
-    def from_dict(cls, obj: Dict[str, Any]) -> Optional[{{#discriminator}}Union[{{#mappedModels}}{{{modelName}}}{{^-last}}, {{/-last}}{{/mappedModels}}]{{/discriminator}}{{^discriminator}}Self{{/discriminator}}]:
+    def from_dict(cls, obj: Dict[str, Any]) -> Optional[{{#discriminator}}Union[{{#mappedModels}}{{{modelName}}}{{^-last}}, {{/-last}}{{/mappedModels}}]{{/discriminator}}{{^discriminator}}{{classname}}{{/discriminator}}]:
         """Create an instance of {{{classname}}} from a dict"""
         {{#discriminator}}
         # look up the object type based on discriminator mapping
@@ -282,7 +280,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     {{/hasChildren}}
     {{^hasChildren}}
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[{{classname}}]:
         """Create an instance of {{{classname}}} from a dict"""
         if obj is None:
             return None
@@ -435,7 +433,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
     {{#vendorExtensions.x-optimeering-datapoint-info}}
     def datapoints(self,start:Optional[datetime|StrictStr]=None,end:Optional[datetime|StrictStr]=None,include_history:Optional[StrictBool]=None)->{{packageName}}.models.{{vendorExtensions.x-optimeering-datapoint-info.response-model-name}}:
         """
-        Returns data points associated with
+        Returns data points for the current series.
 
         :param start: The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 format (eg - '2024-05-15T06:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
         :param end: The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 format (eg - '2024-05-15T08:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
@@ -474,7 +472,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         {{#vendorExtensions.x-optimeering-iterable.filter_properties}}
         {{{name}}}:Optional[List[{{{type}}}]]=None,
         {{/vendorExtensions.x-optimeering-iterable.filter_properties}}
-    )->Self:
+    )->{{classname}}:
         """Filters items"""
         properties=[
             {{#vendorExtensions.x-optimeering-iterable.filter_properties}}

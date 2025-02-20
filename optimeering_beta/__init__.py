@@ -18,7 +18,6 @@ __version__ = "0.0.7"
 
 # import apis into sdk package
 from optimeering_beta.api.access_api import AccessApi
-from optimeering_beta.api.parameters_api import ParametersApi
 from optimeering_beta.api.predictions_api import PredictionsApi
 from optimeering_beta.api_client import OptimeeringClient
 
@@ -40,23 +39,24 @@ from optimeering_beta.models.access_key_created import AccessKeyCreated
 from optimeering_beta.models.access_key_post_response import AccessKeyPostResponse
 from optimeering_beta.models.access_post_key import AccessPostKey
 from optimeering_beta.models.end import End
-from optimeering_beta.models.enum_parameters import EnumParameters
 from optimeering_beta.models.http_validation_error import HTTPValidationError
-from optimeering_beta.models.location_inner import LocationInner
 from optimeering_beta.models.max_event_time import MaxEventTime
-from optimeering_beta.models.predictions_created_series import PredictionsCreatedSeries
-from optimeering_beta.models.predictions_data_get_response import PredictionsDataGetResponse
-from optimeering_beta.models.predictions_series_get_response import PredictionsSeriesGetResponse
-from optimeering_beta.models.predictions_single_event_data_created import PredictionsSingleEventDataCreated
-from optimeering_beta.models.predictions_single_series_data_created import PredictionsSingleSeriesDataCreated
-from optimeering_beta.models.predictions_values import PredictionsValues
+from optimeering_beta.models.predictions_data import PredictionsData
+from optimeering_beta.models.predictions_data_list import PredictionsDataList
+from optimeering_beta.models.predictions_event import PredictionsEvent
+from optimeering_beta.models.predictions_series import PredictionsSeries
+from optimeering_beta.models.predictions_series_list import PredictionsSeriesList
+from optimeering_beta.models.predictions_value import PredictionsValue
+from optimeering_beta.models.predictions_version import PredictionsVersion
+from optimeering_beta.models.predictions_version_list import PredictionsVersionList
 from optimeering_beta.models.start import Start
 from optimeering_beta.models.validation_error import ValidationError
+from optimeering_beta.models.validation_error_loc_inner import ValidationErrorLocInner
+from optimeering_beta.models.versioned_series import VersionedSeries
 
 # add to __all__
 __all__ = [
     "AccessApi",
-    "ParametersApi",
     "PredictionsApi",
     "ApiResponse",
     "AzureAuth",
@@ -72,16 +72,18 @@ __all__ = [
     "AccessKeyPostResponse",
     "AccessPostKey",
     "End",
-    "EnumParameters",
     "HTTPValidationError",
-    "LocationInner",
     "MaxEventTime",
-    "PredictionsCreatedSeries",
-    "PredictionsDataGetResponse",
-    "PredictionsSeriesGetResponse",
-    "PredictionsSingleEventDataCreated",
-    "PredictionsSingleSeriesDataCreated",
-    "PredictionsValues",
+    "PredictionsData",
+    "PredictionsDataList",
+    "PredictionsEvent",
+    "PredictionsSeries",
+    "PredictionsSeriesList",
+    "PredictionsValue",
+    "PredictionsVersion",
+    "PredictionsVersionList",
     "Start",
     "ValidationError",
+    "ValidationErrorLocInner",
+    "VersionedSeries",
 ]

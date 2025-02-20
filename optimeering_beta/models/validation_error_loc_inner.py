@@ -20,14 +20,13 @@ from typing import Any, Dict, Optional, Set, Union
 
 import orjson
 from pydantic import BaseModel, StrictInt, StrictStr, ValidationError, field_validator
-from typing_extensions import Self
 
-LOCATIONINNER_ANY_OF_SCHEMAS = ["int", "str"]
+VALIDATIONERRORLOCINNER_ANY_OF_SCHEMAS = ["int", "str"]
 
 
-class LocationInner(BaseModel):
+class ValidationErrorLocInner(BaseModel):
     """
-    LocationInner
+    ValidationErrorLocInner
     """
 
     # data type: str
@@ -54,7 +53,7 @@ class LocationInner(BaseModel):
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_anyof(cls, v):
-        instance = LocationInner.model_construct()  # noqa: F841
+        instance = ValidationErrorLocInner.model_construct()  # noqa: F841
         error_messages = []
         # validate data type: str
         try:
@@ -71,18 +70,18 @@ class LocationInner(BaseModel):
         if error_messages:
             # no match
             raise ValueError(
-                "No match found when setting the actual_instance in LocationInner with anyOf schemas: int, str. Details: "
+                "No match found when setting the actual_instance in ValidationErrorLocInner with anyOf schemas: int, str. Details: "
                 + ", ".join(error_messages)
             )
         else:
             return v
 
     @classmethod
-    def from_dict(cls, obj: Dict[str, Any]) -> Self:
+    def from_dict(cls, obj: Dict[str, Any]) -> ValidationErrorLocInner:
         return cls.from_json(orjson.dumps(obj).decode())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> ValidationErrorLocInner:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         error_messages = []
@@ -108,7 +107,7 @@ class LocationInner(BaseModel):
         if error_messages:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into LocationInner with anyOf schemas: int, str. Details: "
+                "No match found when deserializing the JSON string into ValidationErrorLocInner with anyOf schemas: int, str. Details: "
                 + ", ".join(error_messages)
             )
         else:

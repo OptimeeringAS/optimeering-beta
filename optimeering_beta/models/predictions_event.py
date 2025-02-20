@@ -21,14 +21,13 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
-from optimeering_beta.models.predictions_values import PredictionsValues
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing_extensions import Self
+from optimeering_beta.models.predictions_value import PredictionsValue
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 
 
-class PredictionsSingleEventDataCreated(BaseModel):
+class PredictionsEvent(BaseModel):
     """
-    PredictionsSingleEventDataCreated
+     A :any:`PredictionsEvent` contains a collection of :any:`PredictionsValue`. If a :any:`PredictionsEvent` is simulated, ``is_simulated`` will be true. See `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_ for an explanation on what simulated events are.
 
     :param created_at: The timestamp at which datapoint was registered
     :type created_at: datetime
@@ -36,15 +35,18 @@ class PredictionsSingleEventDataCreated(BaseModel):
     :type event_time: datetime
     :param id: Unique Identifier for the resource type.
     :type id: int
+    :param is_simulated:
+    :type is_simulated: bool
     :param predictions:
-    :type predictions: List[PredictionsValues]
+    :type predictions: List[PredictionsValue]
     """  # noqa: E501
 
     created_at: datetime = Field(description="The timestamp at which datapoint was registered")
     event_time: datetime = Field(description="Timestamp for when datapoint was generated.")
     id: StrictInt = Field(description="Unique Identifier for the resource type.")
-    predictions: List[PredictionsValues]
-    __properties: ClassVar[List[str]] = ["created_at", "event_time", "id", "predictions"]
+    is_simulated: StrictBool
+    predictions: List[PredictionsValue]
+    __properties: ClassVar[List[str]] = ["created_at", "event_time", "id", "is_simulated", "predictions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,8 +64,8 @@ class PredictionsSingleEventDataCreated(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsSingleEventDataCreated from a JSON string"""
+    def from_json(cls, json_str: str) -> Optional[PredictionsEvent]:
+        """Create an instance of PredictionsEvent from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,8 +95,8 @@ class PredictionsSingleEventDataCreated(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsSingleEventDataCreated from a dict"""
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[PredictionsEvent]:
+        """Create an instance of PredictionsEvent from a dict"""
         if obj is None:
             return None
 
@@ -106,7 +108,8 @@ class PredictionsSingleEventDataCreated(BaseModel):
                 "created_at": obj.get("created_at"),
                 "event_time": obj.get("event_time"),
                 "id": obj.get("id"),
-                "predictions": [PredictionsValues.from_dict(_item) for _item in obj["predictions"]]
+                "is_simulated": obj.get("is_simulated"),
+                "predictions": [PredictionsValue.from_dict(_item) for _item in obj["predictions"]]
                 if obj.get("predictions") is not None
                 else None,
             }
@@ -127,7 +130,7 @@ class PredictionsSingleEventDataCreated(BaseModel):
         return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 
