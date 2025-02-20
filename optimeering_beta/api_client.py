@@ -725,19 +725,6 @@ class OptimeeringClient:
         return api
 
     @property
-    def parameters_api(self) -> _api.ParametersApi:
-        """
-        Collection of methods to interact with ParametersApi
-
-        :rtype: ParametersApi
-        """
-        api = self._application_collection.get("parameters_api", None)
-        if api is None:
-            api = _api.ParametersApi(api_client=self)
-            self._application_collection["parameters_api"] = api
-        return api
-
-    @property
     def predictions_api(self) -> _api.PredictionsApi:
         """
         Collection of methods to interact with PredictionsApi

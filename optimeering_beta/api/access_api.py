@@ -50,21 +50,16 @@ class AccessApi:
 
         :param access_post_key: (required)
         :type access_post_key: AccessPostKey
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
         :rtype: AccessKeyPostResponse
 
         :Example:
 
-        >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://beta.optimeering.com")
-        >>> client = OptimeeringClient(configuration=configuration)
-        >>> # Post data point - replace ... with correct dataformat documented above
-        >>> response = client.access_api.create_api_key(...)
+                >>> from optimeering_beta import Configuration, OptimeeringClient
+                >>> configuration = Configuration(host="https://beta.optimeering.com")
+                >>> client = OptimeeringClient(configuration=configuration)
+                >>> # Post data point - replace ... with correct dataformat documented above
+                >>> response = client.access_api.create_api_key(...)
 
         """  # noqa: E501
 
@@ -76,6 +71,7 @@ class AccessApi:
             "200": "AccessKeyPostResponse",
             "422": "HTTPValidationError",
         }
+
         response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         response = self.api_client.response_deserialize(
@@ -135,21 +131,16 @@ class AccessApi:
 
         :param id: (required)
         :type id: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
         :rtype: bool
 
         :Example:
 
-        >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://beta.optimeering.com")
-        >>> client = OptimeeringClient(configuration=configuration)
-        >>> # Post data point - replace ... with correct dataformat documented above
-        >>> response = client.access_api.delete_key(...)
+                >>> from optimeering_beta import Configuration, OptimeeringClient
+                >>> configuration = Configuration(host="https://beta.optimeering.com")
+                >>> client = OptimeeringClient(configuration=configuration)
+                >>> # Post data point - replace ... with correct dataformat documented above
+                >>> response = client.access_api.delete_key(...)
 
         """  # noqa: E501
 
@@ -161,6 +152,7 @@ class AccessApi:
             "200": "bool",
             "422": "HTTPValidationError",
         }
+
         response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         response = self.api_client.response_deserialize(
@@ -218,21 +210,16 @@ class AccessApi:
 
         Lists all the keys owned by the user.
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :return: Returns the result object.
         :rtype: List[AccessKeyCreated]
 
         :Example:
 
-        >>> from optimeering_beta import Configuration, OptimeeringClient
-        >>> configuration = Configuration(host="https://beta.optimeering.com")
-        >>> client = OptimeeringClient(configuration=configuration)
-        >>> # Get filtered data point - replace ... with appropriate filters documented above
-        >>> response = client.access_api.list_my_keys(...)
+                >>> from optimeering_beta import Configuration, OptimeeringClient
+                >>> configuration = Configuration(host="https://beta.optimeering.com")
+                >>> client = OptimeeringClient(configuration=configuration)
+                >>> # Get filtered data point - replace ... with appropriate filters documented above
+                >>> response = client.access_api.list_my_keys(...)
 
         """  # noqa: E501
 
@@ -241,6 +228,7 @@ class AccessApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[AccessKeyCreated]",
         }
+
         response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         paginated_response = self.api_client.response_deserialize(

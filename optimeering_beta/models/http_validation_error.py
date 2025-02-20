@@ -22,7 +22,6 @@ import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.validation_error import ValidationError
 from pydantic import BaseModel, ConfigDict
-from typing_extensions import Self
 
 
 class HTTPValidationError(BaseModel):
@@ -52,7 +51,7 @@ class HTTPValidationError(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
+    def from_json(cls, json_str: str) -> Optional[HTTPValidationError]:
         """Create an instance of HTTPValidationError from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
@@ -83,7 +82,7 @@ class HTTPValidationError(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[HTTPValidationError]:
         """Create an instance of HTTPValidationError from a dict"""
         if obj is None:
             return None
@@ -114,7 +113,7 @@ class HTTPValidationError(BaseModel):
         return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

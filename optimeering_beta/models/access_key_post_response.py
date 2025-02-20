@@ -22,7 +22,6 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing_extensions import Self
 
 
 class AccessKeyPostResponse(BaseModel):
@@ -67,7 +66,7 @@ class AccessKeyPostResponse(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
+    def from_json(cls, json_str: str) -> Optional[AccessKeyPostResponse]:
         """Create an instance of AccessKeyPostResponse from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
@@ -91,7 +90,7 @@ class AccessKeyPostResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[AccessKeyPostResponse]:
         """Create an instance of AccessKeyPostResponse from a dict"""
         if obj is None:
             return None
@@ -124,8 +123,17 @@ class AccessKeyPostResponse(BaseModel):
             return sum(len(i) for i in self.capacity_restrictions)
         return 1
 
+    def __iter__(self):
+        """Iteration method for generated models"""
+        if isinstance(self, list):
+            return (i for i in self)
+        elif "items" in self.model_fields:
+            return iter(self.items)
+        else:
+            raise AttributeError("This object does not support iteration.")
+
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

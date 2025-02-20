@@ -22,7 +22,6 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing_extensions import Self
 
 
 class AccessPostKey(BaseModel):
@@ -55,7 +54,7 @@ class AccessPostKey(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
+    def from_json(cls, json_str: str) -> Optional[AccessPostKey]:
         """Create an instance of AccessPostKey from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
@@ -84,7 +83,7 @@ class AccessPostKey(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[AccessPostKey]:
         """Create an instance of AccessPostKey from a dict"""
         if obj is None:
             return None
@@ -109,7 +108,7 @@ class AccessPostKey(BaseModel):
         return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

@@ -16,28 +16,27 @@ from __future__ import annotations
 
 import pprint
 import re  # noqa: F401
-from datetime import datetime
-from typing import Any, ClassVar, Dict, List, Optional, Set, Union
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing_extensions import Self
+from optimeering_beta.models.predictions_data import PredictionsData
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 
-class PredictionsValues(BaseModel):
+class PredictionsDataList(BaseModel):
     """
-    PredictionsValues
+    A :any:`PredictionsDataList` contains a collection of :any:`PredictionsData`
 
-    :param prediction_for: The time prediction is made for.'
-    :type prediction_for: datetime
-    :param value:
-    :type value: Dict[str, float]
+    :param items:
+    :type items: List[PredictionsData]
+    :param next_page: The next page of results (if available).
+    :type next_page: str
     """  # noqa: E501
 
-    prediction_for: datetime = Field(description="The time prediction is made for.'")
-    value: Dict[str, Union[StrictFloat, StrictInt]]
-    __properties: ClassVar[List[str]] = ["prediction_for", "value"]
+    items: List[PredictionsData]
+    next_page: Optional[StrictStr] = Field(default=None, description="The next page of results (if available).")
+    __properties: ClassVar[List[str]] = ["items", "next_page"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,8 +54,8 @@ class PredictionsValues(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsValues from a JSON string"""
+    def from_json(cls, json_str: str) -> Optional[PredictionsDataList]:
+        """Create an instance of PredictionsDataList from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,18 +75,32 @@ class PredictionsValues(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in items (list)
+        _items = []
+        if self.items:
+            for _item_items in self.items:
+                if _item_items:
+                    _items.append(_item_items.to_dict())
+            _dict["items"] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsValues from a dict"""
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[PredictionsDataList]:
+        """Create an instance of PredictionsDataList from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"prediction_for": obj.get("prediction_for"), "value": obj.get("value")})
+        _obj = cls.model_validate(
+            {
+                "items": [PredictionsData.from_dict(_item) for _item in obj["items"]]
+                if obj.get("items") is not None
+                else None,
+                "next_page": obj.get("next_page"),
+            }
+        )
         return _obj
 
     def __len__(self):
@@ -103,8 +116,50 @@ class PredictionsValues(BaseModel):
             return sum(len(i) for i in self.capacity_restrictions)
         return 1
 
+    def __iter__(self):
+        """Iteration method for generated models"""
+        if isinstance(self, list):
+            return (i for i in self)
+        elif "items" in self.model_fields:
+            return iter(self.items)
+        else:
+            raise AttributeError("This object does not support iteration.")
+
+    def filter(
+        self,
+        series_id: Optional[List[int]] = None,
+        version: Optional[List[str]] = None,
+    ) -> PredictionsDataList:
+        """Filters items"""
+        properties = [
+            "series_id",
+            "version",
+        ]
+        _locals = locals()
+        compare_dict = {i: _locals[i] for i in properties if _locals[i] is not None}
+
+        if isinstance(self, list):
+            return [
+                item
+                for item in self
+                if all((item.get(property) in filter_values) for property_name, filter_values in compare_dict.items())
+            ]
+        elif "items" in self.model_fields:
+            obj_copy = self.copy()
+            obj_copy.items = [
+                item
+                for item in iter(obj_copy.items)
+                if all(
+                    getattr(item, property_name) in filter_values
+                    for property_name, filter_values in compare_dict.items()
+                )
+            ]
+            return obj_copy
+        else:
+            raise AttributeError("This object does not support iteration.")
+
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

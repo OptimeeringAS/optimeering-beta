@@ -1,6 +1,6 @@
 import functools
 from importlib import import_module
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 pd: Any = None
 try:
@@ -55,10 +55,7 @@ def _merge_resolving_conflicting_columns(
     return df
 
 
-def pydantic_to_pandas(obj, unpack_value_method: str) -> "pd.DataFrane":  # type: ignore[name-defined]
-    if unpack_value_method not in ALLOWED_UNPACK_VALUE_METHODS:
-        raise ValueError(f"`unpack_value_method` must be one of {','.join(ALLOWED_UNPACK_VALUE_METHODS)}")
-
+def pydantic_to_pandas(obj, unpack_value_method: Optional[str] = None) -> "pd.DataFrane":  # type: ignore[name-defined]
     dict_repr = obj.to_dict()
     if "items" in dict_repr:
         dict_repr = dict_repr["items"]
@@ -93,7 +90,7 @@ def pydantic_to_pandas(obj, unpack_value_method: str) -> "pd.DataFrane":  # type
                             break
                         case _:
                             raise ValueError(
-                                f"`unpack_value_method` must be one of {','.join(ALLOWED_UNPACK_VALUE_METHODS)}"
+                                f"`unpack_value_method` must be used, and be one of {','.join(ALLOWED_UNPACK_VALUE_METHODS)}"
                             )
                 else:
                     # If columns are of type dict, make each record a new column

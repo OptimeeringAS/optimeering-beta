@@ -16,28 +16,27 @@ from __future__ import annotations
 
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+from datetime import datetime
+from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
-from optimeering_beta.models.predictions_single_event_data_created import PredictionsSingleEventDataCreated
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing_extensions import Self
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 
 
-class PredictionsSingleSeriesDataCreated(BaseModel):
+class PredictionsValue(BaseModel):
     """
-    PredictionsSingleSeriesDataCreated
+    A :any:`PredictionsValue` contains the value for a specific period of time as specified by the ``prediction_for`` datetime.
 
-    :param events:
-    :type events: List[PredictionsSingleEventDataCreated]
-    :param series_id: Identifier for the series id.
-    :type series_id: int
+    :param prediction_for: The time prediction is made for.'
+    :type prediction_for: datetime
+    :param value:
+    :type value: Dict[str, float]
     """  # noqa: E501
 
-    events: List[PredictionsSingleEventDataCreated]
-    series_id: StrictInt = Field(description="Identifier for the series id.")
-    __properties: ClassVar[List[str]] = ["events", "series_id"]
+    prediction_for: datetime = Field(description="The time prediction is made for.'")
+    value: Dict[str, Union[StrictFloat, StrictInt]]
+    __properties: ClassVar[List[str]] = ["prediction_for", "value"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,8 +54,8 @@ class PredictionsSingleSeriesDataCreated(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsSingleSeriesDataCreated from a JSON string"""
+    def from_json(cls, json_str: str) -> Optional[PredictionsValue]:
+        """Create an instance of PredictionsValue from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,32 +75,18 @@ class PredictionsSingleSeriesDataCreated(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in events (list)
-        _items = []
-        if self.events:
-            for _item_events in self.events:
-                if _item_events:
-                    _items.append(_item_events.to_dict())
-            _dict["events"] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsSingleSeriesDataCreated from a dict"""
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[PredictionsValue]:
+        """Create an instance of PredictionsValue from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "events": [PredictionsSingleEventDataCreated.from_dict(_item) for _item in obj["events"]]
-                if obj.get("events") is not None
-                else None,
-                "series_id": obj.get("series_id"),
-            }
-        )
+        _obj = cls.model_validate({"prediction_for": obj.get("prediction_for"), "value": obj.get("value")})
         return _obj
 
     def __len__(self):
@@ -118,7 +103,7 @@ class PredictionsSingleSeriesDataCreated(BaseModel):
         return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

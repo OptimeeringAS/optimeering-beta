@@ -20,24 +20,36 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
-from optimeering_beta.models.predictions_single_series_data_created import PredictionsSingleSeriesDataCreated
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing_extensions import Self
+from optimeering_beta.models.predictions_event import PredictionsEvent
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, field_validator
+from typing_extensions import Annotated
 
 
-class PredictionsDataGetResponse(BaseModel):
+class PredictionsData(BaseModel):
     """
-    PredictionsDataGetResponse
+    :any:`PredictionsData` contains a collection of :any:`PredictionsEvent` for a given :any:`PredictionSeries`
 
-    :param items:
-    :type items: List[PredictionsSingleSeriesDataCreated]
-    :param next_page: The next page of results (if available).
-    :type next_page: str
+    :param events:
+    :type events: List[PredictionsEvent]
+    :param series_id: Identifier for the series id.
+    :type series_id: int
+    :param version: Version of the model that generated the predictions
+    :type version: str
     """  # noqa: E501
 
-    items: List[PredictionsSingleSeriesDataCreated]
-    next_page: Optional[StrictStr] = Field(default=None, description="The next page of results (if available).")
-    __properties: ClassVar[List[str]] = ["items", "next_page"]
+    events: List[PredictionsEvent]
+    series_id: StrictInt = Field(description="Identifier for the series id.")
+    version: Annotated[str, Field(strict=True)] = Field(
+        description="Version of the model that generated the predictions"
+    )
+    __properties: ClassVar[List[str]] = ["events", "series_id", "version"]
+
+    @field_validator("version")
+    def version_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"[0-9]+\.[0-9]+\.[0-9]+", value):
+            raise ValueError(r"must validate the regular expression /[0-9]+\.[0-9]+\.[0-9]+/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,8 +67,8 @@ class PredictionsDataGetResponse(BaseModel):
         return orjson.dumps(self.to_dict()).decode()
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PredictionsDataGetResponse from a JSON string"""
+    def from_json(cls, json_str: str) -> Optional[PredictionsData]:
+        """Create an instance of PredictionsData from a JSON string"""
         return cls.from_dict(orjson.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,18 +88,18 @@ class PredictionsDataGetResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in items (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in events (list)
         _items = []
-        if self.items:
-            for _item_items in self.items:
-                if _item_items:
-                    _items.append(_item_items.to_dict())
-            _dict["items"] = _items
+        if self.events:
+            for _item_events in self.events:
+                if _item_events:
+                    _items.append(_item_events.to_dict())
+            _dict["events"] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PredictionsDataGetResponse from a dict"""
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[PredictionsData]:
+        """Create an instance of PredictionsData from a dict"""
         if obj is None:
             return None
 
@@ -96,10 +108,11 @@ class PredictionsDataGetResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "items": [PredictionsSingleSeriesDataCreated.from_dict(_item) for _item in obj["items"]]
-                if obj.get("items") is not None
+                "events": [PredictionsEvent.from_dict(_item) for _item in obj["events"]]
+                if obj.get("events") is not None
                 else None,
-                "next_page": obj.get("next_page"),
+                "series_id": obj.get("series_id"),
+                "version": obj.get("version"),
             }
         )
         return _obj
@@ -118,7 +131,7 @@ class PredictionsDataGetResponse(BaseModel):
         return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 
