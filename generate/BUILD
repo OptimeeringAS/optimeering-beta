@@ -14,7 +14,7 @@ python_source(name="fix-openapi-extensions", source="fix_openapi_extensions.py")
 #    ),
 # )
 
-file(name="openapi-schema", source="./openapi.json")
+resource(name="openapi-schema", source="openapi.json")
 
 adhoc_tool(
     name="run-fix-openapi-extensions",
