@@ -48,7 +48,7 @@ def generate_data(model: str):
                 data[property_name] = {"mock_key": 1}
                 continue
         elif property_type == "boolean":
-            data[property_name]= True
+            data[property_name] = True
             continue
 
         raise TypeError(f"Unsupported type {property_type}")
