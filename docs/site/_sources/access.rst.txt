@@ -1,7 +1,6 @@
-Client
+AccessApi
 ====================
 
-.. autoclass:: optimeering_beta.OptimeeringClient
+.. autoclass:: optimeering_beta.AccessApi
     :members:
     :member-order: bysource 
-
