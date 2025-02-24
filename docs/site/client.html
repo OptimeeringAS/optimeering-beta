@@ -144,16 +144,16 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="optimeering_beta.Configuration">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://beta.optimeering.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_auth_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration" title="Link to this definition"></a></dt>
-<dd><p>This class contains various settings of the API client.</p>
+<dd><p>This class is used to configure the <a class="reference internal" href="#optimeering_beta.OptimeeringClient" title="optimeering_beta.OptimeeringClient"><code class="xref any py py-class docutils literal notranslate"><span class="pre">OptimeeringClient</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>host</strong> – Base url.</p></li>
-<li><p><strong>api_auth_url</strong> – URL for Authentication.</p></li>
+<li><p><strong>host</strong> – API host url.</p></li>
+<li><p><strong>api_auth_url</strong> – URL for Authentication. Defaults to <cite>api://{host}/.default</cite></p></li>
 <li><p><strong>retries</strong> – Number of retries for API requests.
-Also supports a urllib Retry object. Documentation: <a class="reference external" href="https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry">https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry</a></p></li>
+Also supports a urllib <code class="docutils literal notranslate"><span class="pre">Retry</span></code> object. <a class="reference external" href="https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry">See the urlib docs</a></p></li>
 <li><p><strong>api_key</strong> – API Key to use for Authentication.</p></li>
-<li><p><strong>token</strong> – Token to use for Authentication.</p></li>
+<li><p><strong>token</strong> – Token to use for Authentication. Only use this when you don’t want to have the <a class="reference internal" href="#optimeering_beta.OptimeeringClient" title="optimeering_beta.OptimeeringClient"><code class="xref any py py-class docutils literal notranslate"><span class="pre">OptimeeringClient</span></code></a> retrieve a token.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Example<span class="colon">:</span></dt>
@@ -355,11 +355,8 @@ configuration.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">OptimeeringClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookie</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient" title="Link to this definition"></a></dt>
-<dd><p>Generic API client for OpenAPI client library builds.</p>
-<p>This client handles the client-server communication,
-and is invariant across implementations. Specifics of
-the methods and models for each application are generated from the OpenAPI
-templates.</p>
+<dd><p>Main class to interact with the API.</p>
+<p>All APIs are accessible through an instance of this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

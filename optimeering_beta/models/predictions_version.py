@@ -28,7 +28,7 @@ from typing_extensions import Annotated
 
 class PredictionsVersion(BaseModel):
     """
-    A :any:`PredictionsVersion` is used for indexing a specific version for a series of :any:`PredictionsData`. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>
+    A :any:`PredictionsVersion` is used for indexing a specific version for a series of :any:`PredictionsData`. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_
 
     :param area: Areas to be filtered. E.g. NO1, NO2
     :type area: str

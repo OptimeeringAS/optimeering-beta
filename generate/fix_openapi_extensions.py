@@ -3,130 +3,6 @@ import json
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple
 
-KEYS_DEFINING_SERIES_LIST_IN_RESPONSE = ("items",)
-UNFILTERABLE_PROPERTIES = ("description",)
-TYPE_MAPPING = {"string": "str", "integer": "int", "number": "float", "boolean": "bool"}
-
-POLYMORPHISM_EXTENSION_KEY = "x-optimeering-direct-polymorphism"
-
-
-def allow_component_polymorphism(method_names: List[str]) -> Dict:
-    """Extension for inheritance of type casting methods of children classes"""
-    return {
-        "x-optimeering-component-polymorphism": {
-            "description": f"This extension denotes that this component is iterable and each item can be directly converted to some other class (Refer to '{POLYMORPHISM_EXTENSION_KEY}' in referred component).",
-            "component-polymorphism": method_names,
-        }
-    }
-
-
-def inject_optimeering_extensions_into_models(openapi_schema: Dict) -> None:
-    """
-    Injects series id method support into POST response object
-    Injects reference to datapoint API into POST response object
-
-    :param openapi_schema:
-    :return:
-    """
-    for path, path_description in openapi_schema["paths"].items():
-        is_series_response_model = path.endswith("/series/")
-        for method in path_description:
-            tags = path_description[method]["tags"]
-            if len(tags) == 1:
-                api_name = f"{tags[0].capitalize()}Api"
-            else:
-                raise AttributeError("API route has multiple tags.")
-            response_component_name = (
-                path_description[method]["responses"]["200"]["content"]["application/json"]["schema"]
-                .get("$ref", "")
-                .replace("#/components/schemas/", "")
-            )
-            if not response_component_name:
-                continue
-            component_reference = openapi_schema["components"]["schemas"][response_component_name]
-
-            if is_series_response_model:
-                # inject get_series_ids
-                component_reference["x-optimeering-model-with-series-ids"] = {
-                    "description": "This extension denotes that the response have series ids.",
-                    "value": True,
-                }
-                # inject observations operation id and data model
-                datapoint_description = openapi_schema["paths"][path[0 : -len("/series")]]["get"]
-                datapoint_operation_id = datapoint_description["operationId"]
-                datapoint_model = datapoint_description["responses"]["200"]["content"]["application/json"]["schema"][
-                    "$ref"
-                ].replace("#/components/schemas/", "")
-                component_reference["x-optimeering-datapoint-info"] = {
-                    "description": "This extension links responses of series API routes "
-                    "to the API routes that return their datapoints.",
-                    "operation-id": datapoint_operation_id,
-                    "response-model-name": datapoint_model,
-                    "api-name": api_name,
-                }
-
-                # Check if repsonse is a collection of series id
-                # if it is, add datapoint info to the referenced component
-                for key in KEYS_DEFINING_SERIES_LIST_IN_RESPONSE:
-                    series_component_ref = (
-                        component_reference.get("properties", {}).get("items", {}).get(key, {}).get("$ref")
-                    )
-                    if series_component_ref is None:
-                        continue
-                    series_component_name = series_component_ref.replace("#/components/schemas/", "")
-                    series_component = openapi_schema["components"]["schemas"][series_component_name]
-                    series_component["x-optimeering-datapoint-info"] = {
-                        "description": "This extension links responses of series API routes "
-                        "to the API routes that return their datapoints.",
-                        "operation-id": datapoint_operation_id,
-                        "response-model-name": datapoint_model,
-                        "api-name": api_name,
-                    }
-
-            # Inject iterable functionality
-            component_reference["x-optimeering-iterable"] = {
-                "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
-                "iterable": True,
-                "filterable": False,
-            }
-
-            item_reference_name = (
-                component_reference.get("properties", {})
-                .get("items", {})
-                .get("items", {})
-                .get("$ref", "")
-                .replace("#/components/schemas/", "")
-            )
-
-            if item_reference_name:
-                item_reference = openapi_schema["components"]["schemas"][item_reference_name]
-
-                # add filter extension
-                child_component_properties = [
-                    {"name": prop_name, "type": TYPE_MAPPING[prop_description["type"]]}
-                    for prop_name, prop_description in item_reference.get("properties", {}).items()
-                    if (
-                        prop_name not in UNFILTERABLE_PROPERTIES
-                        # removes multi type properties [ideally we want to check for nulls values]
-                        and "anyOf" not in prop_description
-                        # remove all date types from filter
-                        and prop_description.get("format") != "date-time"
-                        # remove properties that are iterable
-                        and "items" not in prop_description
-                    )
-                ]
-                if len(child_component_properties):
-                    component_reference["x-optimeering-iterable"]["filterable"] = True
-                    component_reference["x-optimeering-iterable"]["filter_properties"] = child_component_properties
-
-                # Inject polymorphism
-                polymorphism_extension = item_reference.get(POLYMORPHISM_EXTENSION_KEY)
-                if polymorphism_extension is not None:
-                    openapi_schema["components"]["schemas"][response_component_name] = {
-                        **component_reference,
-                        **allow_component_polymorphism([i["method_name"] for i in polymorphism_extension["values"]]),
-                    }
-
 
 def replace_sdk_docstring(openapi_spec: Dict):
     for _, path_description in openapi_spec["paths"].items():
@@ -266,45 +142,6 @@ def move_optimeering_extensions_out_of_schema(content):
                 method_definition["requestBody"] = {**method_definition["requestBody"], **extensions}
 
 
-def add_py_data_type_for_duration_type(content):
-    """
-    Adds optimeering extensions for parameters with type `duration`
-    """
-    for path, path_desc in content["paths"].items():
-        for route, route_desc in path_desc.items():
-            if "parameters" not in route_desc:
-                continue
-            for parameter in route_desc["parameters"]:
-                if "schema" not in parameter:
-                    continue
-                if "anyOf" not in parameter["schema"]:
-                    continue
-                has_duration = False
-                is_optional = False
-                duration_idx = None
-                for any_idx, any_of in enumerate(parameter["schema"]["anyOf"]):
-                    if (any_of.get("type") == "string") and (any_of.get("format") == "duration"):
-                        has_duration = True
-                        duration_idx = any_idx
-                    if any_of.get("type") == "null":
-                        is_optional = True
-
-                if has_duration:
-                    parameter["schema"]["anyOf"][duration_idx]["x-optimeering-bypass-py-typing"] = {
-                        "type": "timedelta",
-                        "is_optional": is_optional,
-                    }
-
-
-def add_silent_type_cast_extension_to_route(content):
-    for path, path_descriptions in content.get("paths").items():
-        for method, method_description in path_descriptions.items():
-            if "x-optimeering-alternate-typing" in str(method_description):
-                method_description["x-optimeering-route-supports-alternate-datatypes"] = {
-                    "description": "This extension denotes that the route supports multiple datatypes for one or more of its paramters."
-                }
-
-
 def fix_openapi_extensions(schema_path: str) -> None:
     with open(schema_path, "r") as file:
         content = json.load(file)
@@ -316,10 +153,7 @@ def fix_openapi_extensions(schema_path: str) -> None:
     remove_parameter_enums(content)
 
     move_optimeering_extensions_out_of_schema(content)
-    add_silent_type_cast_extension_to_route(content)
-    add_py_data_type_for_duration_type(content)
     filter_schema_components(content)
-    inject_optimeering_extensions_into_models(content)
 
     print(json.dumps(content, indent=4, sort_keys=True))
 

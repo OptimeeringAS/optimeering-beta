@@ -40,12 +40,10 @@ RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 
 
 class OptimeeringClient:
-    """Generic API client for OpenAPI client library builds.
+    """Main class to interact with the API.
 
-    This client handles the client-server communication,
-    and is invariant across implementations. Specifics of
-    the methods and models for each application are generated from the OpenAPI
-    templates.
+    All APIs are accessible through an instance of this class.
+
 
     :param configuration: The Configuration object to use with the client
     :type configuration: Configuration

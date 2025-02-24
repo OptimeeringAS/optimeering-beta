@@ -81,7 +81,12 @@
                     "created_at"
                 ],
                 "title": "AccessKeyPostResponse",
-                "type": "object"
+                "type": "object",
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filterable": false,
+                    "iterable": true
+                }
             },
             "AccessPostKey": {
                 "additionalProperties": false,
@@ -231,6 +236,21 @@
                 ],
                 "title": "PredictionsDataList",
                 "type": "object",
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter_properties": [
+                        {
+                            "name": "series_id",
+                            "type": "int"
+                        },
+                        {
+                            "name": "version",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true
+                },
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsDataList` contains a collection of :any:`PredictionsData`"
             },
             "PredictionsEvent": {
@@ -358,6 +378,12 @@
                 ],
                 "title": "PredictionsSeries",
                 "type": "object",
+                "x-optimeering-datapoint-info": {
+                    "api-name": "PredictionsApi",
+                    "description": "This extension links responses of series API routes to the API routes that return their datapoints.",
+                    "operation-id": "retrieve",
+                    "response-model-name": "PredictionsDataList"
+                },
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsSeries` is used for indexing a series of :any:`PredictionsData`."
             },
             "PredictionsSeriesList": {
@@ -382,6 +408,47 @@
                 ],
                 "title": "PredictionsSeriesList",
                 "type": "object",
+                "x-optimeering-datapoint-info": {
+                    "api-name": "PredictionsApi",
+                    "description": "This extension links responses of series API routes to the API routes that return their datapoints.",
+                    "operation-id": "retrieve",
+                    "response-model-name": "PredictionsDataList"
+                },
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter_properties": [
+                        {
+                            "name": "area",
+                            "type": "str"
+                        },
+                        {
+                            "name": "id",
+                            "type": "int"
+                        },
+                        {
+                            "name": "product",
+                            "type": "str"
+                        },
+                        {
+                            "name": "statistic",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit_type",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true
+                },
+                "x-optimeering-model-with-series-ids": {
+                    "description": "This extension denotes that the response have series ids.",
+                    "value": true
+                },
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsSeriesList` contains a collection of :any:`PredictionsSeries`."
             },
             "PredictionsValue": {
@@ -552,7 +619,7 @@
                         }
                     ]
                 },
-                "x-optimeering-sdk-docstring": "A :any:`PredictionsVersion` is used for indexing a specific version for a series of :any:`PredictionsData`.\nFor an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>\n"
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsVersion` is used for indexing a specific version for a series of :any:`PredictionsData`.\nFor an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n"
             },
             "PredictionsVersionList": {
                 "additionalProperties": false,
@@ -575,6 +642,47 @@
                 ],
                 "title": "PredictionsVersionList",
                 "type": "object",
+                "x-optimeering-component-polymorphism": {
+                    "component-polymorphism": [
+                        "convert_to_versioned_series"
+                    ],
+                    "description": "This extension denotes that this component is iterable and each item can be directly converted to some other class (Refer to 'x-optimeering-direct-polymorphism' in referred component)."
+                },
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter_properties": [
+                        {
+                            "name": "area",
+                            "type": "str"
+                        },
+                        {
+                            "name": "id",
+                            "type": "int"
+                        },
+                        {
+                            "name": "product",
+                            "type": "str"
+                        },
+                        {
+                            "name": "statistic",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit_type",
+                            "type": "str"
+                        },
+                        {
+                            "name": "version",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true
+                },
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsVersionList` contains a collection of :any:`PredictionsVersion`."
             },
             "ValidationError": {
@@ -798,7 +906,11 @@
                             "anyOf": [
                                 {
                                     "format": "duration",
-                                    "type": "string"
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
                                 },
                                 {
                                     "format": "date-time",
@@ -821,7 +933,11 @@
                             "anyOf": [
                                 {
                                     "format": "duration",
-                                    "type": "string"
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
                                 },
                                 {
                                     "format": "date-time",
@@ -932,7 +1048,11 @@
                             "anyOf": [
                                 {
                                     "format": "duration",
-                                    "type": "string"
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
                                 },
                                 {
                                     "format": "date-time",
@@ -1508,7 +1628,11 @@
                             "anyOf": [
                                 {
                                     "format": "duration",
-                                    "type": "string"
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
                                 },
                                 {
                                     "format": "date-time",
@@ -1531,7 +1655,11 @@
                             "anyOf": [
                                 {
                                     "format": "duration",
-                                    "type": "string"
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
                                 },
                                 {
                                     "format": "date-time",
@@ -1643,6 +1771,9 @@
                 "x-optimeering-paginated-route": {
                     "description": "This extension denotes that the route returns a paginated response and is paginated by parameters `limit` and `offset`. These routes return a `next_page` in the response, which can be used to obtain the next page of the paginated response.Any language specific client build over the API should consider this extension as a flag to implement pagination logic.",
                     "value": true
+                },
+                "x-optimeering-route-supports-alternate-datatypes": {
+                    "description": "This extension denotes that the route supports multiple datatypes for one or more of its paramters."
                 },
                 "x-optimeering-sdk-docstring": "\nReturns versioned predictions.\n\n\nUse the :any:`list_version` method to get the available versions for each prediction series.\n\nCan be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n"
             }
