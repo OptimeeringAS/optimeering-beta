@@ -1,7 +1,6 @@
-Client
+Configuration
 ====================
 
-.. autoclass:: optimeering_beta.OptimeeringClient
+.. autoclass:: optimeering_beta.Configuration
     :members:
     :member-order: bysource 
-
