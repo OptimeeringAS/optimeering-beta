@@ -1,7 +1,6 @@
-Client
+PredictionsApi
 ====================
 
-.. autoclass:: optimeering_beta.OptimeeringClient
+.. autoclass:: optimeering_beta.PredictionsApi
     :members:
     :member-order: bysource 
-

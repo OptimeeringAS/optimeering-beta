@@ -1,14 +1,7 @@
-Optimeering Beta SDK
+Client
 ====================
-
-.. autoclass:: optimeering_beta.Configuration
-    :members:
-    :member-order: bysource
 
 .. autoclass:: optimeering_beta.OptimeeringClient
     :members:
     :member-order: bysource 
 
-.. automodule:: optimeering_beta.api
-    :members:
-    :member-order: bysource
