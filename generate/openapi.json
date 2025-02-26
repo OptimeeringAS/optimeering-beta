@@ -274,11 +274,6 @@
                         "title": "Event Time",
                         "type": "string"
                     },
-                    "id": {
-                        "description": "Unique Identifier for the resource type.",
-                        "title": "Id",
-                        "type": "integer"
-                    },
                     "is_simulated": {
                         "title": "Is Simulated",
                         "type": "boolean"
@@ -292,7 +287,6 @@
                     }
                 },
                 "required": [
-                    "id",
                     "created_at",
                     "event_time",
                     "predictions",

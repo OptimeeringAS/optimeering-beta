@@ -182,13 +182,7 @@ class PredictionsSeriesList(BaseModel):
         _locals = locals()
         compare_dict = {i: _locals[i] for i in properties if _locals[i] is not None}
 
-        if isinstance(self, list):
-            return [
-                item
-                for item in self
-                if all((item.get(property) in filter_values) for property_name, filter_values in compare_dict.items())
-            ]
-        elif "items" in self.model_fields:
+        if "items" in self.model_fields:
             obj_copy = self.copy()
             obj_copy.items = [
                 item

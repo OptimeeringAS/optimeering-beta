@@ -15,7 +15,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.predictions_value import PredictionsValue
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 
 
 class PredictionsEvent(BaseModel):
@@ -26,8 +26,6 @@ class PredictionsEvent(BaseModel):
     :type created_at: datetime
     :param event_time: Timestamp for when datapoint was generated.
     :type event_time: datetime
-    :param id: Unique Identifier for the resource type.
-    :type id: int
     :param is_simulated:
     :type is_simulated: bool
     :param predictions:
@@ -36,10 +34,9 @@ class PredictionsEvent(BaseModel):
 
     created_at: datetime = Field(description="The timestamp at which datapoint was registered")
     event_time: datetime = Field(description="Timestamp for when datapoint was generated.")
-    id: StrictInt = Field(description="Unique Identifier for the resource type.")
     is_simulated: StrictBool
     predictions: List[PredictionsValue]
-    __properties: ClassVar[List[str]] = ["created_at", "event_time", "id", "is_simulated", "predictions"]
+    __properties: ClassVar[List[str]] = ["created_at", "event_time", "is_simulated", "predictions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,7 +97,6 @@ class PredictionsEvent(BaseModel):
             {
                 "created_at": obj.get("created_at"),
                 "event_time": obj.get("event_time"),
-                "id": obj.get("id"),
                 "is_simulated": obj.get("is_simulated"),
                 "predictions": [PredictionsValue.from_dict(_item) for _item in obj["predictions"]]
                 if obj.get("predictions") is not None
