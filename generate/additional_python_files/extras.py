@@ -23,15 +23,10 @@ def require_pandas(fn: Callable):
 
 ALLOWED_UNPACK_VALUE_METHODS = ("retain_original", "new_rows", "new_columns")
 EXPLOSION_COLUMNS = {
-    # observations
-    "datapoints": "datapoint",
     # predictions
     "events": "event",
     "predictions": "prediction",
     "value": "value",
-    # umms
-    "entities": "entity",
-    "capacity_restrictions": "capacity_restriction",
 }
 
 
