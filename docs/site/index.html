@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started &mdash; Optimeering Beta Python Client 0.0.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=6e83718d" />
 
   
@@ -48,8 +48,11 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="client.html">Optimeering Beta SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="access.html">AccessApi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predictions.html">PredictionsApi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Client Models</a></li>
 </ul>
 
         </div>
@@ -104,33 +107,57 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="client.html">Optimeering Beta SDK</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="client.html#optimeering_beta.Configuration"><code class="docutils literal notranslate"><span class="pre">Configuration</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.logger"><code class="docutils literal notranslate"><span class="pre">Configuration.logger</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.logger_stream_handler"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_stream_handler</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.logger_file_handler"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_file_handler</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.verify_ssl"><code class="docutils literal notranslate"><span class="pre">Configuration.verify_ssl</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.ssl_ca_cert"><code class="docutils literal notranslate"><span class="pre">Configuration.ssl_ca_cert</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.cert_file"><code class="docutils literal notranslate"><span class="pre">Configuration.cert_file</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.key_file"><code class="docutils literal notranslate"><span class="pre">Configuration.key_file</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.assert_hostname"><code class="docutils literal notranslate"><span class="pre">Configuration.assert_hostname</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.tls_server_name"><code class="docutils literal notranslate"><span class="pre">Configuration.tls_server_name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.connection_pool_maxsize"><code class="docutils literal notranslate"><span class="pre">Configuration.connection_pool_maxsize</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.proxy"><code class="docutils literal notranslate"><span class="pre">Configuration.proxy</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.proxy_headers"><code class="docutils literal notranslate"><span class="pre">Configuration.proxy_headers</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.retries"><code class="docutils literal notranslate"><span class="pre">Configuration.retries</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.socket_options"><code class="docutils literal notranslate"><span class="pre">Configuration.socket_options</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.datetime_format"><code class="docutils literal notranslate"><span class="pre">Configuration.datetime_format</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.date_format"><code class="docutils literal notranslate"><span class="pre">Configuration.date_format</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.set_default"><code class="docutils literal notranslate"><span class="pre">Configuration.set_default()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.get_default_copy"><code class="docutils literal notranslate"><span class="pre">Configuration.get_default_copy()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.get_default"><code class="docutils literal notranslate"><span class="pre">Configuration.get_default()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.logger_file"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_file</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.debug"><code class="docutils literal notranslate"><span class="pre">Configuration.debug</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.logger_format"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_format</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.Configuration.to_debug_report"><code class="docutils literal notranslate"><span class="pre">Configuration.to_debug_report()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration"><code class="docutils literal notranslate"><span class="pre">Configuration</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.logger"><code class="docutils literal notranslate"><span class="pre">Configuration.logger</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.logger_stream_handler"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_stream_handler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.logger_file_handler"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_file_handler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.verify_ssl"><code class="docutils literal notranslate"><span class="pre">Configuration.verify_ssl</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.ssl_ca_cert"><code class="docutils literal notranslate"><span class="pre">Configuration.ssl_ca_cert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.cert_file"><code class="docutils literal notranslate"><span class="pre">Configuration.cert_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.key_file"><code class="docutils literal notranslate"><span class="pre">Configuration.key_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.assert_hostname"><code class="docutils literal notranslate"><span class="pre">Configuration.assert_hostname</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.tls_server_name"><code class="docutils literal notranslate"><span class="pre">Configuration.tls_server_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.connection_pool_maxsize"><code class="docutils literal notranslate"><span class="pre">Configuration.connection_pool_maxsize</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.proxy"><code class="docutils literal notranslate"><span class="pre">Configuration.proxy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.proxy_headers"><code class="docutils literal notranslate"><span class="pre">Configuration.proxy_headers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.retries"><code class="docutils literal notranslate"><span class="pre">Configuration.retries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.socket_options"><code class="docutils literal notranslate"><span class="pre">Configuration.socket_options</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.datetime_format"><code class="docutils literal notranslate"><span class="pre">Configuration.datetime_format</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.date_format"><code class="docutils literal notranslate"><span class="pre">Configuration.date_format</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.set_default"><code class="docutils literal notranslate"><span class="pre">Configuration.set_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.get_default_copy"><code class="docutils literal notranslate"><span class="pre">Configuration.get_default_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.get_default"><code class="docutils literal notranslate"><span class="pre">Configuration.get_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.logger_file"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.debug"><code class="docutils literal notranslate"><span class="pre">Configuration.debug</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.logger_format"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_format</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#optimeering_beta.Configuration.to_debug_report"><code class="docutils literal notranslate"><span class="pre">Configuration.to_debug_report()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="access.html">AccessApi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="access.html#optimeering_beta.AccessApi"><code class="docutils literal notranslate"><span class="pre">AccessApi</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access.html#optimeering_beta.AccessApi.create_api_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.create_api_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access.html#optimeering_beta.AccessApi.delete_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.delete_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access.html#optimeering_beta.AccessApi.list_my_keys"><code class="docutils literal notranslate"><span class="pre">AccessApi.list_my_keys()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="predictions.html">PredictionsApi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi"><code class="docutils literal notranslate"><span class="pre">PredictionsApi</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi.list_parameters"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.list_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi.list_series"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.list_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi.list_version"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.list_version()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi.retrieve"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.retrieve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi.retrieve_latest"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.retrieve_latest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi.retrieve_versioned"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.retrieve_versioned()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.user_agent"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.user_agent</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.get_default"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.get_default()</span></code></a></li>
@@ -147,67 +174,175 @@
 <li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.select_header_content_type"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.select_header_content_type()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.update_params_for_auth"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.update_params_for_auth()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.access_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.access_api</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.parameters_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.parameters_api</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient.predictions_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.predictions_api</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="client.html#optimeering_beta.api.AccessApi"><code class="docutils literal notranslate"><span class="pre">AccessApi</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.AccessApi.create_api_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.create_api_key()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.AccessApi.delete_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.delete_key()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.AccessApi.list_my_keys"><code class="docutils literal notranslate"><span class="pre">AccessApi.list_my_keys()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="client.html#optimeering_beta.api.ParametersApi"><code class="docutils literal notranslate"><span class="pre">ParametersApi</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.ParametersApi.get_parameter_values"><code class="docutils literal notranslate"><span class="pre">ParametersApi.get_parameter_values()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Client Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated.to_str"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated.to_json"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated.from_json"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated.to_dict"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated.from_dict"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated.to_pandas"><code class="docutils literal notranslate"><span class="pre">AccessKeyCreated.to_pandas()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="client.html#optimeering_beta.api.PredictionsApi"><code class="docutils literal notranslate"><span class="pre">PredictionsApi</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.PredictionsApi.get_latest_predictions"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.get_latest_predictions()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.PredictionsApi.get_prediction_series"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.get_prediction_series()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="client.html#optimeering_beta.api.PredictionsApi.get_predictions"><code class="docutils literal notranslate"><span class="pre">PredictionsApi.get_predictions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_str"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_json"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse.from_json"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_dict"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse.from_dict"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_pandas"><code class="docutils literal notranslate"><span class="pre">AccessKeyPostResponse.to_pandas()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey"><code class="docutils literal notranslate"><span class="pre">AccessPostKey</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey.to_str"><code class="docutils literal notranslate"><span class="pre">AccessPostKey.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey.to_json"><code class="docutils literal notranslate"><span class="pre">AccessPostKey.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey.from_json"><code class="docutils literal notranslate"><span class="pre">AccessPostKey.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey.to_dict"><code class="docutils literal notranslate"><span class="pre">AccessPostKey.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey.from_dict"><code class="docutils literal notranslate"><span class="pre">AccessPostKey.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey.to_pandas"><code class="docutils literal notranslate"><span class="pre">AccessPostKey.to_pandas()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="filters.html#optimeering_beta.EnumParameters"><code class="docutils literal notranslate"><span class="pre">EnumParameters</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.EnumParameters.AREA"><code class="docutils literal notranslate"><span class="pre">EnumParameters.AREA</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.EnumParameters.PRODUCT"><code class="docutils literal notranslate"><span class="pre">EnumParameters.PRODUCT</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.EnumParameters.STATISTIC"><code class="docutils literal notranslate"><span class="pre">EnumParameters.STATISTIC</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.EnumParameters.UNIT_TYPE"><code class="docutils literal notranslate"><span class="pre">EnumParameters.UNIT_TYPE</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.EnumParameters.from_json"><code class="docutils literal notranslate"><span class="pre">EnumParameters.from_json()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.End"><code class="docutils literal notranslate"><span class="pre">End</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.End.from_json"><code class="docutils literal notranslate"><span class="pre">End.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.End.to_json"><code class="docutils literal notranslate"><span class="pre">End.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.End.to_dict"><code class="docutils literal notranslate"><span class="pre">End.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.End.to_str"><code class="docutils literal notranslate"><span class="pre">End.to_str()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="filters.html#optimeering_beta.Start"><code class="docutils literal notranslate"><span class="pre">Start</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.anyof_schema_1_validator"><code class="docutils literal notranslate"><span class="pre">Start.anyof_schema_1_validator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.anyof_schema_2_validator"><code class="docutils literal notranslate"><span class="pre">Start.anyof_schema_2_validator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.actual_instance"><code class="docutils literal notranslate"><span class="pre">Start.actual_instance</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.any_of_schemas"><code class="docutils literal notranslate"><span class="pre">Start.any_of_schemas</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.model_config"><code class="docutils literal notranslate"><span class="pre">Start.model_config</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.actual_instance_must_validate_anyof"><code class="docutils literal notranslate"><span class="pre">Start.actual_instance_must_validate_anyof()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.from_dict"><code class="docutils literal notranslate"><span class="pre">Start.from_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.from_json"><code class="docutils literal notranslate"><span class="pre">Start.from_json()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.to_json"><code class="docutils literal notranslate"><span class="pre">Start.to_json()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.to_dict"><code class="docutils literal notranslate"><span class="pre">Start.to_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.to_str"><code class="docutils literal notranslate"><span class="pre">Start.to_str()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">Start.model_computed_fields</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.Start.model_fields"><code class="docutils literal notranslate"><span class="pre">Start.model_fields</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError.to_str"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError.to_json"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError.from_json"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError.to_dict"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError.from_dict"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.HTTPValidationError.to_pandas"><code class="docutils literal notranslate"><span class="pre">HTTPValidationError.to_pandas()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="filters.html#optimeering_beta.End"><code class="docutils literal notranslate"><span class="pre">End</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.anyof_schema_1_validator"><code class="docutils literal notranslate"><span class="pre">End.anyof_schema_1_validator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.anyof_schema_2_validator"><code class="docutils literal notranslate"><span class="pre">End.anyof_schema_2_validator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.actual_instance"><code class="docutils literal notranslate"><span class="pre">End.actual_instance</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.any_of_schemas"><code class="docutils literal notranslate"><span class="pre">End.any_of_schemas</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.model_config"><code class="docutils literal notranslate"><span class="pre">End.model_config</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.actual_instance_must_validate_anyof"><code class="docutils literal notranslate"><span class="pre">End.actual_instance_must_validate_anyof()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.from_dict"><code class="docutils literal notranslate"><span class="pre">End.from_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.from_json"><code class="docutils literal notranslate"><span class="pre">End.from_json()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.to_json"><code class="docutils literal notranslate"><span class="pre">End.to_json()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.to_dict"><code class="docutils literal notranslate"><span class="pre">End.to_dict()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.to_str"><code class="docutils literal notranslate"><span class="pre">End.to_str()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">End.model_computed_fields</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="filters.html#optimeering_beta.End.model_fields"><code class="docutils literal notranslate"><span class="pre">End.model_fields</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.MaxEventTime"><code class="docutils literal notranslate"><span class="pre">MaxEventTime</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.MaxEventTime.from_json"><code class="docutils literal notranslate"><span class="pre">MaxEventTime.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.MaxEventTime.to_json"><code class="docutils literal notranslate"><span class="pre">MaxEventTime.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.MaxEventTime.to_dict"><code class="docutils literal notranslate"><span class="pre">MaxEventTime.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.MaxEventTime.to_str"><code class="docutils literal notranslate"><span class="pre">MaxEventTime.to_str()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData"><code class="docutils literal notranslate"><span class="pre">PredictionsData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.version_validate_regular_expression"><code class="docutils literal notranslate"><span class="pre">PredictionsData.version_validate_regular_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsData.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsData.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsData.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsData.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsData.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsData.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsData.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.filter"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsDataList.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsDataList.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsEvent.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsEvent.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.datapoints"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.datapoints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeries.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsSeries.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.series_ids"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.series_ids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.datapoints"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.datapoints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.filter"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsSeriesList.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsSeriesList.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue"><code class="docutils literal notranslate"><span class="pre">PredictionsValue</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsValue.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsValue.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsValue.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsValue.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsValue.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsValue.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsValue.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.version_validate_regular_expression"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.version_validate_regular_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.convert_to_versioned_series"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.convert_to_versioned_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersion.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsVersion.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.to_str"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.to_json"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.from_json"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.to_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.from_dict"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.filter"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.convert_to_versioned_series"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.convert_to_versioned_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.PredictionsVersionList.to_pandas"><code class="docutils literal notranslate"><span class="pre">PredictionsVersionList.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.Start"><code class="docutils literal notranslate"><span class="pre">Start</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.Start.from_json"><code class="docutils literal notranslate"><span class="pre">Start.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.Start.to_json"><code class="docutils literal notranslate"><span class="pre">Start.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.Start.to_dict"><code class="docutils literal notranslate"><span class="pre">Start.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.Start.to_str"><code class="docutils literal notranslate"><span class="pre">Start.to_str()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError"><code class="docutils literal notranslate"><span class="pre">ValidationError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError.to_str"><code class="docutils literal notranslate"><span class="pre">ValidationError.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError.to_json"><code class="docutils literal notranslate"><span class="pre">ValidationError.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError.from_json"><code class="docutils literal notranslate"><span class="pre">ValidationError.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError.to_dict"><code class="docutils literal notranslate"><span class="pre">ValidationError.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError.from_dict"><code class="docutils literal notranslate"><span class="pre">ValidationError.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationError.to_pandas"><code class="docutils literal notranslate"><span class="pre">ValidationError.to_pandas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationErrorLocInner"><code class="docutils literal notranslate"><span class="pre">ValidationErrorLocInner</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationErrorLocInner.from_json"><code class="docutils literal notranslate"><span class="pre">ValidationErrorLocInner.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationErrorLocInner.to_json"><code class="docutils literal notranslate"><span class="pre">ValidationErrorLocInner.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationErrorLocInner.to_dict"><code class="docutils literal notranslate"><span class="pre">ValidationErrorLocInner.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.ValidationErrorLocInner.to_str"><code class="docutils literal notranslate"><span class="pre">ValidationErrorLocInner.to_str()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries"><code class="docutils literal notranslate"><span class="pre">VersionedSeries</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.version_validate_regular_expression"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.version_validate_regular_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.to_str"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.to_json"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.from_json"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.to_dict"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.from_dict"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#optimeering_beta.models.VersionedSeries.to_pandas"><code class="docutils literal notranslate"><span class="pre">VersionedSeries.to_pandas()</span></code></a></li>
 </ul>
 </li>
 </ul>

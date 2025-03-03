@@ -28,7 +28,10 @@ def generate_data(model: str):
                 data[property_name] = "2000-01-01T00:00:00+00:00"
                 continue
             else:
-                data[property_name] = "mock string"
+                if property_name == "version":
+                    data[property_name] = "1.0.0"
+                else:
+                    data[property_name] = "mock string"
                 continue
         elif property_type == "integer":
             data[property_name] = 1
@@ -44,6 +47,9 @@ def generate_data(model: str):
             if property.get("additionalProperties", {}).get("type") == "number":
                 data[property_name] = {"mock_key": 1}
                 continue
+        elif property_type == "boolean":
+            data[property_name] = True
+            continue
 
         raise TypeError(f"Unsupported type {property_type}")
     return data

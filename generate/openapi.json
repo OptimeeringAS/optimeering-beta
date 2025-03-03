@@ -1,0 +1,1776 @@
+{
+    "components": {
+        "schemas": {
+            "AccessKeyCreated": {
+                "additionalProperties": false,
+                "properties": {
+                    "created_at": {
+                        "description": "Time stamp at which key was created.",
+                        "format": "date-time",
+                        "title": "Created At",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description for the Access key.",
+                        "title": "Description",
+                        "type": "string"
+                    },
+                    "expires_at": {
+                        "description": "Duration after which key expires.",
+                        "format": "date-time",
+                        "title": "Expires At",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "ID of the access key",
+                        "title": "Id",
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "expires_at",
+                    "description",
+                    "id",
+                    "created_at"
+                ],
+                "title": "AccessKeyCreated",
+                "type": "object"
+            },
+            "AccessKeyPostResponse": {
+                "additionalProperties": false,
+                "properties": {
+                    "apikey": {
+                        "description": "API key",
+                        "title": "Apikey",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Time stamp at which key was created.",
+                        "format": "date-time",
+                        "title": "Created At",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description for the Access key.",
+                        "title": "Description",
+                        "type": "string"
+                    },
+                    "expires_at": {
+                        "description": "Duration after which key expires.",
+                        "format": "date-time",
+                        "title": "Expires At",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "ID of the access key",
+                        "title": "Id",
+                        "type": "integer"
+                    },
+                    "owner_id": {
+                        "description": "Creator of the access key.",
+                        "title": "Owner Id",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "owner_id",
+                    "apikey",
+                    "expires_at",
+                    "description",
+                    "id",
+                    "created_at"
+                ],
+                "title": "AccessKeyPostResponse",
+                "type": "object",
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filterable": false,
+                    "iterable": true
+                }
+            },
+            "AccessPostKey": {
+                "additionalProperties": false,
+                "properties": {
+                    "description": {
+                        "description": "Description for the Access key.",
+                        "title": "Description",
+                        "type": "string"
+                    },
+                    "expires_at": {
+                        "anyOf": [
+                            {
+                                "format": "date-time",
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Duration after which key expires. Defaults to one year in the future.",
+                        "title": "Expires At"
+                    }
+                },
+                "required": [
+                    "description"
+                ],
+                "title": "AccessPostKey",
+                "type": "object"
+            },
+            "EnumPredictionsParameters": {
+                "enum": [
+                    "area",
+                    "product",
+                    "statistic",
+                    "unit_type"
+                ],
+                "title": "EnumPredictionsParameters",
+                "type": "string"
+            },
+            "EnumProduct": {
+                "enum": [
+                    "mFRR_EAM_Up",
+                    "mFRR_EAM_Down",
+                    "mFRR_CM_Up",
+                    "mFRR_CM_Down",
+                    "aFRR_CM_Up",
+                    "aFRR_CM_Down",
+                    "aFRR_EAM_Up",
+                    "aFRR_EAM_Down",
+                    "Imbalance",
+                    "FCRN_CM_P1",
+                    "FCRN_CM_P2",
+                    "FCRD_CM_P1_Up",
+                    "FCRD_CM_P1_Down",
+                    "FCRD_CM_P2_Up",
+                    "FCRD_CM_P2_Down"
+                ],
+                "title": "EnumProduct",
+                "type": "string"
+            },
+            "EnumStatistic": {
+                "enum": [
+                    "Point",
+                    "Quantile",
+                    "Distribution",
+                    "Conditional_Index"
+                ],
+                "title": "EnumStatistic",
+                "type": "string"
+            },
+            "EnumUnitType": {
+                "enum": [
+                    "Price",
+                    "Volume_Ratio_Of_Procured",
+                    "Price_Spread",
+                    "Direction",
+                    "Volume"
+                ],
+                "title": "EnumUnitType",
+                "type": "string"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    }
+                },
+                "title": "HTTPValidationError",
+                "type": "object"
+            },
+            "PredictionsData": {
+                "additionalProperties": false,
+                "properties": {
+                    "events": {
+                        "items": {
+                            "$ref": "#/components/schemas/PredictionsEvent"
+                        },
+                        "title": "Events",
+                        "type": "array"
+                    },
+                    "series_id": {
+                        "description": "Identifier for the series id.",
+                        "title": "Series Id",
+                        "type": "integer"
+                    },
+                    "version": {
+                        "description": "Version of the model that generated the predictions",
+                        "examples": [
+                            "1.0.0"
+                        ],
+                        "pattern": "[0-9]+\\.[0-9]+\\.[0-9]+",
+                        "title": "Version",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "version",
+                    "series_id",
+                    "events"
+                ],
+                "title": "PredictionsData",
+                "type": "object",
+                "x-optimeering-sdk-docstring": ":any:`PredictionsData` contains a collection of :any:`PredictionsEvent` for a given :any:`PredictionSeries`"
+            },
+            "PredictionsDataList": {
+                "additionalProperties": false,
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/PredictionsData"
+                        },
+                        "title": "Items",
+                        "type": "array"
+                    },
+                    "next_page": {
+                        "description": "The next page of results (if available).",
+                        "title": "Next Page",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "title": "PredictionsDataList",
+                "type": "object",
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter_properties": [
+                        {
+                            "name": "series_id",
+                            "type": "int"
+                        },
+                        {
+                            "name": "version",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true
+                },
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsDataList` contains a collection of :any:`PredictionsData`"
+            },
+            "PredictionsEvent": {
+                "additionalProperties": false,
+                "properties": {
+                    "created_at": {
+                        "description": "The timestamp at which datapoint was registered",
+                        "examples": [
+                            "2024-01-02T03:04:05+00:00"
+                        ],
+                        "format": "date-time",
+                        "title": "Created At",
+                        "type": "string"
+                    },
+                    "event_time": {
+                        "description": "Timestamp for when datapoint was generated.",
+                        "examples": [
+                            "2024-01-02T03:04:05+00:00"
+                        ],
+                        "format": "date-time",
+                        "title": "Event Time",
+                        "type": "string"
+                    },
+                    "is_simulated": {
+                        "title": "Is Simulated",
+                        "type": "boolean"
+                    },
+                    "predictions": {
+                        "items": {
+                            "$ref": "#/components/schemas/PredictionsValue"
+                        },
+                        "title": "Predictions",
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "event_time",
+                    "predictions",
+                    "is_simulated"
+                ],
+                "title": "PredictionsEvent",
+                "type": "object",
+                "x-optimeering-sdk-docstring": "\nA :any:`PredictionsEvent` contains a collection of :any:`PredictionsValue`.\nIf a :any:`PredictionsEvent` is simulated, ``is_simulated`` will be true. See `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_ for an explanation on what simulated events are.\n"
+            },
+            "PredictionsSeries": {
+                "additionalProperties": false,
+                "description": "A Predictions Series is used for indexing a series of Prediction data points.",
+                "properties": {
+                    "area": {
+                        "description": "Areas to be filtered. E.g. NO1, NO2",
+                        "title": "Area",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "examples": [
+                            "2024-03-15T06:00:00+00:00"
+                        ],
+                        "format": "date-time",
+                        "title": "Created At",
+                        "type": "string"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "id": {
+                        "title": "Id",
+                        "type": "integer"
+                    },
+                    "latest_event_time": {
+                        "anyOf": [
+                            {
+                                "format": "date-time",
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "examples": [
+                            "2024-03-15T06:00:00+00:00"
+                        ],
+                        "title": "Latest Event Time"
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/EnumProduct",
+                        "description": "Product name for the series"
+                    },
+                    "statistic": {
+                        "$ref": "#/components/schemas/EnumStatistic",
+                        "description": "Type of statistics."
+                    },
+                    "unit": {
+                        "description": "The unit for the series.",
+                        "title": "Unit",
+                        "type": "string"
+                    },
+                    "unit_type": {
+                        "$ref": "#/components/schemas/EnumUnitType",
+                        "description": "Unit type for the series"
+                    }
+                },
+                "required": [
+                    "unit",
+                    "id",
+                    "created_at",
+                    "area",
+                    "product",
+                    "unit_type",
+                    "statistic"
+                ],
+                "title": "PredictionsSeries",
+                "type": "object",
+                "x-optimeering-datapoint-info": {
+                    "api-name": "PredictionsApi",
+                    "description": "This extension links responses of series API routes to the API routes that return their datapoints.",
+                    "operation-id": "retrieve",
+                    "response-model-name": "PredictionsDataList"
+                },
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsSeries` is used for indexing a series of :any:`PredictionsData`."
+            },
+            "PredictionsSeriesList": {
+                "additionalProperties": false,
+                "description": "A Predictions Series List contains a collection of Predictions Series.",
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/PredictionsSeries"
+                        },
+                        "title": "Items",
+                        "type": "array"
+                    },
+                    "next_page": {
+                        "description": "The next page of results (if available).",
+                        "title": "Next Page",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "title": "PredictionsSeriesList",
+                "type": "object",
+                "x-optimeering-datapoint-info": {
+                    "api-name": "PredictionsApi",
+                    "description": "This extension links responses of series API routes to the API routes that return their datapoints.",
+                    "operation-id": "retrieve",
+                    "response-model-name": "PredictionsDataList"
+                },
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter_properties": [
+                        {
+                            "name": "area",
+                            "type": "str"
+                        },
+                        {
+                            "name": "id",
+                            "type": "int"
+                        },
+                        {
+                            "name": "product",
+                            "type": "str"
+                        },
+                        {
+                            "name": "statistic",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit_type",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true
+                },
+                "x-optimeering-model-with-series-ids": {
+                    "description": "This extension denotes that the response have series ids.",
+                    "value": true
+                },
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsSeriesList` contains a collection of :any:`PredictionsSeries`."
+            },
+            "PredictionsValue": {
+                "additionalProperties": false,
+                "properties": {
+                    "prediction_for": {
+                        "description": "The time prediction is made for.'",
+                        "format": "date-time",
+                        "title": "Prediction For",
+                        "type": "string"
+                    },
+                    "value": {
+                        "additionalProperties": {
+                            "type": "number"
+                        },
+                        "examples": [
+                            {
+                                "10": 0.1,
+                                "25": 0.1,
+                                "50": 0.1,
+                                "75": 0.1,
+                                "90": 0.1
+                            },
+                            {
+                                "-100": 0.1,
+                                "-20": 0.1,
+                                "-50": 0.1,
+                                "100": 0.1,
+                                "20": 0.1,
+                                "50": 0.1
+                            },
+                            {
+                                "down": 0.1,
+                                "none": 0.1,
+                                "up": 0.1
+                            },
+                            {
+                                "point": 0.1
+                            }
+                        ],
+                        "title": "Value",
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "prediction_for",
+                    "value"
+                ],
+                "title": "PredictionsValue",
+                "type": "object",
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsValue` contains the value for a specific period of time as specified by the ``prediction_for`` datetime."
+            },
+            "PredictionsVersion": {
+                "additionalProperties": false,
+                "properties": {
+                    "area": {
+                        "description": "Areas to be filtered. E.g. NO1, NO2",
+                        "title": "Area",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "examples": [
+                            "2024-03-15T06:00:00+00:00"
+                        ],
+                        "format": "date-time",
+                        "title": "Created At",
+                        "type": "string"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "id": {
+                        "title": "Id",
+                        "type": "integer"
+                    },
+                    "latest_event_time": {
+                        "anyOf": [
+                            {
+                                "format": "date-time",
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "examples": [
+                            "2024-03-15T06:00:00+00:00"
+                        ],
+                        "title": "Latest Event Time"
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/EnumProduct",
+                        "description": "Product name for the series"
+                    },
+                    "simulation_event_time_end": {
+                        "description": "The timestamp to which predictions is generated using simulation",
+                        "format": "date-time",
+                        "title": "Simulation Event Time End",
+                        "type": "string"
+                    },
+                    "simulation_event_time_start": {
+                        "description": "The timestamp from which predictions is generated using simulation",
+                        "format": "date-time",
+                        "title": "Simulation Event Time Start",
+                        "type": "string"
+                    },
+                    "statistic": {
+                        "$ref": "#/components/schemas/EnumStatistic",
+                        "description": "Type of statistics."
+                    },
+                    "unit": {
+                        "description": "The unit for the series.",
+                        "title": "Unit",
+                        "type": "string"
+                    },
+                    "unit_type": {
+                        "$ref": "#/components/schemas/EnumUnitType",
+                        "description": "Unit type for the series"
+                    },
+                    "version": {
+                        "description": "Version of the model that generated the predictions",
+                        "examples": [
+                            "1.0.0"
+                        ],
+                        "pattern": "[0-9]+\\.[0-9]+\\.[0-9]+",
+                        "title": "Version",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "version",
+                    "simulation_event_time_start",
+                    "simulation_event_time_end",
+                    "unit",
+                    "id",
+                    "created_at",
+                    "area",
+                    "product",
+                    "unit_type",
+                    "statistic"
+                ],
+                "title": "PredictionsVersion",
+                "type": "object",
+                "x-optimeering-direct-polymorphism": {
+                    "description": "This extension denotes that this component can be directly converted to another specified component.",
+                    "values": [
+                        {
+                            "class": "VersionedSeries",
+                            "fields": [
+                                {
+                                    "field_name": "series_id",
+                                    "mapped_field": "id"
+                                },
+                                {
+                                    "field_name": "version",
+                                    "mapped_field": "version"
+                                }
+                            ],
+                            "method_name": "convert_to_versioned_series"
+                        }
+                    ]
+                },
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsVersion` is used for indexing a specific version for a series of :any:`PredictionsData`.\nFor an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n"
+            },
+            "PredictionsVersionList": {
+                "additionalProperties": false,
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/PredictionsVersion"
+                        },
+                        "title": "Items",
+                        "type": "array"
+                    },
+                    "next_page": {
+                        "description": "The next page of results (if available).",
+                        "title": "Next Page",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "items"
+                ],
+                "title": "PredictionsVersionList",
+                "type": "object",
+                "x-optimeering-component-polymorphism": {
+                    "component-polymorphism": [
+                        "convert_to_versioned_series"
+                    ],
+                    "description": "This extension denotes that this component is iterable and each item can be directly converted to some other class (Refer to 'x-optimeering-direct-polymorphism' in referred component)."
+                },
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter_properties": [
+                        {
+                            "name": "area",
+                            "type": "str"
+                        },
+                        {
+                            "name": "id",
+                            "type": "int"
+                        },
+                        {
+                            "name": "product",
+                            "type": "str"
+                        },
+                        {
+                            "name": "statistic",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit",
+                            "type": "str"
+                        },
+                        {
+                            "name": "unit_type",
+                            "type": "str"
+                        },
+                        {
+                            "name": "version",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true
+                },
+                "x-optimeering-sdk-docstring": "A :any:`PredictionsVersionList` contains a collection of :any:`PredictionsVersion`."
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "title": "Location",
+                        "type": "array"
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError",
+                "type": "object"
+            },
+            "VersionedSeries": {
+                "additionalProperties": false,
+                "properties": {
+                    "series_id": {
+                        "description": "Id of the series",
+                        "title": "Series Id",
+                        "type": "integer"
+                    },
+                    "version": {
+                        "description": "Version number of the series to filter",
+                        "examples": [
+                            "1.0.0"
+                        ],
+                        "pattern": "[0-9]+\\.[0-9]+\\.[0-9]+",
+                        "title": "Version",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "series_id",
+                    "version"
+                ],
+                "title": "VersionedSeries",
+                "type": "object",
+                "x-optimeering-sdk-docstring": "A :any:`VersionedSeries` can be used with :any:`retrieve_versioned` to specify a version of a series to retrieve."
+            }
+        }
+    },
+    "info": {
+        "title": "Optimeering",
+        "version": "0.1.0"
+    },
+    "openapi": "3.1.0",
+    "paths": {
+        "/api/access/apikey/create": {
+            "post": {
+                "description": "Creates a new access key",
+                "operationId": "create_api_key",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AccessPostKey"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessKeyPostResponse"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "Post Access",
+                "tags": [
+                    "access"
+                ]
+            }
+        },
+        "/api/access/apikey/delete": {
+            "delete": {
+                "description": "Deletes an api key.",
+                "operationId": "delete_key",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "title": "Id",
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Delete Key",
+                                    "type": "boolean"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "Drop Key",
+                "tags": [
+                    "access"
+                ]
+            }
+        },
+        "/api/access/apikey/list_my_keys": {
+            "get": {
+                "description": "Lists all the keys owned by the user.",
+                "operationId": "list_my_keys",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/AccessKeyCreated"
+                                    },
+                                    "title": "Response List My Keys",
+                                    "type": "array"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    }
+                },
+                "summary": "Get Access",
+                "tags": [
+                    "access"
+                ],
+                "x-optimeering-paginated-route": {
+                    "description": "This extension denotes that the route returns a paginated response and is paginated by parameters `limit` and `offset`. These routes return a `next_page` in the response, which can be used to obtain the next page of the paginated response.Any language specific client build over the API should consider this extension as a flag to implement pagination logic.",
+                    "value": true
+                }
+            }
+        },
+        "/api/predictions/": {
+            "get": {
+                "description": "Returns predictions.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\nTo get predictions for a particular version, use the `/api/predictions/versioned` route.",
+                "operationId": "retrieve",
+                "parameters": [
+                    {
+                        "description": "Series ID to filter. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                        "in": "query",
+                        "name": "series_id",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minLength": 0,
+                                    "pattern": "^\\d+(,\\d+)*$",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Series ID to filter. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                            "title": "Series Id",
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictInt]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                        "in": "query",
+                        "name": "start",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "format": "duration",
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
+                                },
+                                {
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                            "title": "Start"
+                        }
+                    },
+                    {
+                        "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                        "in": "query",
+                        "name": "end",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "format": "duration",
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
+                                },
+                                {
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                            "title": "End"
+                        }
+                    },
+                    {
+                        "description": "Number of items per page",
+                        "example": 2,
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "maximum": 100000,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 100000,
+                            "description": "Number of items per page",
+                            "title": "Limit",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    },
+                    {
+                        "description": "Page offset",
+                        "in": "query",
+                        "name": "offset",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minimum": 0,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Page offset",
+                            "title": "Offset",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PredictionsDataList"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "Retrieve",
+                "tags": [
+                    "predictions"
+                ],
+                "x-optimeering-paginated-route": {
+                    "description": "This extension denotes that the route returns a paginated response and is paginated by parameters `limit` and `offset`. These routes return a `next_page` in the response, which can be used to obtain the next page of the paginated response.Any language specific client build over the API should consider this extension as a flag to implement pagination logic.",
+                    "value": true
+                },
+                "x-optimeering-sdk-docstring": "\nReturns predictions.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned` method.\n"
+            }
+        },
+        "/api/predictions/latest": {
+            "get": {
+                "description": "Returns predictions with the most recent `event_time`.\n\nIf multiple versions of a prediction exist for a given series, the newest version is returned.\nTo get predictions for a particular version, use the `/api/predictions/versioned` route.",
+                "operationId": "retrieve_latest",
+                "parameters": [
+                    {
+                        "description": "If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                        "in": "query",
+                        "name": "max_event_time",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "format": "duration",
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
+                                },
+                                {
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                            "title": "Max Event Time"
+                        }
+                    },
+                    {
+                        "description": "Series ID to filter. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                        "in": "query",
+                        "name": "series_id",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minLength": 0,
+                                    "pattern": "^\\d+(,\\d+)*$",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Series ID to filter. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                            "title": "Series Id",
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictInt]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Number of items per page",
+                        "example": 2,
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "maximum": 100000,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 100000,
+                            "description": "Number of items per page",
+                            "title": "Limit",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    },
+                    {
+                        "description": "Page offset",
+                        "in": "query",
+                        "name": "offset",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minimum": 0,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Page offset",
+                            "title": "Offset",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PredictionsDataList"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "Retrieve Latest",
+                "tags": [
+                    "predictions"
+                ],
+                "x-optimeering-paginated-route": {
+                    "description": "This extension denotes that the route returns a paginated response and is paginated by parameters `limit` and `offset`. These routes return a `next_page` in the response, which can be used to obtain the next page of the paginated response.Any language specific client build over the API should consider this extension as a flag to implement pagination logic.",
+                    "value": true
+                },
+                "x-optimeering-sdk-docstring": "\nReturns predictions with the most recent ``event_time``.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned`  method.\n"
+            }
+        },
+        "/api/predictions/parameters/{param}": {
+            "get": {
+                "description": "Allowed values for each parameter used in filters on the **predictions** routes",
+                "operationId": "list_parameters",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "param",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/EnumPredictionsParameters"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response List Parameters",
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "Parameter Route",
+                "tags": [
+                    "predictions"
+                ]
+            }
+        },
+        "/api/predictions/series/": {
+            "get": {
+                "description": "Returns the prediction series\n\nTo list versions of a series, use the `/api/predictions/series_version` route.",
+                "operationId": "list_series",
+                "parameters": [
+                    {
+                        "description": "ID of the series to retrieve. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                        "in": "query",
+                        "name": "id",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minLength": 0,
+                                    "pattern": "^\\d+(,\\d+)*$",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "ID of the series to retrieve. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                            "title": "Id",
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictInt]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "The product for which series should be retrieved. If not specified, will return series for all products. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/product).",
+                        "in": "query",
+                        "name": "product",
+                        "required": false,
+                        "schema": {
+                            "description": "The product for which series should be retrieved. If not specified, will return series for all products. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/product).",
+                            "title": "Product",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "product"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Unit type. If not specified, will return series for all unit types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/unit_type).",
+                        "in": "query",
+                        "name": "unit_type",
+                        "required": false,
+                        "schema": {
+                            "description": "Unit type. If not specified, will return series for all unit types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/unit_type).",
+                            "title": "Unit Type",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "unit_type"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Statistic type. If not specified, will return series for all statistic types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/statistic).",
+                        "in": "query",
+                        "name": "statistic",
+                        "required": false,
+                        "schema": {
+                            "description": "Statistic type. If not specified, will return series for all statistic types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/statistic).",
+                            "title": "Statistic",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "statistic"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "The name of the area. If not specified, will return all areas. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/area).",
+                        "in": "query",
+                        "name": "area",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The name of the area. If not specified, will return all areas. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/area).",
+                            "title": "Area",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "area"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Number of items per page",
+                        "example": 2,
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "maximum": 100000,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 100000,
+                            "description": "Number of items per page",
+                            "title": "Limit",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    },
+                    {
+                        "description": "Page offset",
+                        "in": "query",
+                        "name": "offset",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minimum": 0,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Page offset",
+                            "title": "Offset",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PredictionsSeriesList"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "List Series",
+                "tags": [
+                    "predictions"
+                ],
+                "x-optimeering-paginated-route": {
+                    "description": "This extension denotes that the route returns a paginated response and is paginated by parameters `limit` and `offset`. These routes return a `next_page` in the response, which can be used to obtain the next page of the paginated response.Any language specific client build over the API should consider this extension as a flag to implement pagination logic.",
+                    "value": true
+                },
+                "x-optimeering-sdk-docstring": "\nReturns prediction series.\n\nTo list versions of a series, use the :any:`list_version` method.\n"
+            }
+        },
+        "/api/predictions/series_version/": {
+            "get": {
+                "description": "Returns prediction series and their versions.",
+                "operationId": "list_version",
+                "parameters": [
+                    {
+                        "description": "ID of the series to retrieve. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                        "in": "query",
+                        "name": "id",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minLength": 0,
+                                    "pattern": "^\\d+(,\\d+)*$",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "ID of the series to retrieve. If not specified, will return all series. Multiple values can be specified by separating with a comma.",
+                            "title": "Id",
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictInt]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "The product for which series should be retrieved. If not specified, will return series for all products. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/product).",
+                        "in": "query",
+                        "name": "product",
+                        "required": false,
+                        "schema": {
+                            "description": "The product for which series should be retrieved. If not specified, will return series for all products. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/product).",
+                            "title": "Product",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "product"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Unit type. If not specified, will return series for all unit types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/unit_type).",
+                        "in": "query",
+                        "name": "unit_type",
+                        "required": false,
+                        "schema": {
+                            "description": "Unit type. If not specified, will return series for all unit types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/unit_type).",
+                            "title": "Unit Type",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "unit_type"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Statistic type. If not specified, will return series for all statistic types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/statistic).",
+                        "in": "query",
+                        "name": "statistic",
+                        "required": false,
+                        "schema": {
+                            "description": "Statistic type. If not specified, will return series for all statistic types. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/statistic).",
+                            "title": "Statistic",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "statistic"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "The name of the area. If not specified, will return all areas. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/area).",
+                        "in": "query",
+                        "name": "area",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The name of the area. If not specified, will return all areas. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/area).",
+                            "title": "Area",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "area"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Number of items per page",
+                        "example": 2,
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "maximum": 100000,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 100000,
+                            "description": "Number of items per page",
+                            "title": "Limit",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    },
+                    {
+                        "description": "Page offset",
+                        "in": "query",
+                        "name": "offset",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minimum": 0,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Page offset",
+                            "title": "Offset",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PredictionsVersionList"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "List Series Version",
+                "tags": [
+                    "predictions"
+                ],
+                "x-optimeering-sdk-docstring": "\nReturns prediction series and their versions.\n\n"
+            }
+        },
+        "/api/predictions/versioned": {
+            "post": {
+                "description": "Returns versioned predictions.\n\nCan be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see [Prediction Versioning](https://docs.optimeering.com/getting-started/prediction-versioning/)",
+                "operationId": "retrieve_versioned",
+                "parameters": [
+                    {
+                        "description": "If false, filters out simulated prediction from response.",
+                        "in": "query",
+                        "name": "include_simulated",
+                        "required": false,
+                        "schema": {
+                            "default": false,
+                            "description": "If false, filters out simulated prediction from response.",
+                            "title": "Include Simulated",
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                        "in": "query",
+                        "name": "start",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "format": "duration",
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
+                                },
+                                {
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                            "title": "Start"
+                        }
+                    },
+                    {
+                        "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                        "in": "query",
+                        "name": "end",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "format": "duration",
+                                    "type": "string",
+                                    "x-optimeering-bypass-py-typing": {
+                                        "is_optional": true,
+                                        "type": "timedelta"
+                                    }
+                                },
+                                {
+                                    "format": "date-time",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                            "title": "End"
+                        }
+                    },
+                    {
+                        "description": "Number of items per page",
+                        "example": 2,
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "maximum": 100000,
+                                    "minimum": 1,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 100000,
+                            "description": "Number of items per page",
+                            "title": "Limit",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    },
+                    {
+                        "description": "Page offset",
+                        "in": "query",
+                        "name": "offset",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "minimum": 0,
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Page offset",
+                            "title": "Offset",
+                            "x-optimeering-pagination-parameter": {
+                                "description": "This extension denotes that the parameter is used for pagination.",
+                                "value": true
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "items": {
+                                    "$ref": "#/components/schemas/VersionedSeries"
+                                },
+                                "minItems": 1,
+                                "title": "Series Version Restriction",
+                                "type": "array",
+                                "x-optimeering-alternate-typing": {
+                                    "annotation": "Field(min_length=1)",
+                                    "type": "List[VersionedSeries] | PredictionsVersionList"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PredictionsDataList"
+                                }
+                            }
+                        },
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        },
+                        "description": "Validation Error"
+                    }
+                },
+                "summary": "Retrive Versioned",
+                "tags": [
+                    "predictions"
+                ],
+                "x-optimeering-paginated-route": {
+                    "description": "This extension denotes that the route returns a paginated response and is paginated by parameters `limit` and `offset`. These routes return a `next_page` in the response, which can be used to obtain the next page of the paginated response.Any language specific client build over the API should consider this extension as a flag to implement pagination logic.",
+                    "value": true
+                },
+                "x-optimeering-route-supports-alternate-datatypes": {
+                    "description": "This extension denotes that the route supports multiple datatypes for one or more of its paramters."
+                },
+                "x-optimeering-sdk-docstring": "\nReturns versioned predictions.\n\n\nUse the :any:`list_version` method to get the available versions for each prediction series.\n\nCan be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n"
+            }
+        }
+    }
+}

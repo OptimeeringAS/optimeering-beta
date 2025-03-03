@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 import multiprocessing
 {{/asyncio}}
 import sys
-from typing import Optional, Dict
+from typing import Optional, Dict, Union
 import urllib3
 
 import http.client as httplib
@@ -23,13 +23,15 @@ JSON_SCHEMA_VALIDATION_KEYWORDS = {
 }
 
 class Configuration:
-    """This class contains various settings of the API client.
+    """This class is used to configure the :any:`OptimeeringClient`.
 
-    :param host: Base url.
-    :param api_auth_url: URL for Authentication.
-    :param retries: Number of retries for API requests.
+    :param host: API host url.
+    :param api_auth_url: URL for Authentication. Defaults to `api://{host}/.default`
+    :param retries:
+        Number of retries for API requests.
+        Also supports a urllib ``Retry`` object. `See the urlib docs <https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry>`_
     :param api_key: API Key to use for Authentication.
-    :param token: Token to use for Authentication.
+    :param token: Token to use for Authentication. Only use this when you don't want to have the :any:`OptimeeringClient` retrieve a token.
 
     :Example:
 
@@ -54,7 +56,7 @@ class Configuration:
                 *,
                 api_key:Optional[str]=None,
                 token:Optional[str]=None,
-                retries=None,
+                retries:Optional[Union[int,urllib3.Retry]]=None,
                 debug: Optional[bool] = None
                 ) -> None:
         """Constructor

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from inspect import getfullargspec
-import json
+import orjson
 import pprint
 import re  # noqa: F401
 from datetime import timedelta
@@ -11,7 +11,7 @@ from datetime import timedelta
 {{{.}}}
 {{/vendorExtensions.x-py-model-imports}}
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
-from typing_extensions import Literal, Self
+from typing import Literal
 from pydantic import Field
 
 {{#lambda.uppercase}}{{{classname}}}{{/lambda.uppercase}}_ANY_OF_SCHEMAS = [{{#anyOf}}"{{.}}"{{^-last}}, {{/-last}}{{/anyOf}}]
@@ -106,11 +106,11 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             return v
 
     @classmethod
-    def from_dict(cls, obj: Dict[str, Any]) -> Self:
-        return cls.from_json(json.dumps(obj))
+    def from_dict(cls, obj: Dict[str, Any]) -> {{classname}}:
+        return cls.from_json(orjson.dumps(obj).decode())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> {{classname}}:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         {{#isNullable}}
@@ -124,7 +124,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # deserialize data into {{{dataType}}}
         try:
             # validation
-            instance.{{vendorExtensions.x-py-name}} = json.loads(json_str)
+            instance.{{vendorExtensions.x-py-name}} = orjson.loads(json_str)
             # assign value to actual_instance
             instance.actual_instance = instance.{{vendorExtensions.x-py-name}}
             return instance
@@ -136,7 +136,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         # deserialize data into {{{dataType}}}
         try:
             # validation
-            instance.{{vendorExtensions.x-py-name}} = json.loads(json_str)
+            instance.{{vendorExtensions.x-py-name}} = orjson.loads(json_str)
             # assign value to actual_instance
             instance.actual_instance = instance.{{vendorExtensions.x-py-name}}
             return instance
@@ -168,7 +168,7 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
         if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
             return self.actual_instance.to_json()
         else:
-            return json.dumps(self.actual_instance)
+            return orjson.dumps(self.actual_instance).decode()
 
     def to_dict(self) -> Optional[Union[Dict[str, Any], {{#anyOf}}{{.}}{{^-last}}, {{/-last}}{{/anyOf}}]]:
         """Returns the dict representation of the actual instance"""

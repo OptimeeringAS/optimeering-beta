@@ -19,5 +19,8 @@ Contents
 .. toctree::
    self
    authentication
+   configuration
+   access
+   predictions
    client
-   filters
+   models

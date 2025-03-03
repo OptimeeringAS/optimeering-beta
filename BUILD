@@ -6,22 +6,22 @@ python_distribution(
     name="optimeering_beta",
     dependencies=[
         "//optimeering_beta:optimeering_beta",
+        ":root#orjson",
     ],
     long_description_path="README.md",
     output_path="optimeering-beta",
     provides=python_artifact(
         name="optimeering_beta",
-        version="0.0.8",
+        version="0.1.0",
         description="Optimeering Python Client (Beta)",
         long_description_content_type="text/markdown",
         author="Optimeering",
         classifiers=[
-            "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
         ],
     ),
-    wheel_config_settings={"--global-option": ["--python-tag", "py39.py310.py311"]},
+    wheel_config_settings={"--global-option": ["--python-tag", "py310.py311"]},
 )
 
 file(name="pyproject", source="pyproject.toml")

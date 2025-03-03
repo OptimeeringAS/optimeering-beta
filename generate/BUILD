@@ -9,10 +9,12 @@ resource(
     name="openapi-schema",
     source=http_source(
         url="https://beta.optimeering.com/api/docs/openapi.json",
-        sha256="8417b27d22ae3dba7a7030ffef9c1710a322fef1a5bf74a9ea0150f16e7e3dd3",
-        len=48278,
+        sha256="852d13fa221d7d3dd2c5fd9feb208167653b3e7517e692023305c62db7e0366b",
+        len=85348,
     ),
 )
+
+# resource(name="openapi-schema", source="openapi.json")
 
 adhoc_tool(
     name="run-fix-openapi-extensions",
@@ -43,7 +45,7 @@ jvm_artifact(
     name="openapi-generator",
     group="org.openapitools",
     artifact="openapi-generator-cli",
-    version="7.7.0",
+    version="7.10.0",
 )
 
 adhoc_tool(

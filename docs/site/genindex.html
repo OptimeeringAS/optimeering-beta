@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Index &mdash; Optimeering Beta Python Client 0.0.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=6e83718d" />
 
   
@@ -46,8 +46,11 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="client.html">Optimeering Beta SDK</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="access.html">AccessApi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predictions.html">PredictionsApi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client.html">Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Client Models</a></li>
 </ul>
 
         </div>
@@ -83,6 +86,7 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
@@ -100,43 +104,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.access_api">access_api (optimeering_beta.OptimeeringClient property)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.api.AccessApi">AccessApi (class in optimeering_beta.api)</a>
+      <li><a href="access.html#optimeering_beta.AccessApi">AccessApi (class in optimeering_beta)</a>
 </li>
-      <li><a href="filters.html#optimeering_beta.End.actual_instance">actual_instance (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.actual_instance">(optimeering_beta.Start attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated">AccessKeyCreated (class in optimeering_beta.models)</a>
 </li>
-      </ul></li>
-      <li><a href="filters.html#optimeering_beta.End.actual_instance_must_validate_anyof">actual_instance_must_validate_anyof() (optimeering_beta.End class method)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.actual_instance_must_validate_anyof">(optimeering_beta.Start class method)</a>
-</li>
-      </ul></li>
-      <li><a href="filters.html#optimeering_beta.End.any_of_schemas">any_of_schemas (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.any_of_schemas">(optimeering_beta.Start attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.End.anyof_schema_1_validator">anyof_schema_1_validator (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.anyof_schema_1_validator">(optimeering_beta.Start attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse">AccessKeyPostResponse (class in optimeering_beta.models)</a>
 </li>
-      </ul></li>
-      <li><a href="filters.html#optimeering_beta.End.anyof_schema_2_validator">anyof_schema_2_validator (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.anyof_schema_2_validator">(optimeering_beta.Start attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessPostKey">AccessPostKey (class in optimeering_beta.models)</a>
 </li>
-      </ul></li>
-      <li><a href="filters.html#optimeering_beta.EnumParameters.AREA">AREA (optimeering_beta.EnumParameters attribute)</a>
-</li>
-      <li><a href="client.html#optimeering_beta.Configuration.assert_hostname">assert_hostname (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.assert_hostname">assert_hostname (optimeering_beta.Configuration attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -146,15 +124,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.call_api">call_api() (optimeering_beta.OptimeeringClient method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.cert_file">cert_file (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.cert_file">cert_file (optimeering_beta.Configuration attribute)</a>
+</li>
+      <li><a href="configuration.html#optimeering_beta.Configuration">Configuration (class in optimeering_beta)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration">Configuration (class in optimeering_beta)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.connection_pool_maxsize">connection_pool_maxsize (optimeering_beta.Configuration attribute)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.connection_pool_maxsize">connection_pool_maxsize (optimeering_beta.Configuration attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsVersion.convert_to_versioned_series">convert_to_versioned_series() (optimeering_beta.models.PredictionsVersion method)</a>
+
+      <ul>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.convert_to_versioned_series">(optimeering_beta.models.PredictionsVersionList method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.api.AccessApi.create_api_key">create_api_key() (optimeering_beta.api.AccessApi method)</a>
+      </ul></li>
+      <li><a href="access.html#optimeering_beta.AccessApi.create_api_key">create_api_key() (optimeering_beta.AccessApi method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -162,15 +146,21 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.date_format">date_format (optimeering_beta.Configuration attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsSeries.datapoints">datapoints() (optimeering_beta.models.PredictionsSeries method)</a>
+
+      <ul>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.datapoints">(optimeering_beta.models.PredictionsSeriesList method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.datetime_format">datetime_format (optimeering_beta.Configuration attribute)</a>
+      </ul></li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.date_format">date_format (optimeering_beta.Configuration attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.debug">debug (optimeering_beta.Configuration property)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.datetime_format">datetime_format (optimeering_beta.Configuration attribute)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.api.AccessApi.delete_key">delete_key() (optimeering_beta.api.AccessApi method)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.debug">debug (optimeering_beta.Configuration property)</a>
+</li>
+      <li><a href="access.html#optimeering_beta.AccessApi.delete_key">delete_key() (optimeering_beta.AccessApi method)</a>
 </li>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.deserialize">deserialize() (optimeering_beta.OptimeeringClient method)</a>
 </li>
@@ -180,11 +170,7 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.End">End (class in optimeering_beta)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.EnumParameters">EnumParameters (class in optimeering_beta)</a>
+      <li><a href="models.html#optimeering_beta.models.End">End (class in optimeering_beta.models)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -194,20 +180,82 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.files_parameters">files_parameters() (optimeering_beta.OptimeeringClient method)</a>
 </li>
-      <li><a href="filters.html#optimeering_beta.End.from_dict">from_dict() (optimeering_beta.End class method)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsDataList.filter">filter() (optimeering_beta.models.PredictionsDataList method)</a>
 
       <ul>
-        <li><a href="filters.html#optimeering_beta.Start.from_dict">(optimeering_beta.Start class method)</a>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.filter">(optimeering_beta.models.PredictionsSeriesList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.filter">(optimeering_beta.models.PredictionsVersionList method)</a>
+</li>
+      </ul></li>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated.from_dict">from_dict() (optimeering_beta.models.AccessKeyCreated class method)</a>
+
+      <ul>
+        <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse.from_dict">(optimeering_beta.models.AccessKeyPostResponse class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.AccessPostKey.from_dict">(optimeering_beta.models.AccessPostKey class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.HTTPValidationError.from_dict">(optimeering_beta.models.HTTPValidationError class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsData.from_dict">(optimeering_beta.models.PredictionsData class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsDataList.from_dict">(optimeering_beta.models.PredictionsDataList class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsEvent.from_dict">(optimeering_beta.models.PredictionsEvent class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeries.from_dict">(optimeering_beta.models.PredictionsSeries class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.from_dict">(optimeering_beta.models.PredictionsSeriesList class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsValue.from_dict">(optimeering_beta.models.PredictionsValue class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.from_dict">(optimeering_beta.models.PredictionsVersion class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.from_dict">(optimeering_beta.models.PredictionsVersionList class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationError.from_dict">(optimeering_beta.models.ValidationError class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.from_dict">(optimeering_beta.models.VersionedSeries class method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.End.from_json">from_json() (optimeering_beta.End class method)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated.from_json">from_json() (optimeering_beta.models.AccessKeyCreated class method)</a>
 
       <ul>
-        <li><a href="filters.html#optimeering_beta.EnumParameters.from_json">(optimeering_beta.EnumParameters class method)</a>
+        <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse.from_json">(optimeering_beta.models.AccessKeyPostResponse class method)</a>
 </li>
-        <li><a href="filters.html#optimeering_beta.Start.from_json">(optimeering_beta.Start class method)</a>
+        <li><a href="models.html#optimeering_beta.models.AccessPostKey.from_json">(optimeering_beta.models.AccessPostKey class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.End.from_json">(optimeering_beta.models.End class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.HTTPValidationError.from_json">(optimeering_beta.models.HTTPValidationError class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.MaxEventTime.from_json">(optimeering_beta.models.MaxEventTime class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsData.from_json">(optimeering_beta.models.PredictionsData class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsDataList.from_json">(optimeering_beta.models.PredictionsDataList class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsEvent.from_json">(optimeering_beta.models.PredictionsEvent class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeries.from_json">(optimeering_beta.models.PredictionsSeries class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.from_json">(optimeering_beta.models.PredictionsSeriesList class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsValue.from_json">(optimeering_beta.models.PredictionsValue class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.from_json">(optimeering_beta.models.PredictionsVersion class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.from_json">(optimeering_beta.models.PredictionsVersionList class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.Start.from_json">(optimeering_beta.models.Start class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationError.from_json">(optimeering_beta.models.ValidationError class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationErrorLocInner.from_json">(optimeering_beta.models.ValidationErrorLocInner class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.from_json">(optimeering_beta.models.VersionedSeries class method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -216,23 +264,23 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.get_default">get_default() (optimeering_beta.Configuration class method)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.get_default">get_default() (optimeering_beta.Configuration class method)</a>
 
       <ul>
         <li><a href="client.html#optimeering_beta.OptimeeringClient.get_default">(optimeering_beta.OptimeeringClient class method)</a>
 </li>
       </ul></li>
-      <li><a href="client.html#optimeering_beta.Configuration.get_default_copy">get_default_copy() (optimeering_beta.Configuration class method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.api.PredictionsApi.get_latest_predictions">get_latest_predictions() (optimeering_beta.api.PredictionsApi method)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.get_default_copy">get_default_copy() (optimeering_beta.Configuration class method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.api.ParametersApi.get_parameter_values">get_parameter_values() (optimeering_beta.api.ParametersApi method)</a>
-</li>
-      <li><a href="client.html#optimeering_beta.api.PredictionsApi.get_prediction_series">get_prediction_series() (optimeering_beta.api.PredictionsApi method)</a>
-</li>
-      <li><a href="client.html#optimeering_beta.api.PredictionsApi.get_predictions">get_predictions() (optimeering_beta.api.PredictionsApi method)</a>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#optimeering_beta.models.HTTPValidationError">HTTPValidationError (class in optimeering_beta.models)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -240,7 +288,7 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.key_file">key_file (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.key_file">key_file (optimeering_beta.Configuration attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -248,19 +296,25 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.api.AccessApi.list_my_keys">list_my_keys() (optimeering_beta.api.AccessApi method)</a>
+      <li><a href="access.html#optimeering_beta.AccessApi.list_my_keys">list_my_keys() (optimeering_beta.AccessApi method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.logger">logger (optimeering_beta.Configuration attribute)</a>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi.list_parameters">list_parameters() (optimeering_beta.PredictionsApi method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.logger_file">logger_file (optimeering_beta.Configuration property)</a>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi.list_series">list_series() (optimeering_beta.PredictionsApi method)</a>
+</li>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi.list_version">list_version() (optimeering_beta.PredictionsApi method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.logger_file_handler">logger_file_handler (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.logger">logger (optimeering_beta.Configuration attribute)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.logger_format">logger_format (optimeering_beta.Configuration property)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.logger_file">logger_file (optimeering_beta.Configuration property)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.logger_stream_handler">logger_stream_handler (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.logger_file_handler">logger_file_handler (optimeering_beta.Configuration attribute)</a>
+</li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.logger_format">logger_format (optimeering_beta.Configuration property)</a>
+</li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.logger_stream_handler">logger_stream_handler (optimeering_beta.Configuration attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -268,31 +322,15 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.End.model_computed_fields">model_computed_fields (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.model_computed_fields">(optimeering_beta.Start attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.MaxEventTime">MaxEventTime (class in optimeering_beta.models)</a>
 </li>
-      </ul></li>
-      <li><a href="filters.html#optimeering_beta.End.model_config">model_config (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.model_config">(optimeering_beta.Start attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.End.model_fields">model_fields (optimeering_beta.End attribute)</a>
-
-      <ul>
-        <li><a href="filters.html#optimeering_beta.Start.model_fields">(optimeering_beta.Start attribute)</a>
-</li>
-      </ul></li>
       <li>
     module
 
       <ul>
-        <li><a href="client.html#module-optimeering_beta.api">optimeering_beta.api</a>
+        <li><a href="models.html#module-optimeering_beta.models">optimeering_beta.models</a>
 </li>
       </ul></li>
   </ul></td>
@@ -302,10 +340,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    optimeering_beta.api
+    optimeering_beta.models
 
       <ul>
-        <li><a href="client.html#module-optimeering_beta.api">module</a>
+        <li><a href="models.html#module-optimeering_beta.models">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -320,25 +358,35 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.param_serialize">param_serialize() (optimeering_beta.OptimeeringClient method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.OptimeeringClient.parameters_api">parameters_api (optimeering_beta.OptimeeringClient property)</a>
-</li>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.parameters_to_tuples">parameters_to_tuples() (optimeering_beta.OptimeeringClient method)</a>
 </li>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.parameters_to_url_query">parameters_to_url_query() (optimeering_beta.OptimeeringClient method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.api.ParametersApi">ParametersApi (class in optimeering_beta.api)</a>
+      <li><a href="client.html#optimeering_beta.OptimeeringClient.predictions_api">predictions_api (optimeering_beta.OptimeeringClient property)</a>
+</li>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi">PredictionsApi (class in optimeering_beta)</a>
+</li>
+      <li><a href="models.html#optimeering_beta.models.PredictionsData">PredictionsData (class in optimeering_beta.models)</a>
+</li>
+      <li><a href="models.html#optimeering_beta.models.PredictionsDataList">PredictionsDataList (class in optimeering_beta.models)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.OptimeeringClient.predictions_api">predictions_api (optimeering_beta.OptimeeringClient property)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsEvent">PredictionsEvent (class in optimeering_beta.models)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.api.PredictionsApi">PredictionsApi (class in optimeering_beta.api)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsSeries">PredictionsSeries (class in optimeering_beta.models)</a>
 </li>
-      <li><a href="filters.html#optimeering_beta.EnumParameters.PRODUCT">PRODUCT (optimeering_beta.EnumParameters attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList">PredictionsSeriesList (class in optimeering_beta.models)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.proxy">proxy (optimeering_beta.Configuration attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsValue">PredictionsValue (class in optimeering_beta.models)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.proxy_headers">proxy_headers (optimeering_beta.Configuration attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsVersion">PredictionsVersion (class in optimeering_beta.models)</a>
+</li>
+      <li><a href="models.html#optimeering_beta.models.PredictionsVersionList">PredictionsVersionList (class in optimeering_beta.models)</a>
+</li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.proxy">proxy (optimeering_beta.Configuration attribute)</a>
+</li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.proxy_headers">proxy_headers (optimeering_beta.Configuration attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -348,9 +396,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.response_deserialize">response_deserialize() (optimeering_beta.OptimeeringClient method)</a>
 </li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.retries">retries (optimeering_beta.Configuration attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.retries">retries (optimeering_beta.Configuration attribute)</a>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi.retrieve">retrieve() (optimeering_beta.PredictionsApi method)</a>
+</li>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi.retrieve_latest">retrieve_latest() (optimeering_beta.PredictionsApi method)</a>
+</li>
+      <li><a href="predictions.html#optimeering_beta.PredictionsApi.retrieve_versioned">retrieve_versioned() (optimeering_beta.PredictionsApi method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -364,21 +418,21 @@
 </li>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.select_header_content_type">select_header_content_type() (optimeering_beta.OptimeeringClient method)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.set_default">set_default() (optimeering_beta.Configuration class method)</a>
+      <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.series_ids">series_ids (optimeering_beta.models.PredictionsSeriesList property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="configuration.html#optimeering_beta.Configuration.set_default">set_default() (optimeering_beta.Configuration class method)</a>
 
       <ul>
         <li><a href="client.html#optimeering_beta.OptimeeringClient.set_default">(optimeering_beta.OptimeeringClient class method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.socket_options">socket_options (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.socket_options">socket_options (optimeering_beta.Configuration attribute)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.ssl_ca_cert">ssl_ca_cert (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.ssl_ca_cert">ssl_ca_cert (optimeering_beta.Configuration attribute)</a>
 </li>
-      <li><a href="filters.html#optimeering_beta.Start">Start (class in optimeering_beta)</a>
-</li>
-      <li><a href="filters.html#optimeering_beta.EnumParameters.STATISTIC">STATISTIC (optimeering_beta.EnumParameters attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.Start">Start (class in optimeering_beta.models)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -386,28 +440,154 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.tls_server_name">tls_server_name (optimeering_beta.Configuration attribute)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.tls_server_name">tls_server_name (optimeering_beta.Configuration attribute)</a>
 </li>
-      <li><a href="client.html#optimeering_beta.Configuration.to_debug_report">to_debug_report() (optimeering_beta.Configuration method)</a>
+      <li><a href="configuration.html#optimeering_beta.Configuration.to_debug_report">to_debug_report() (optimeering_beta.Configuration method)</a>
 </li>
-      <li><a href="filters.html#optimeering_beta.End.to_dict">to_dict() (optimeering_beta.End method)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated.to_dict">to_dict() (optimeering_beta.models.AccessKeyCreated method)</a>
 
       <ul>
-        <li><a href="filters.html#optimeering_beta.Start.to_dict">(optimeering_beta.Start method)</a>
+        <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_dict">(optimeering_beta.models.AccessKeyPostResponse method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.AccessPostKey.to_dict">(optimeering_beta.models.AccessPostKey method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.End.to_dict">(optimeering_beta.models.End method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.HTTPValidationError.to_dict">(optimeering_beta.models.HTTPValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.MaxEventTime.to_dict">(optimeering_beta.models.MaxEventTime method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsData.to_dict">(optimeering_beta.models.PredictionsData method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsDataList.to_dict">(optimeering_beta.models.PredictionsDataList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsEvent.to_dict">(optimeering_beta.models.PredictionsEvent method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeries.to_dict">(optimeering_beta.models.PredictionsSeries method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.to_dict">(optimeering_beta.models.PredictionsSeriesList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsValue.to_dict">(optimeering_beta.models.PredictionsValue method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.to_dict">(optimeering_beta.models.PredictionsVersion method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.to_dict">(optimeering_beta.models.PredictionsVersionList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.Start.to_dict">(optimeering_beta.models.Start method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationError.to_dict">(optimeering_beta.models.ValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationErrorLocInner.to_dict">(optimeering_beta.models.ValidationErrorLocInner method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.to_dict">(optimeering_beta.models.VersionedSeries method)</a>
+</li>
+      </ul></li>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated.to_json">to_json() (optimeering_beta.models.AccessKeyCreated method)</a>
+
+      <ul>
+        <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_json">(optimeering_beta.models.AccessKeyPostResponse method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.AccessPostKey.to_json">(optimeering_beta.models.AccessPostKey method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.End.to_json">(optimeering_beta.models.End method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.HTTPValidationError.to_json">(optimeering_beta.models.HTTPValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.MaxEventTime.to_json">(optimeering_beta.models.MaxEventTime method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsData.to_json">(optimeering_beta.models.PredictionsData method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsDataList.to_json">(optimeering_beta.models.PredictionsDataList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsEvent.to_json">(optimeering_beta.models.PredictionsEvent method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeries.to_json">(optimeering_beta.models.PredictionsSeries method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.to_json">(optimeering_beta.models.PredictionsSeriesList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsValue.to_json">(optimeering_beta.models.PredictionsValue method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.to_json">(optimeering_beta.models.PredictionsVersion method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.to_json">(optimeering_beta.models.PredictionsVersionList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.Start.to_json">(optimeering_beta.models.Start method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationError.to_json">(optimeering_beta.models.ValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationErrorLocInner.to_json">(optimeering_beta.models.ValidationErrorLocInner method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.to_json">(optimeering_beta.models.VersionedSeries method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.End.to_json">to_json() (optimeering_beta.End method)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated.to_pandas">to_pandas() (optimeering_beta.models.AccessKeyCreated method)</a>
 
       <ul>
-        <li><a href="filters.html#optimeering_beta.Start.to_json">(optimeering_beta.Start method)</a>
+        <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_pandas">(optimeering_beta.models.AccessKeyPostResponse method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.AccessPostKey.to_pandas">(optimeering_beta.models.AccessPostKey method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.HTTPValidationError.to_pandas">(optimeering_beta.models.HTTPValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsData.to_pandas">(optimeering_beta.models.PredictionsData method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsDataList.to_pandas">(optimeering_beta.models.PredictionsDataList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsEvent.to_pandas">(optimeering_beta.models.PredictionsEvent method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeries.to_pandas">(optimeering_beta.models.PredictionsSeries method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.to_pandas">(optimeering_beta.models.PredictionsSeriesList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsValue.to_pandas">(optimeering_beta.models.PredictionsValue method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.to_pandas">(optimeering_beta.models.PredictionsVersion method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.to_pandas">(optimeering_beta.models.PredictionsVersionList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationError.to_pandas">(optimeering_beta.models.ValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.to_pandas">(optimeering_beta.models.VersionedSeries method)</a>
 </li>
       </ul></li>
-      <li><a href="filters.html#optimeering_beta.End.to_str">to_str() (optimeering_beta.End method)</a>
+      <li><a href="models.html#optimeering_beta.models.AccessKeyCreated.to_str">to_str() (optimeering_beta.models.AccessKeyCreated method)</a>
 
       <ul>
-        <li><a href="filters.html#optimeering_beta.Start.to_str">(optimeering_beta.Start method)</a>
+        <li><a href="models.html#optimeering_beta.models.AccessKeyPostResponse.to_str">(optimeering_beta.models.AccessKeyPostResponse method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.AccessPostKey.to_str">(optimeering_beta.models.AccessPostKey method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.End.to_str">(optimeering_beta.models.End method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.HTTPValidationError.to_str">(optimeering_beta.models.HTTPValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.MaxEventTime.to_str">(optimeering_beta.models.MaxEventTime method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsData.to_str">(optimeering_beta.models.PredictionsData method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsDataList.to_str">(optimeering_beta.models.PredictionsDataList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsEvent.to_str">(optimeering_beta.models.PredictionsEvent method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeries.to_str">(optimeering_beta.models.PredictionsSeries method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsSeriesList.to_str">(optimeering_beta.models.PredictionsSeriesList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsValue.to_str">(optimeering_beta.models.PredictionsValue method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.to_str">(optimeering_beta.models.PredictionsVersion method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersionList.to_str">(optimeering_beta.models.PredictionsVersionList method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.Start.to_str">(optimeering_beta.models.Start method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationError.to_str">(optimeering_beta.models.ValidationError method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.ValidationErrorLocInner.to_str">(optimeering_beta.models.ValidationErrorLocInner method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.to_str">(optimeering_beta.models.VersionedSeries method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -416,12 +596,10 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="filters.html#optimeering_beta.EnumParameters.UNIT_TYPE">UNIT_TYPE (optimeering_beta.EnumParameters attribute)</a>
+      <li><a href="client.html#optimeering_beta.OptimeeringClient.update_params_for_auth">update_params_for_auth() (optimeering_beta.OptimeeringClient method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.OptimeeringClient.update_params_for_auth">update_params_for_auth() (optimeering_beta.OptimeeringClient method)</a>
-</li>
       <li><a href="client.html#optimeering_beta.OptimeeringClient.user_agent">user_agent (optimeering_beta.OptimeeringClient property)</a>
 </li>
   </ul></td>
@@ -430,7 +608,23 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="client.html#optimeering_beta.Configuration.verify_ssl">verify_ssl (optimeering_beta.Configuration attribute)</a>
+      <li><a href="models.html#optimeering_beta.models.ValidationError">ValidationError (class in optimeering_beta.models)</a>
+</li>
+      <li><a href="models.html#optimeering_beta.models.ValidationErrorLocInner">ValidationErrorLocInner (class in optimeering_beta.models)</a>
+</li>
+      <li><a href="configuration.html#optimeering_beta.Configuration.verify_ssl">verify_ssl (optimeering_beta.Configuration attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="models.html#optimeering_beta.models.PredictionsData.version_validate_regular_expression">version_validate_regular_expression() (optimeering_beta.models.PredictionsData class method)</a>
+
+      <ul>
+        <li><a href="models.html#optimeering_beta.models.PredictionsVersion.version_validate_regular_expression">(optimeering_beta.models.PredictionsVersion class method)</a>
+</li>
+        <li><a href="models.html#optimeering_beta.models.VersionedSeries.version_validate_regular_expression">(optimeering_beta.models.VersionedSeries class method)</a>
+</li>
+      </ul></li>
+      <li><a href="models.html#optimeering_beta.models.VersionedSeries">VersionedSeries (class in optimeering_beta.models)</a>
 </li>
   </ul></td>
 </tr></table>

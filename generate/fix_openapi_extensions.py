@@ -4,58 +4,20 @@ from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple
 
 
-def inject_optimeering_extensions_into_models(openapi_schema: Dict) -> None:
-    """
-    Injects series id method support into POST response object
-    Injects reference to datapoint API into POST response object
+def replace_sdk_docstring(openapi_spec: Dict):
+    for _, path_description in openapi_spec["paths"].items():
+        for _, method_description in path_description.items():
+            sdk_doc_string = method_description.get("x-optimeering-sdk-docstring")
+            if sdk_doc_string:
+                method_description["description"] = sdk_doc_string
 
-    :param openapi_schema:
-    :return:
-    """
-    for path, path_description in openapi_schema["paths"].items():
-        is_series_response_model = path.endswith("/series/")
-        for method in path_description:
-            tags = path_description[method]["tags"]
-            if len(tags) == 1:
-                api_name = f"{tags[0].capitalize()}Api"
-            else:
-                raise AttributeError("API route has multiple tags.")
-            response_component_name = (
-                path_description[method]["responses"]["200"]["content"]["application/json"]["schema"]
-                .get("$ref", "")
-                .replace("#/components/schemas/", "")
-            )
-            if not response_component_name:
-                continue
-            component_reference = openapi_schema["components"]["schemas"][response_component_name]
-
-            if is_series_response_model:
-                # inject get_series_ids
-                component_reference["x-optimeering-model-with-series-ids"] = {
-                    "description": "This extension denotes that the response have series ids.",
-                    "value": True,
-                }
-                # inject observations operation id and data model
-                datapoint_description = openapi_schema["paths"][path[0 : -len("/series")]]["get"]
-                datapoint_operation_id = datapoint_description["operationId"]
-                datapoint_model = datapoint_description["responses"]["200"]["content"]["application/json"]["schema"][
-                    "$ref"
-                ].replace("#/components/schemas/", "")
-                component_reference["x-optimeering-datapoint-info"] = {
-                    "description": "This extension links responses of series API routes "
-                    "to the API routes that return their datapoints.",
-                    "operation-id": datapoint_operation_id,
-                    "response-model-name": datapoint_model,
-                    "api-name": api_name,
-                }
-            # Inject iterable functionality
-            component_reference["x-optimeering-iterable"] = {
-                "description": "This extension denotes that the response is iterable.",
-                "value": True,
-            }
+    for _, schema_value in openapi_spec["components"]["schemas"].items():
+        sdk_doc_string = schema_value.get("x-optimeering-sdk-docstring")
+        if sdk_doc_string:
+            schema_value["description"] = sdk_doc_string
 
 
-def remove_enums_from_specs(openapi_specs: Dict):
+def remove_and_replace_referenced_enums_in_component(openapi_specs: Dict):
     """
     Replace all enum references with type defination
     :param openapi_specs:
@@ -141,13 +103,14 @@ def remove_comma_separated_docs(openapi_spec: Dict):
 
 def remove_hyperlinks_from_docs(openapi_spec: Dict):
     """Remove hyper links for allowed values in documentation"""
-    for _, path_definition in openapi_spec["paths"].items():
+    for path, path_definition in openapi_spec["paths"].items():
+        _, _, api_name, _ = path.split("/", 3)
         for method, method_definition in path_definition.items():
             if method != "get":
                 continue
             for parameter_definition in method_definition.get("parameters", []):
                 if "x-optimeering-allowed-parameter-values" in parameter_definition.get("schema", {}):
-                    hyperlink_doc = f" List of available values [here](/api/parameters/{parameter_definition['schema']['x-optimeering-allowed-parameter-values']['parameter-name']})."
+                    hyperlink_doc = f" List of available values [here](/api/{api_name}/parameters/{parameter_definition['schema']['x-optimeering-allowed-parameter-values']['parameter-name']})."
                     if "description" in parameter_definition:
                         parameter_definition["description"] = parameter_definition["description"].replace(
                             hyperlink_doc, ""
@@ -164,61 +127,53 @@ def move_optimeering_extensions_out_of_schema(content):
     """
     for _, methods in content["paths"].items():
         for _, method_definition in methods.items():
-            if "parameters" not in method_definition:
-                continue
-            parameters = method_definition["parameters"]
+            parameters = method_definition.get("parameters", [])
             for parameter in parameters:
                 if "schema" not in parameter:
                     continue
                 for key in list(parameter["schema"]):
                     if key.startswith("x-"):
                         parameter[key] = parameter["schema"].pop(key)
-
-
-def add_py_data_type_for_duration_type(content):
-    """
-    Adds optimeering extensions for parameters with type `duration`
-    """
-    for path, path_desc in content["paths"].items():
-        for route, route_desc in path_desc.items():
-            if "parameters" not in route_desc:
-                continue
-            for parameter in route_desc["parameters"]:
-                if "schema" not in parameter:
-                    continue
-                if "anyOf" not in parameter["schema"]:
-                    continue
-                has_duration = False
-                is_optional = False
-                duration_idx = None
-                for any_idx, any_of in enumerate(parameter["schema"]["anyOf"]):
-                    if (any_of.get("type") == "string") and (any_of.get("format") == "duration"):
-                        has_duration = True
-                        duration_idx = any_idx
-                    if any_of.get("type") == "null":
-                        is_optional = True
-
-                if has_duration:
-                    parameter["schema"]["anyOf"][duration_idx]["x-optimeering-bypass-py-typing"] = {
-                        "type": "timedelta",
-                        "is_optional": is_optional,
-                    }
+            body_schema = (
+                method_definition.get("requestBody", {}).get("content", {}).get("application/json", {}).get("schema")
+            )
+            if body_schema:
+                extensions = {k: v for k, v in body_schema.items() if k.startswith("x-")}
+                method_definition["requestBody"] = {**method_definition["requestBody"], **extensions}
 
 
 def fix_openapi_extensions(schema_path: str) -> None:
     with open(schema_path, "r") as file:
         content = json.load(file)
 
+    replace_sdk_docstring(content)
     remove_comma_separated_docs(content)
     remove_hyperlinks_from_docs(content)
-    remove_enums_from_specs(content)
+    remove_and_replace_referenced_enums_in_component(content)
+    remove_parameter_enums(content)
 
     move_optimeering_extensions_out_of_schema(content)
-    add_py_data_type_for_duration_type(content)
     filter_schema_components(content)
-    inject_optimeering_extensions_into_models(content)
 
     print(json.dumps(content, indent=4, sort_keys=True))
+
+
+def remove_parameter_enums(openapi_doc: Dict):
+    for path, path_description in openapi_doc["paths"].items():
+        try:
+            _, api, app_name, route, _ = path.split("/", 4)
+        except ValueError:
+            continue
+        if api == "api" and route == "parameters":
+            for _, method_description in path_description.items():
+                for param_description in method_description.get("parameters", []):
+                    expected_enum_name = f"Enum{app_name.capitalize()}Parameters"
+                    component_reference = param_description.get("schema", {}).get("$ref")
+                    if component_reference == f"#/components/schemas/{expected_enum_name}":
+                        enum_component_type = openapi_doc["components"]["schemas"][expected_enum_name]["type"]
+                        del openapi_doc["components"]["schemas"][expected_enum_name]
+                        del param_description["schema"]["$ref"]
+                        param_description["schema"]["type"] = enum_component_type
 
 
 def resolve_schema_ref_in_schema(schema_components: Dict, schema_name_list: List[str]):

@@ -1,32 +1,34 @@
         """{{#isDeprecated}}(Deprecated) {{/isDeprecated}}{{{summary}}}{{^summary}}{{operationId}}{{/summary}}
 
-        {{#notes}}
-        {{{.}}}
-        {{/notes}}
+{{#unescapedNotes}}
+{{{.}}}
+{{/unescapedNotes}}
 
-        {{#allParams}}
-        {{^vendorExtensions.x-optimeering-pagination-parameter.value}}
-        {{! IGNORE ALL PAGINATION PARAMTERS}}
-        :param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
-        {{^vendorExtensions.x-optimeering-comma-separated.data-type}}
-        {{! DEFAULT CASE FROM OPENAPI GENERATOR}}
-        :type {{paramName}}: {{dataType}}{{#optional}}, optional{{/optional}}
-        {{/vendorExtensions.x-optimeering-comma-separated.data-type}}
-        {{#vendorExtensions.x-optimeering-comma-separated.data-type}}
-        {{! OPTIMEERING PYTHON TYPE OVERWRITE}}
-        :type {{paramName}}: {{vendorExtensions.x-optimeering-comma-separated.data-type}}{{#optional}}, optional{{/optional}}
-        {{/vendorExtensions.x-optimeering-comma-separated.data-type}}
-        {{/vendorExtensions.x-optimeering-pagination-parameter.value}}
-        {{/allParams}}
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :return: Returns the result object.
-        :rtype: {{returnType}}
-        
-        {{>example_api}}
+{{#allParams}}
+{{^vendorExtensions.x-optimeering-pagination-parameter.value}}
+{{! IGNORE ALL PAGINATION PARAMTERS}}
+:param {{paramName}}:{{#description}} {{{.}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+{{^vendorExtensions.x-optimeering-comma-separated.data-type}}
+{{! DEFAULT CASE FROM OPENAPI GENERATOR}}
+:type {{paramName}}: {{!
+}}{{#vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+    }}{{{vendorExtensions.x-optimeering-alternate-typing.type}}}{{!
+}}{{/vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+}}{{^vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+    }}{{dataType}}{{!
+}}{{/vendorExtensions.x-optimeering-alternate-typing.type}}{{!
+}}{{#optional}}, optional{{/optional}}
+{{/vendorExtensions.x-optimeering-comma-separated.data-type}}
+{{#vendorExtensions.x-optimeering-comma-separated.data-type}}
+{{! OPTIMEERING PYTHON TYPE OVERWRITE}}
+:type {{paramName}}: {{vendorExtensions.x-optimeering-comma-separated.data-type}}{{#optional}}, optional{{/optional}}
+{{/vendorExtensions.x-optimeering-comma-separated.data-type}}
+{{/vendorExtensions.x-optimeering-pagination-parameter.value}}
+{{/allParams}}
+:return: Returns the result object.
+:rtype: {{returnType}}
+
+{{>example_api}}
         """ # noqa: E501
         {{#isDeprecated}}
         warnings.warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning)
