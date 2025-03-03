@@ -6,12 +6,12 @@ python_source(name="fix-openapi-extensions", source="fix_openapi_extensions.py")
 # To get the SHA and the length, use the following command
 # curl -L https://beta.optimeering.com/api/docs/openapi.json | tee >(wc -c) >(shasum -a 256) >/dev/null
 resource(
-   name="openapi-schema",
-   source=http_source(
-      url="https://beta.optimeering.com/api/docs/openapi.json",
-       sha256="852d13fa221d7d3dd2c5fd9feb208167653b3e7517e692023305c62db7e0366b",
-       len=85348,
-   ),
+    name="openapi-schema",
+    source=http_source(
+        url="https://beta.optimeering.com/api/docs/openapi.json",
+        sha256="852d13fa221d7d3dd2c5fd9feb208167653b3e7517e692023305c62db7e0366b",
+        len=85348,
+    ),
 )
 
 # resource(name="openapi-schema", source="openapi.json")
