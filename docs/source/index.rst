@@ -19,6 +19,7 @@ Contents
 .. toctree::
    self
    authentication
+   examples
    configuration
    access
    predictions

@@ -1,0 +1,65 @@
+Code Examples
+========
+
+==============================
+Working with Prediction Series
+==============================
+
+The following examples show how to use the ``list_series`` method to get the prediction series you want to work with, and then retrieve predction events.
+
+``list_series`` allows for the following filter parameters:
+
+* product
+* unit_type
+* statistic
+* area
+
+You can find the available values for each parameter by using the ``list_parameters`` method. For example to get the availabe ``area`` values:
+
+.. code-block:: python
+
+    areas = client.predictions_api.list_parameters('area')
+
+The above returns a dictionary, where the keys are the values that can be used in the filters. You can then, for example, use list comprehension to filter out only the Norwegian areas:
+
+.. code-block:: python
+
+    norwegian_areas = [area for area in areas.keys() if 'NO' in area]
+
+This can then be used when retrieving the prediction series:
+
+.. code-block:: python
+
+    series = client.predictions_api.list_series(area=norwegian_areas)
+
+The ``series`` object above is of type :any:`PredictionsSeriesList`. If you like to explore your data as a Pandas dataframe, you can call ``to_pandas()`` on this object.
+
+You can also easily filter a :any:`PredictionsSeriesList` by using the ``filter()`` method. This method takes in the same filters as you can use when calling ``list_series``. 
+
+It can also be used to filter on other parameters of a :any:`PredictionSeries` such as ``unit`` and ``id``. For example, to filter out only series with a ``product`` of ``Imbalance`` and ``statistic`` of ``Point``:
+
+.. code-block:: python
+
+    filtered_series = series.filter(product=['Imbalance'], statistic=['Point'])
+
+.. note::
+    Remember that the arguments of ``filter()`` and ``list_series()`` are lists, so you can filter on multiple values for each parameter.
+
+    You should always try to pass as many filters into ``list_series()`` as possible, as this will reduce the amount of data that needs to be transferred from the server to your client.
+
+Now that we have the appropriate series, we can retrieve the prediction events for these series, by simply calling the following:
+
+.. code-block:: python
+
+    data = filtered_series.retrieve(start="-P1W")
+
+This will return a :any:`PredictionsData` object, which can be converted to a Pandas dataframe by calling ``to_pandas()`` on it, with a ``unpack_value_method``.
+
+The ``unpack_value_method`` can be one of:
+
+* ``new_rows``
+* ``new_columns``
+
+See the :any:`PredictionsDataList.to_pandas` method for more information on each of the methods.
+
+This can be done by using the :any:`retrieve` or :any:`retrieve_latest` methods
