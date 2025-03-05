@@ -1,6 +1,8 @@
 Code Examples
 ========
 
+You can see full working examples in our Github repository: https://github.com/OptimeeringAS/optimeering-beta/tree/main/examples
+
 ==============================
 Working with Prediction Series
 ==============================
