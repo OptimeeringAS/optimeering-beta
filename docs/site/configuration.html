@@ -22,7 +22,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AccessApi" href="access.html" />
+    <link rel="next" title="Code Examples" href="examples.html" />
     <link rel="prev" title="Authentication" href="authentication.html" /> 
 </head>
 
@@ -49,35 +49,8 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.Configuration"><code class="docutils literal notranslate"><span class="pre">Configuration</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.logger"><code class="docutils literal notranslate"><span class="pre">Configuration.logger</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.logger_stream_handler"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_stream_handler</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.logger_file_handler"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_file_handler</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.verify_ssl"><code class="docutils literal notranslate"><span class="pre">Configuration.verify_ssl</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.ssl_ca_cert"><code class="docutils literal notranslate"><span class="pre">Configuration.ssl_ca_cert</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.cert_file"><code class="docutils literal notranslate"><span class="pre">Configuration.cert_file</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.key_file"><code class="docutils literal notranslate"><span class="pre">Configuration.key_file</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.assert_hostname"><code class="docutils literal notranslate"><span class="pre">Configuration.assert_hostname</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.tls_server_name"><code class="docutils literal notranslate"><span class="pre">Configuration.tls_server_name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.connection_pool_maxsize"><code class="docutils literal notranslate"><span class="pre">Configuration.connection_pool_maxsize</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.proxy"><code class="docutils literal notranslate"><span class="pre">Configuration.proxy</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.proxy_headers"><code class="docutils literal notranslate"><span class="pre">Configuration.proxy_headers</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.retries"><code class="docutils literal notranslate"><span class="pre">Configuration.retries</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.socket_options"><code class="docutils literal notranslate"><span class="pre">Configuration.socket_options</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.datetime_format"><code class="docutils literal notranslate"><span class="pre">Configuration.datetime_format</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.date_format"><code class="docutils literal notranslate"><span class="pre">Configuration.date_format</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.set_default"><code class="docutils literal notranslate"><span class="pre">Configuration.set_default()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.get_default_copy"><code class="docutils literal notranslate"><span class="pre">Configuration.get_default_copy()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.get_default"><code class="docutils literal notranslate"><span class="pre">Configuration.get_default()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.logger_file"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_file</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.debug"><code class="docutils literal notranslate"><span class="pre">Configuration.debug</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.logger_format"><code class="docutils literal notranslate"><span class="pre">Configuration.logger_format</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.Configuration.to_debug_report"><code class="docutils literal notranslate"><span class="pre">Configuration.to_debug_report()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Code Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="access.html">AccessApi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="predictions.html">PredictionsApi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="client.html">Client</a></li>
@@ -110,217 +83,6 @@
              
   <section id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://beta.optimeering.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_auth_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration" title="Link to this definition"></a></dt>
-<dd><p>This class is used to configure the <a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient" title="optimeering_beta.OptimeeringClient"><code class="xref any py py-class docutils literal notranslate"><span class="pre">OptimeeringClient</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>host</strong> – API host url.</p></li>
-<li><p><strong>api_auth_url</strong> – URL for Authentication. Defaults to <cite>api://{host}/.default</cite></p></li>
-<li><p><strong>retries</strong> – Number of retries for API requests.
-Also supports a urllib <code class="docutils literal notranslate"><span class="pre">Retry</span></code> object. <a class="reference external" href="https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry">See the urlib docs</a></p></li>
-<li><p><strong>api_key</strong> – API Key to use for Authentication.</p></li>
-<li><p><strong>token</strong> – Token to use for Authentication. Only use this when you don’t want to have the <a class="reference internal" href="client.html#optimeering_beta.OptimeeringClient" title="optimeering_beta.OptimeeringClient"><code class="xref any py py-class docutils literal notranslate"><span class="pre">OptimeeringClient</span></code></a> retrieve a token.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Example<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">API Key Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;your api key&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Token Example<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="s2">&quot;your token&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#optimeering_beta.Configuration.logger" title="Link to this definition"></a></dt>
-<dd><p>Logging Settings</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.logger_stream_handler">
-<span class="sig-name descname"><span class="pre">logger_stream_handler</span></span><a class="headerlink" href="#optimeering_beta.Configuration.logger_stream_handler" title="Link to this definition"></a></dt>
-<dd><p>Log stream handler</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.logger_file_handler">
-<span class="sig-name descname"><span class="pre">logger_file_handler</span></span><a class="headerlink" href="#optimeering_beta.Configuration.logger_file_handler" title="Link to this definition"></a></dt>
-<dd><p>Log file handler</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.verify_ssl">
-<span class="sig-name descname"><span class="pre">verify_ssl</span></span><a class="headerlink" href="#optimeering_beta.Configuration.verify_ssl" title="Link to this definition"></a></dt>
-<dd><p>SSL/TLS verification
-Set this to false to skip verifying SSL certificate when calling API
-from https server.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.ssl_ca_cert">
-<span class="sig-name descname"><span class="pre">ssl_ca_cert</span></span><a class="headerlink" href="#optimeering_beta.Configuration.ssl_ca_cert" title="Link to this definition"></a></dt>
-<dd><p>Set this to customize the certificate file to verify the peer.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.cert_file">
-<span class="sig-name descname"><span class="pre">cert_file</span></span><a class="headerlink" href="#optimeering_beta.Configuration.cert_file" title="Link to this definition"></a></dt>
-<dd><p>client certificate file</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.key_file">
-<span class="sig-name descname"><span class="pre">key_file</span></span><a class="headerlink" href="#optimeering_beta.Configuration.key_file" title="Link to this definition"></a></dt>
-<dd><p>client key file</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.assert_hostname">
-<span class="sig-name descname"><span class="pre">assert_hostname</span></span><a class="headerlink" href="#optimeering_beta.Configuration.assert_hostname" title="Link to this definition"></a></dt>
-<dd><p>Set this to True/False to enable/disable SSL hostname verification.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.tls_server_name">
-<span class="sig-name descname"><span class="pre">tls_server_name</span></span><a class="headerlink" href="#optimeering_beta.Configuration.tls_server_name" title="Link to this definition"></a></dt>
-<dd><p>SSL/TLS Server Name Indication (SNI)
-Set this to the SNI value expected by the server.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.connection_pool_maxsize">
-<span class="sig-name descname"><span class="pre">connection_pool_maxsize</span></span><a class="headerlink" href="#optimeering_beta.Configuration.connection_pool_maxsize" title="Link to this definition"></a></dt>
-<dd><p>urllib3 connection pool’s maximum number of connections saved
-per pool. urllib3 uses 1 connection as default value, but this is
-not the best value when you are making a lot of possibly parallel
-requests to the same host, which is often the case here.
-cpu_count * 5 is used as default value to increase performance.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.proxy">
-<span class="sig-name descname"><span class="pre">proxy</span></span><a class="headerlink" href="#optimeering_beta.Configuration.proxy" title="Link to this definition"></a></dt>
-<dd><p>Proxy URL</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.proxy_headers">
-<span class="sig-name descname"><span class="pre">proxy_headers</span></span><a class="headerlink" href="#optimeering_beta.Configuration.proxy_headers" title="Link to this definition"></a></dt>
-<dd><p>Proxy headers</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.retries">
-<span class="sig-name descname"><span class="pre">retries</span></span><a class="headerlink" href="#optimeering_beta.Configuration.retries" title="Link to this definition"></a></dt>
-<dd><p>Adding retries to override urllib3 default value 3</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.socket_options">
-<span class="sig-name descname"><span class="pre">socket_options</span></span><a class="headerlink" href="#optimeering_beta.Configuration.socket_options" title="Link to this definition"></a></dt>
-<dd><p>Options to pass down to the underlying urllib3 socket</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.datetime_format">
-<span class="sig-name descname"><span class="pre">datetime_format</span></span><a class="headerlink" href="#optimeering_beta.Configuration.datetime_format" title="Link to this definition"></a></dt>
-<dd><p>datetime format</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.date_format">
-<span class="sig-name descname"><span class="pre">date_format</span></span><a class="headerlink" href="#optimeering_beta.Configuration.date_format" title="Link to this definition"></a></dt>
-<dd><p>date format</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.set_default">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration.set_default" title="Link to this definition"></a></dt>
-<dd><p>Set default instance of configuration.</p>
-<p>It stores default configuration, which can be
-returned by get_default_copy method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>default</strong> – object of Configuration</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.get_default_copy">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration.get_default_copy" title="Link to this definition"></a></dt>
-<dd><p>Deprecated. Please use <cite>get_default</cite> instead.</p>
-<p>Deprecated. Please use <cite>get_default</cite> instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The configuration object.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.get_default">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration.get_default" title="Link to this definition"></a></dt>
-<dd><p>Return the default configuration.</p>
-<p>This method returns newly created, based on default constructor,
-object of Configuration class or returns a copy of default
-configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The configuration object.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.logger_file">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logger_file</span></span><a class="headerlink" href="#optimeering_beta.Configuration.logger_file" title="Link to this definition"></a></dt>
-<dd><p>Debug file location</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.debug">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">debug</span></span><a class="headerlink" href="#optimeering_beta.Configuration.debug" title="Link to this definition"></a></dt>
-<dd><p>Debug status</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.logger_format">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logger_format</span></span><a class="headerlink" href="#optimeering_beta.Configuration.logger_format" title="Link to this definition"></a></dt>
-<dd><p>Log format</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.Configuration.to_debug_report">
-<span class="sig-name descname"><span class="pre">to_debug_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.Configuration.to_debug_report" title="Link to this definition"></a></dt>
-<dd><p>Gets the essential information for debugging.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The report for debugging.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 
 
@@ -328,7 +90,7 @@ configuration.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="authentication.html" class="btn btn-neutral float-left" title="Authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="access.html" class="btn btn-neutral float-right" title="AccessApi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Code Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

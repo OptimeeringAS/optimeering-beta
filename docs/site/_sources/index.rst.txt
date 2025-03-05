@@ -20,6 +20,7 @@ Contents
    self
    authentication
    configuration
+   examples
    access
    predictions
    client
