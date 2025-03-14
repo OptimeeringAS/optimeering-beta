@@ -9,12 +9,15 @@ from __future__ import annotations
 
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import warnings
+from datetime import datetime
+from typing import Any, ClassVar, Dict, Iterator, List, Optional, Set
 
+import optimeering_beta
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.predictions_version import PredictionsVersion
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, model_validator
 
 
 class PredictionsVersionList(BaseModel):
@@ -29,6 +32,7 @@ class PredictionsVersionList(BaseModel):
 
     items: List[PredictionsVersion]
     next_page: Optional[StrictStr] = Field(default=None, description="The next page of results (if available).")
+    _client: Any = None
     __properties: ClassVar[List[str]] = ["items", "next_page"]
 
     model_config = ConfigDict(
@@ -96,33 +100,68 @@ class PredictionsVersionList(BaseModel):
         )
         return _obj
 
-    def __len__(self):
-        if "items" in self.model_fields:
-            return sum(len(i) for i in self.items)
-        elif "datapoints" in self.model_fields:
-            return sum(len(i) for i in self.datapoints)
-        elif "predictions" in self.model_fields:
-            return sum(len(i) for i in self.predictions)
-        elif "entities" in self.model_fields:
-            return sum(len(i) for i in self.entities)
-        elif "capacity_restrictions" in self.model_fields:
-            return sum(len(i) for i in self.capacity_restrictions)
-        return 1
+    @model_validator(mode="before")
+    def validate_extra_fields(cls, values):
+        if len(values) > 1:  # Check if there are extra fields
+            if set(values) - set(cls.model_fields):
+                warnings.warn("Data mismatch, please update the SDK to the latest version")
+        return values
 
-    def __iter__(self):
+    def retrieve_versioned(
+        self,
+        include_simulated: Optional[bool] = None,
+        start: Optional[datetime | StrictStr] = None,
+        end: Optional[datetime | StrictStr] = None,
+    ) -> optimeering_beta.models.PredictionsDataList:
+        """
+
+        Returns versioned predictions.
+
+
+        Use the :any:`list_version` method to get the available versions for each prediction series.
+
+        Can be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_
+
+
+                :param include_simulated: If false, filters out simulated prediction from response.
+                :param start: The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+                :param end: The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+        """
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve_versioned(
+            versioned_series=self,
+            include_simulated=include_simulated,
+            start=start,
+            end=end,
+        )
+
+    def __len__(self):
+        return sum(len(i) for i in self.items)
+
+    def __iter__(self) -> Iterator[PredictionsVersion]:  # type: ignore[override]
         """Iteration method for generated models"""
-        if isinstance(self, list):
-            return (i for i in self)
-        elif "items" in self.model_fields:
-            return iter(self.items)
+        self.__iter_index = 0
+        return self
+
+    def __next__(self) -> PredictionsVersion:
+        if not self.items:
+            raise StopIteration
+        try:
+            _return = self.items[self.__iter_index]
+        except IndexError:
+            raise StopIteration
         else:
-            raise AttributeError("This object does not support iteration.")
+            self.__iter_index += 1
+            return _return
 
     def filter(
         self,
         area: Optional[List[str]] = None,
         id: Optional[List[int]] = None,
         product: Optional[List[str]] = None,
+        resolution: Optional[List[str]] = None,
         statistic: Optional[List[str]] = None,
         unit: Optional[List[str]] = None,
         unit_type: Optional[List[str]] = None,
@@ -133,6 +172,7 @@ class PredictionsVersionList(BaseModel):
             "area",
             "id",
             "product",
+            "resolution",
             "statistic",
             "unit",
             "unit_type",
@@ -141,34 +181,28 @@ class PredictionsVersionList(BaseModel):
         _locals = locals()
         compare_dict = {i: _locals[i] for i in properties if _locals[i] is not None}
 
-        if "items" in self.model_fields:
-            obj_copy = self.copy()
-            obj_copy.items = [
-                item
-                for item in iter(obj_copy.items)
-                if all(
-                    getattr(item, property_name) in filter_values
-                    for property_name, filter_values in compare_dict.items()
-                )
-            ]
-            return obj_copy
-        else:
-            raise AttributeError("This object does not support iteration.")
+        obj_copy = self.model_copy()
+        obj_copy.items = [
+            item
+            for item in obj_copy
+            if all(
+                getattr(item, property_name) in filter_values for property_name, filter_values in compare_dict.items()
+            )
+        ]
+        return obj_copy
 
     def convert_to_versioned_series(self) -> List:
         """Converts all items"""
         return [i.convert_to_versioned_series() for i in self.items]
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(
+        self,
+    ) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 
-        :param unpack_value_method:
-            Determines how values are unpacked. Should be one of the following:
-                1. retain_original: Do not unpack the values.
-                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
-                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
-        :type unpack_value_method: str
         """
-        return pydantic_to_pandas(self, unpack_value_method)
+        return pydantic_to_pandas(
+            self,
+        )

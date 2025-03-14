@@ -7,17 +7,18 @@
 
 from __future__ import annotations
 
-import inspect
 import pprint
 import re  # noqa: F401
+import warnings
 from datetime import datetime
-from typing import Any, ClassVar, Dict, Iterable, List, Optional, Set
+from typing import Any, ClassVar, Dict, Iterable, Iterator, List, Optional, Set
+from warnings import warn
 
 import optimeering_beta
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.predictions_series import PredictionsSeries
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, model_validator
 
 
 class PredictionsSeriesList(BaseModel):
@@ -100,18 +101,12 @@ class PredictionsSeriesList(BaseModel):
         )
         return _obj
 
-    def __len__(self):
-        if "items" in self.model_fields:
-            return sum(len(i) for i in self.items)
-        elif "datapoints" in self.model_fields:
-            return sum(len(i) for i in self.datapoints)
-        elif "predictions" in self.model_fields:
-            return sum(len(i) for i in self.predictions)
-        elif "entities" in self.model_fields:
-            return sum(len(i) for i in self.entities)
-        elif "capacity_restrictions" in self.model_fields:
-            return sum(len(i) for i in self.capacity_restrictions)
-        return 1
+    @model_validator(mode="before")
+    def validate_extra_fields(cls, values):
+        if len(values) > 1:  # Check if there are extra fields
+            if set(values) - set(cls.model_fields):
+                warnings.warn("Data mismatch, please update the SDK to the latest version")
+        return values
 
     @property
     def series_ids(self) -> List[int]:
@@ -127,45 +122,135 @@ class PredictionsSeriesList(BaseModel):
         self,
         start: Optional[datetime | StrictStr] = None,
         end: Optional[datetime | StrictStr] = None,
-        include_history: Optional[StrictBool] = None,
     ) -> optimeering_beta.models.PredictionsDataList:
         """
-        Returns data points for the current series.
 
-        :param start: The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 format (eg - '2024-05-15T06:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
-        :param end: The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 format (eg - '2024-05-15T08:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
-        :param include_history: Include historical data into the response. Defaults to False. This argument has no effect if the underlying API does not support getting history.
+        Returns predictions.
+
+        If multiple versions of a prediction exist for a given series, the highest version is returned.
+
+        To get predictions for a particular version, use the :any:`retrieve_versioned` method.
+
+
+                :param start: The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+                :param end: The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+        """
+        warn("This method will be deprecated. Use `retrieve` instead.")
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve(
+            series_id=self.series_ids,
+            start=start,
+            end=end,
+        )
+
+    def retrieve(
+        self,
+        start: Optional[datetime | StrictStr] = None,
+        end: Optional[datetime | StrictStr] = None,
+    ) -> optimeering_beta.models.PredictionsDataList:
+        """
+
+        Returns predictions.
+
+        If multiple versions of a prediction exist for a given series, the highest version is returned.
+
+        To get predictions for a particular version, use the :any:`retrieve_versioned` method.
+
+
+                :param start: The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+                :param end: The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
         """
         if self._client is None:
             raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
-        method_for_operation = optimeering_beta.PredictionsApi(api_client=self._client).retrieve
 
-        extra_params: Dict[str, Any] = {}
-        valid_arguments = list(inspect.signature(method_for_operation).parameters.keys())
-        if "include_history" in valid_arguments:
-            extra_params["include_history"] = include_history
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve(
+            series_id=self.series_ids,
+            start=start,
+            end=end,
+        )
 
-        if hasattr(self, "series_ids"):
-            return method_for_operation(series_id=self.series_ids, start=start, end=end, **extra_params)
-        elif hasattr(self, "id"):
-            return method_for_operation(series_id=[self.id], start=start, end=end, **extra_params)
-        else:
-            raise NotImplementedError("This class does not support this feature.")
+    def retrieve_latest(
+        self,
+        max_event_time: Optional[datetime | StrictStr] = None,
+    ) -> optimeering_beta.models.PredictionsDataList:
+        """
 
-    def __iter__(self):
+        Returns predictions with the most recent ``event_time``.
+
+        If multiple versions of a prediction exist for a given series, the highest version is returned.
+
+        To get predictions for a particular version, use the :any:`retrieve_versioned`  method.
+
+
+                :param max_event_time: If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+        """
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve_latest(
+            series_id=self.series_ids,
+            max_event_time=max_event_time,
+        )
+
+    def list_version(
+        self,
+        product: Optional[List[StrictStr]] = None,
+        unit_type: Optional[List[StrictStr]] = None,
+        statistic: Optional[List[StrictStr]] = None,
+        area: Optional[List[StrictStr]] = None,
+        resolution: Optional[List[StrictStr]] = None,
+    ) -> optimeering_beta.models.PredictionsVersionList:
+        """
+
+        Returns prediction series and their versions.
+
+
+
+                :param product: The product for which series should be retrieved. If not specified, will return series for all products.
+                :param unit_type: Unit type. If not specified, will return series for all unit types.
+                :param statistic: Statistic type. If not specified, will return series for all statistic types.
+                :param area: The name of the area. If not specified, will return all areas.
+                :param resolution: Resolution of the series. If not specified, will return series for all resolutions.
+        """
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).list_version(
+            id=self.series_ids,
+            product=product,
+            unit_type=unit_type,
+            statistic=statistic,
+            area=area,
+            resolution=resolution,
+        )
+
+    def __len__(self):
+        return sum(len(i) for i in self.items)
+
+    def __iter__(self) -> Iterator[PredictionsSeries]:  # type: ignore[override]
         """Iteration method for generated models"""
-        if isinstance(self, list):
-            return (i for i in self)
-        elif "items" in self.model_fields:
-            return iter(self.items)
+        self.__iter_index = 0
+        return self
+
+    def __next__(self) -> PredictionsSeries:
+        if not self.items:
+            raise StopIteration
+        try:
+            _return = self.items[self.__iter_index]
+        except IndexError:
+            raise StopIteration
         else:
-            raise AttributeError("This object does not support iteration.")
+            self.__iter_index += 1
+            return _return
 
     def filter(
         self,
         area: Optional[List[str]] = None,
         id: Optional[List[int]] = None,
         product: Optional[List[str]] = None,
+        resolution: Optional[List[str]] = None,
         statistic: Optional[List[str]] = None,
         unit: Optional[List[str]] = None,
         unit_type: Optional[List[str]] = None,
@@ -175,6 +260,7 @@ class PredictionsSeriesList(BaseModel):
             "area",
             "id",
             "product",
+            "resolution",
             "statistic",
             "unit",
             "unit_type",
@@ -182,30 +268,24 @@ class PredictionsSeriesList(BaseModel):
         _locals = locals()
         compare_dict = {i: _locals[i] for i in properties if _locals[i] is not None}
 
-        if "items" in self.model_fields:
-            obj_copy = self.copy()
-            obj_copy.items = [
-                item
-                for item in iter(obj_copy.items)
-                if all(
-                    getattr(item, property_name) in filter_values
-                    for property_name, filter_values in compare_dict.items()
-                )
-            ]
-            return obj_copy
-        else:
-            raise AttributeError("This object does not support iteration.")
+        obj_copy = self.model_copy()
+        obj_copy.items = [
+            item
+            for item in obj_copy
+            if all(
+                getattr(item, property_name) in filter_values for property_name, filter_values in compare_dict.items()
+            )
+        ]
+        return obj_copy
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(
+        self,
+    ) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 
-        :param unpack_value_method:
-            Determines how values are unpacked. Should be one of the following:
-                1. retain_original: Do not unpack the values.
-                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
-                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
-        :type unpack_value_method: str
         """
-        return pydantic_to_pandas(self, unpack_value_method)
+        return pydantic_to_pandas(
+            self,
+        )

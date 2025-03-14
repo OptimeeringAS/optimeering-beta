@@ -7,16 +7,17 @@
 
 from __future__ import annotations
 
-import inspect
 import pprint
 import re  # noqa: F401
+import warnings
 from datetime import datetime
 from typing import Any, ClassVar, Dict, List, Optional, Set
+from warnings import warn
 
 import optimeering_beta
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, model_validator
 
 
 class PredictionsSeries(BaseModel):
@@ -35,6 +36,8 @@ class PredictionsSeries(BaseModel):
     :type latest_event_time: datetime
     :param product: Product name for the series
     :type product: str
+    :param resolution: Resolution of the series.
+    :type resolution: str
     :param statistic: Type of statistics.
     :type statistic: str
     :param unit: The unit for the series.
@@ -49,6 +52,7 @@ class PredictionsSeries(BaseModel):
     id: StrictInt
     latest_event_time: Optional[datetime] = None
     product: StrictStr = Field(description="Product name for the series")
+    resolution: StrictStr = Field(description="Resolution of the series.")
     statistic: StrictStr = Field(description="Type of statistics.")
     unit: StrictStr = Field(description="The unit for the series.")
     unit_type: StrictStr = Field(description="Unit type for the series")
@@ -60,6 +64,7 @@ class PredictionsSeries(BaseModel):
         "id",
         "latest_event_time",
         "product",
+        "resolution",
         "statistic",
         "unit",
         "unit_type",
@@ -131,6 +136,7 @@ class PredictionsSeries(BaseModel):
                 "id": obj.get("id"),
                 "latest_event_time": obj.get("latest_event_time"),
                 "product": obj.get("product"),
+                "resolution": obj.get("resolution"),
                 "statistic": obj.get("statistic"),
                 "unit": obj.get("unit"),
                 "unit_type": obj.get("unit_type"),
@@ -138,58 +144,132 @@ class PredictionsSeries(BaseModel):
         )
         return _obj
 
-    def __len__(self):
-        if "items" in self.model_fields:
-            return sum(len(i) for i in self.items)
-        elif "datapoints" in self.model_fields:
-            return sum(len(i) for i in self.datapoints)
-        elif "predictions" in self.model_fields:
-            return sum(len(i) for i in self.predictions)
-        elif "entities" in self.model_fields:
-            return sum(len(i) for i in self.entities)
-        elif "capacity_restrictions" in self.model_fields:
-            return sum(len(i) for i in self.capacity_restrictions)
-        return 1
+    @model_validator(mode="before")
+    def validate_extra_fields(cls, values):
+        if len(values) > 1:  # Check if there are extra fields
+            if set(values) - set(cls.model_fields):
+                warnings.warn("Data mismatch, please update the SDK to the latest version")
+        return values
 
     def datapoints(
         self,
         start: Optional[datetime | StrictStr] = None,
         end: Optional[datetime | StrictStr] = None,
-        include_history: Optional[StrictBool] = None,
     ) -> optimeering_beta.models.PredictionsDataList:
         """
-        Returns data points for the current series.
 
-        :param start: The first datetime to fetch (inclusive). Defaults to current time. Should be specified in ISO 8601 format (eg - '2024-05-15T06:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
-        :param end: The last datetime to fetch (exclusive). Defaults to 2099-12-30. Should be specified in ISO 8601 format (eg - '2024-05-15T08:00:00+00:00'). Also supports delta formats (e.g. H+1,D-1,W-1)
-        :param include_history: Include historical data into the response. Defaults to False. This argument has no effect if the underlying API does not support getting history.
+        Returns predictions.
+
+        If multiple versions of a prediction exist for a given series, the highest version is returned.
+
+        To get predictions for a particular version, use the :any:`retrieve_versioned` method.
+
+
+                :param start: The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+                :param end: The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+        """
+        warn("This method will be deprecated. Use `retrieve` instead.")
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve(
+            series_id=[self.id],
+            start=start,
+            end=end,
+        )
+
+    def retrieve(
+        self,
+        start: Optional[datetime | StrictStr] = None,
+        end: Optional[datetime | StrictStr] = None,
+    ) -> optimeering_beta.models.PredictionsDataList:
+        """
+
+        Returns predictions.
+
+        If multiple versions of a prediction exist for a given series, the highest version is returned.
+
+        To get predictions for a particular version, use the :any:`retrieve_versioned` method.
+
+
+                :param start: The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+                :param end: The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
         """
         if self._client is None:
             raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
-        method_for_operation = optimeering_beta.PredictionsApi(api_client=self._client).retrieve
 
-        extra_params: Dict[str, Any] = {}
-        valid_arguments = list(inspect.signature(method_for_operation).parameters.keys())
-        if "include_history" in valid_arguments:
-            extra_params["include_history"] = include_history
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve(
+            series_id=[self.id],
+            start=start,
+            end=end,
+        )
 
-        if hasattr(self, "series_ids"):
-            return method_for_operation(series_id=self.series_ids, start=start, end=end, **extra_params)
-        elif hasattr(self, "id"):
-            return method_for_operation(series_id=[self.id], start=start, end=end, **extra_params)
-        else:
-            raise NotImplementedError("This class does not support this feature.")
+    def retrieve_latest(
+        self,
+        max_event_time: Optional[datetime | StrictStr] = None,
+    ) -> optimeering_beta.models.PredictionsDataList:
+        """
+
+        Returns predictions with the most recent ``event_time``.
+
+        If multiple versions of a prediction exist for a given series, the highest version is returned.
+
+        To get predictions for a particular version, use the :any:`retrieve_versioned`  method.
+
+
+                :param max_event_time: If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)
+        """
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).retrieve_latest(
+            series_id=[self.id],
+            max_event_time=max_event_time,
+        )
+
+    def list_version(
+        self,
+        product: Optional[List[StrictStr]] = None,
+        unit_type: Optional[List[StrictStr]] = None,
+        statistic: Optional[List[StrictStr]] = None,
+        area: Optional[List[StrictStr]] = None,
+        resolution: Optional[List[StrictStr]] = None,
+    ) -> optimeering_beta.models.PredictionsVersionList:
+        """
+
+        Returns prediction series and their versions.
+
+
+
+                :param product: The product for which series should be retrieved. If not specified, will return series for all products.
+                :param unit_type: Unit type. If not specified, will return series for all unit types.
+                :param statistic: Statistic type. If not specified, will return series for all statistic types.
+                :param area: The name of the area. If not specified, will return all areas.
+                :param resolution: Resolution of the series. If not specified, will return series for all resolutions.
+        """
+        if self._client is None:
+            raise AttributeError("Cannot call datapoints method on this instance. The client has not been setup.")
+
+        return optimeering_beta.PredictionsApi(api_client=self._client).list_version(
+            id=[self.id],
+            product=product,
+            unit_type=unit_type,
+            statistic=statistic,
+            area=area,
+            resolution=resolution,
+        )
+
+    def __len__(self):
+        return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(
+        self,
+    ) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 
-        :param unpack_value_method:
-            Determines how values are unpacked. Should be one of the following:
-                1. retain_original: Do not unpack the values.
-                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
-                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
-        :type unpack_value_method: str
         """
-        return pydantic_to_pandas(self, unpack_value_method)
+        return pydantic_to_pandas(
+            self,
+        )

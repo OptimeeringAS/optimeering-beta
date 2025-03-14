@@ -81,12 +81,7 @@
                     "created_at"
                 ],
                 "title": "AccessKeyPostResponse",
-                "type": "object",
-                "x-optimeering-iterable": {
-                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
-                    "filterable": false,
-                    "iterable": true
-                }
+                "type": "object"
             },
             "AccessPostKey": {
                 "additionalProperties": false,
@@ -120,10 +115,19 @@
                 "enum": [
                     "area",
                     "product",
+                    "resolution",
                     "statistic",
                     "unit_type"
                 ],
                 "title": "EnumPredictionsParameters",
+                "type": "string"
+            },
+            "EnumPredictionsResolution": {
+                "enum": [
+                    "PT15M",
+                    "PT1H"
+                ],
+                "title": "EnumPredictionsResolution",
                 "type": "string"
             },
             "EnumProduct": {
@@ -179,7 +183,24 @@
                     }
                 },
                 "title": "HTTPValidationError",
-                "type": "object"
+                "type": "object",
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter-properties": [
+                        {
+                            "name": "msg",
+                            "type": "str"
+                        },
+                        {
+                            "name": "type",
+                            "type": "str"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true,
+                    "iterable-property": "detail",
+                    "return-type": "ValidationError"
+                }
             },
             "PredictionsData": {
                 "additionalProperties": false,
@@ -213,6 +234,20 @@
                 ],
                 "title": "PredictionsData",
                 "type": "object",
+                "x-optimeering-complex-value": true,
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filter-properties": [
+                        {
+                            "name": "is_simulated",
+                            "type": "bool"
+                        }
+                    ],
+                    "filterable": true,
+                    "iterable": true,
+                    "iterable-property": "events",
+                    "return-type": "PredictionsEvent"
+                },
                 "x-optimeering-sdk-docstring": ":any:`PredictionsData` contains a collection of :any:`PredictionsEvent` for a given :any:`PredictionSeries`"
             },
             "PredictionsDataList": {
@@ -236,9 +271,10 @@
                 ],
                 "title": "PredictionsDataList",
                 "type": "object",
+                "x-optimeering-complex-value": true,
                 "x-optimeering-iterable": {
                     "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
-                    "filter_properties": [
+                    "filter-properties": [
                         {
                             "name": "series_id",
                             "type": "int"
@@ -249,7 +285,9 @@
                         }
                     ],
                     "filterable": true,
-                    "iterable": true
+                    "iterable": true,
+                    "iterable-property": "items",
+                    "return-type": "PredictionsData"
                 },
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsDataList` contains a collection of :any:`PredictionsData`"
             },
@@ -294,6 +332,14 @@
                 ],
                 "title": "PredictionsEvent",
                 "type": "object",
+                "x-optimeering-complex-value": true,
+                "x-optimeering-iterable": {
+                    "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
+                    "filterable": false,
+                    "iterable": true,
+                    "iterable-property": "predictions",
+                    "return-type": "PredictionsValue"
+                },
                 "x-optimeering-sdk-docstring": "\nA :any:`PredictionsEvent` contains a collection of :any:`PredictionsValue`.\nIf a :any:`PredictionsEvent` is simulated, ``is_simulated`` will be true. See `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_ for an explanation on what simulated events are.\n"
             },
             "PredictionsSeries": {
@@ -347,6 +393,10 @@
                         "$ref": "#/components/schemas/EnumProduct",
                         "description": "Product name for the series"
                     },
+                    "resolution": {
+                        "$ref": "#/components/schemas/EnumPredictionsResolution",
+                        "description": "Resolution of the series."
+                    },
                     "statistic": {
                         "$ref": "#/components/schemas/EnumStatistic",
                         "description": "Type of statistics."
@@ -365,6 +415,7 @@
                     "unit",
                     "id",
                     "created_at",
+                    "resolution",
                     "area",
                     "product",
                     "unit_type",
@@ -372,12 +423,113 @@
                 ],
                 "title": "PredictionsSeries",
                 "type": "object",
-                "x-optimeering-datapoint-info": {
-                    "api-name": "PredictionsApi",
-                    "description": "This extension links responses of series API routes to the API routes that return their datapoints.",
-                    "operation-id": "retrieve",
-                    "response-model-name": "PredictionsDataList"
-                },
+                "x-optimeering-datapoint-info": [
+                    {
+                        "api-name": "PredictionsApi",
+                        "deprecated_by_method": "retrieve",
+                        "description": "\nReturns predictions.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned` method.\n",
+                        "dynamic-parameter-name": "series_id",
+                        "method-name": "datapoints",
+                        "operation-id": "retrieve",
+                        "parameters": [
+                            {
+                                "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "start",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            },
+                            {
+                                "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "end",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "[self.id]",
+                        "response-model-name": "PredictionsDataList"
+                    },
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns predictions.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned` method.\n",
+                        "dynamic-parameter-name": "series_id",
+                        "method-name": "retrieve",
+                        "operation-id": "retrieve",
+                        "parameters": [
+                            {
+                                "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "start",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            },
+                            {
+                                "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "end",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "[self.id]",
+                        "response-model-name": "PredictionsDataList"
+                    },
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns predictions with the most recent ``event_time``.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned`  method.\n",
+                        "dynamic-parameter-name": "series_id",
+                        "method-name": "retrieve_latest",
+                        "operation-id": "retrieve_latest",
+                        "parameters": [
+                            {
+                                "description": "If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "max_event_time",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "[self.id]",
+                        "response-model-name": "PredictionsDataList"
+                    },
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns prediction series and their versions.\n\n",
+                        "dynamic-parameter-name": "id",
+                        "method-name": "list_version",
+                        "operation-id": "list_version",
+                        "parameters": [
+                            {
+                                "description": "The product for which series should be retrieved. If not specified, will return series for all products.",
+                                "name": "product",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "Unit type. If not specified, will return series for all unit types.",
+                                "name": "unit_type",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "Statistic type. If not specified, will return series for all statistic types.",
+                                "name": "statistic",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "The name of the area. If not specified, will return all areas.",
+                                "name": "area",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "Resolution of the series. If not specified, will return series for all resolutions.",
+                                "name": "resolution",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            }
+                        ],
+                        "reference-by": "[self.id]",
+                        "response-model-name": "PredictionsVersionList"
+                    }
+                ],
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsSeries` is used for indexing a series of :any:`PredictionsData`."
             },
             "PredictionsSeriesList": {
@@ -402,15 +554,116 @@
                 ],
                 "title": "PredictionsSeriesList",
                 "type": "object",
-                "x-optimeering-datapoint-info": {
-                    "api-name": "PredictionsApi",
-                    "description": "This extension links responses of series API routes to the API routes that return their datapoints.",
-                    "operation-id": "retrieve",
-                    "response-model-name": "PredictionsDataList"
-                },
+                "x-optimeering-datapoint-info": [
+                    {
+                        "api-name": "PredictionsApi",
+                        "deprecated_by_method": "retrieve",
+                        "description": "\nReturns predictions.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned` method.\n",
+                        "dynamic-parameter-name": "series_id",
+                        "method-name": "datapoints",
+                        "operation-id": "retrieve",
+                        "parameters": [
+                            {
+                                "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "start",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            },
+                            {
+                                "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "end",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "self.series_ids",
+                        "response-model-name": "PredictionsDataList"
+                    },
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns predictions.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned` method.\n",
+                        "dynamic-parameter-name": "series_id",
+                        "method-name": "retrieve",
+                        "operation-id": "retrieve",
+                        "parameters": [
+                            {
+                                "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "start",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            },
+                            {
+                                "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "end",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "self.series_ids",
+                        "response-model-name": "PredictionsDataList"
+                    },
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns predictions with the most recent ``event_time``.\n\nIf multiple versions of a prediction exist for a given series, the highest version is returned.\n\nTo get predictions for a particular version, use the :any:`retrieve_versioned`  method.\n",
+                        "dynamic-parameter-name": "series_id",
+                        "method-name": "retrieve_latest",
+                        "operation-id": "retrieve_latest",
+                        "parameters": [
+                            {
+                                "description": "If specified, will only return the latest prediction available at the specified time. If not specified, no filters are applied. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "max_event_time",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "self.series_ids",
+                        "response-model-name": "PredictionsDataList"
+                    },
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns prediction series and their versions.\n\n",
+                        "dynamic-parameter-name": "id",
+                        "method-name": "list_version",
+                        "operation-id": "list_version",
+                        "parameters": [
+                            {
+                                "description": "The product for which series should be retrieved. If not specified, will return series for all products.",
+                                "name": "product",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "Unit type. If not specified, will return series for all unit types.",
+                                "name": "unit_type",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "Statistic type. If not specified, will return series for all statistic types.",
+                                "name": "statistic",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "The name of the area. If not specified, will return all areas.",
+                                "name": "area",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            },
+                            {
+                                "description": "Resolution of the series. If not specified, will return series for all resolutions.",
+                                "name": "resolution",
+                                "optional": true,
+                                "type": "Optional[List[StrictStr]]"
+                            }
+                        ],
+                        "reference-by": "self.series_ids",
+                        "response-model-name": "PredictionsVersionList"
+                    }
+                ],
                 "x-optimeering-iterable": {
                     "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
-                    "filter_properties": [
+                    "filter-properties": [
                         {
                             "name": "area",
                             "type": "str"
@@ -421,6 +674,10 @@
                         },
                         {
                             "name": "product",
+                            "type": "str"
+                        },
+                        {
+                            "name": "resolution",
                             "type": "str"
                         },
                         {
@@ -437,7 +694,9 @@
                         }
                     ],
                     "filterable": true,
-                    "iterable": true
+                    "iterable": true,
+                    "iterable-property": "items",
+                    "return-type": "PredictionsSeries"
                 },
                 "x-optimeering-model-with-series-ids": {
                     "description": "This extension denotes that the response have series ids.",
@@ -493,6 +752,7 @@
                 ],
                 "title": "PredictionsValue",
                 "type": "object",
+                "x-optimeering-complex-value": true,
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsValue` contains the value for a specific period of time as specified by the ``prediction_for`` datetime."
             },
             "PredictionsVersion": {
@@ -545,6 +805,10 @@
                         "$ref": "#/components/schemas/EnumProduct",
                         "description": "Product name for the series"
                     },
+                    "resolution": {
+                        "$ref": "#/components/schemas/EnumPredictionsResolution",
+                        "description": "Resolution of the series."
+                    },
                     "simulation_event_time_end": {
                         "description": "The timestamp to which predictions is generated using simulation",
                         "format": "date-time",
@@ -587,6 +851,7 @@
                     "unit",
                     "id",
                     "created_at",
+                    "resolution",
                     "area",
                     "product",
                     "unit_type",
@@ -594,6 +859,37 @@
                 ],
                 "title": "PredictionsVersion",
                 "type": "object",
+                "x-optimeering-datapoint-info": [
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns versioned predictions.\n\n\nUse the :any:`list_version` method to get the available versions for each prediction series.\n\nCan be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n",
+                        "dynamic-parameter-name": "versioned_series",
+                        "method-name": "retrieve_versioned",
+                        "operation-id": "retrieve_versioned",
+                        "parameters": [
+                            {
+                                "description": "If false, filters out simulated prediction from response.",
+                                "name": "include_simulated",
+                                "optional": true,
+                                "type": "Optional[bool]"
+                            },
+                            {
+                                "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "start",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            },
+                            {
+                                "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "end",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "[self]",
+                        "response-model-name": "PredictionsDataList"
+                    }
+                ],
                 "x-optimeering-direct-polymorphism": {
                     "description": "This extension denotes that this component can be directly converted to another specified component.",
                     "values": [
@@ -642,9 +938,40 @@
                     ],
                     "description": "This extension denotes that this component is iterable and each item can be directly converted to some other class (Refer to 'x-optimeering-direct-polymorphism' in referred component)."
                 },
+                "x-optimeering-datapoint-info": [
+                    {
+                        "api-name": "PredictionsApi",
+                        "description": "\nReturns versioned predictions.\n\n\nUse the :any:`list_version` method to get the available versions for each prediction series.\n\nCan be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n",
+                        "dynamic-parameter-name": "versioned_series",
+                        "method-name": "retrieve_versioned",
+                        "operation-id": "retrieve_versioned",
+                        "parameters": [
+                            {
+                                "description": "If false, filters out simulated prediction from response.",
+                                "name": "include_simulated",
+                                "optional": true,
+                                "type": "Optional[bool]"
+                            },
+                            {
+                                "description": "The first datetime to fetch (inclusive). Defaults to `1970-01-01 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "start",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            },
+                            {
+                                "description": "The last datetime to fetch (exclusive). Defaults to `2999-12-30 00:00:00+0000`. Should be specified in ISO 8601 datetime or duration format (eg - `2024-05-15T06:00:00+00:00`, `PT1H`, `-P1W1D`)",
+                                "name": "end",
+                                "optional": true,
+                                "type": "Optional[datetime | StrictStr]"
+                            }
+                        ],
+                        "reference-by": "self",
+                        "response-model-name": "PredictionsDataList"
+                    }
+                ],
                 "x-optimeering-iterable": {
                     "description": "This extension denotes that the response is iterable. Additionally, filter_properties key contains properties of component ",
-                    "filter_properties": [
+                    "filter-properties": [
                         {
                             "name": "area",
                             "type": "str"
@@ -655,6 +982,10 @@
                         },
                         {
                             "name": "product",
+                            "type": "str"
+                        },
+                        {
+                            "name": "resolution",
                             "type": "str"
                         },
                         {
@@ -675,7 +1006,9 @@
                         }
                     ],
                     "filterable": true,
-                    "iterable": true
+                    "iterable": true,
+                    "iterable-property": "items",
+                    "return-type": "PredictionsVersion"
                 },
                 "x-optimeering-sdk-docstring": "A :any:`PredictionsVersionList` contains a collection of :any:`PredictionsVersion`."
             },
@@ -1323,6 +1656,25 @@
                         }
                     },
                     {
+                        "description": "Resolution of the series. If not specified, will return series for all resolutions. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/resolution).",
+                        "in": "query",
+                        "name": "resolution",
+                        "required": false,
+                        "schema": {
+                            "description": "Resolution of the series. If not specified, will return series for all resolutions. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/resolution).",
+                            "title": "Resolution",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "resolution"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
                         "description": "Number of items per page",
                         "example": 2,
                         "in": "query",
@@ -1510,6 +1862,25 @@
                             "x-optimeering-allowed-parameter-values": {
                                 "description": "This extension denotes that this parameter take in specific value/ combination of values.",
                                 "parameter-name": "area"
+                            },
+                            "x-optimeering-comma-separated": {
+                                "data-type": "List[StrictStr]",
+                                "description": "This extension denotes that the API parameter takes in comma separated string but is actually an array defined by the field `data_type`."
+                            }
+                        }
+                    },
+                    {
+                        "description": "Resolution of the series. If not specified, will return series for all resolutions. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/resolution).",
+                        "in": "query",
+                        "name": "resolution",
+                        "required": false,
+                        "schema": {
+                            "description": "Resolution of the series. If not specified, will return series for all resolutions. Multiple values can be specified by separating with a comma. List of available values [here](/api/predictions/parameters/resolution).",
+                            "title": "Resolution",
+                            "type": "string",
+                            "x-optimeering-allowed-parameter-values": {
+                                "description": "This extension denotes that this parameter take in specific value/ combination of values.",
+                                "parameter-name": "resolution"
                             },
                             "x-optimeering-comma-separated": {
                                 "data-type": "List[StrictStr]",
@@ -1767,7 +2138,7 @@
                     "value": true
                 },
                 "x-optimeering-route-supports-alternate-datatypes": {
-                    "description": "This extension denotes that the route supports multiple datatypes for one or more of its paramters."
+                    "description": "This extension denotes that the route supports multiple datatypes for one or more of its parameters."
                 },
                 "x-optimeering-sdk-docstring": "\nReturns versioned predictions.\n\n\nUse the :any:`list_version` method to get the available versions for each prediction series.\n\nCan be used to retrieve both versioned and simulated data. For an explanation on versioned and simulated data see `Prediction Versioning <https://docs.optimeering.com/getting-started/prediction-versioning/>`_\n"
             }

@@ -1,18 +1,82 @@
 import argparse
 import json
 from collections import defaultdict
+from enum import Enum
 from typing import Any, Dict, Iterable, List, Tuple
+
+
+class OptimeeringVendorExtensions(Enum):
+    # Adds method to transform a class into another class
+    # Component has properties that is a superset of another component
+    # so it can be converted to another component
+    # e.g. class A has properties a,b and c; class B has properties a and b
+    # class A can be converted to class B
+    # Adds `convert_to_{CLASS_WITH_SUBSET}` method
+    POLYMORPHISM_DIRECT = "x-optimeering-direct-polymorphism"
+
+    # Component is a list like object where each item has POLYMORPHISM_DIRECT extension
+    # Adds method to iterate though its items and convert each item to supported component
+    # Adds `convert_to_{CLASS_WITH_SUBSET}` method
+    POLYMORPHISM_COMPONENT = "x-optimeering-component-polymorphism"
+
+    # Replace documentation for API with documentation provided in this extension when generating client
+    SDK_DOCSTRING = "x-optimeering-sdk-docstring"
+
+    # Indicates that the route supports pagination
+    # When generating client, the method for the route has pagination logic injected into it
+    PAGINATED_ROUTES = "x-optimeering-paginated-route"
+
+    # Indicates the parameter is used for pagination
+    # When generating client, these parameters are removed from any route with PAGINATED_ROUTES extension
+    PAGINATION_PARAMETER = "x-optimeering-pagination-parameter"
+
+    # Indicates that parameter supports multiple values separated by comma
+    # While generating client, the parameter type is changed to list
+    COMMA_SEPARATED_PARAMETER = "x-optimeering-comma-separated"
+
+    # Indicates that the parameter values are checked by an Enum
+    # While generate openapi specs, an hyperlink to list all possible values is added to the description
+    ALLOWED_PARAMETER_VALUES = "x-optimeering-allowed-parameter-values"
+
+    # Indicates that items in the model has series id properties
+    # while generating client, add `series_ids` method that returns a list of all series id
+    MODELS_WITH_SERIES_ID = "x-optimeering-model-with-series-ids"
+
+    # While generating client, adds `datapoint` method
+    DATAPOINT_METHOD = "x-optimeering-datapoint-info"
+
+    # While generating client, adds `__iter__` method, allowing iteration on the class
+    ITERABLE_MODEL = "x-optimeering-iterable"
+
+    # While generating client, overwrites typing information
+    # E.g. datetime type is string for openapi specs with format `date-time`
+    # which is not directly changed to py datetime. This extension can be used to overwrite the typing
+    PYTHON_TYPING = "x-optimeering-bypass-py-typing"
+
+    # Same as above; this one has more information related to python Annotations
+    # TODO: check if it is possible to get rid of one
+    ALTERNATE_TYPE_SUPPORTED = "x-optimeering-alternate-typing"
+
+    # When a route has this extension, adds a decorator `silent_type_cast` over the method for the route.
+    # The extension when detects Annotations with Union in args/kwargs typing,
+    # attempts to convert the value to the first type defined in the Union using the method generated
+    # by POLYMORPHISM extension.
+    ROUTE_SUPPORTS_ALTERNATE_TYPE_SUPPORTED = "x-optimeering-route-supports-alternate-datatypes"
+
+    # Denotes that the value field has complex data structure
+    # When generating client, adds `unpack_value_method` to `to_pandas` method
+    COMPLEX_VALUE_IN_MODEL = "x-optimeering-complex-value"
 
 
 def replace_sdk_docstring(openapi_spec: Dict):
     for _, path_description in openapi_spec["paths"].items():
         for _, method_description in path_description.items():
-            sdk_doc_string = method_description.get("x-optimeering-sdk-docstring")
+            sdk_doc_string = method_description.get(OptimeeringVendorExtensions.SDK_DOCSTRING.value)
             if sdk_doc_string:
                 method_description["description"] = sdk_doc_string
 
     for _, schema_value in openapi_spec["components"]["schemas"].items():
-        sdk_doc_string = schema_value.get("x-optimeering-sdk-docstring")
+        sdk_doc_string = schema_value.get(OptimeeringVendorExtensions.SDK_DOCSTRING.value)
         if sdk_doc_string:
             schema_value["description"] = sdk_doc_string
 
@@ -91,7 +155,9 @@ def remove_comma_separated_docs(openapi_spec: Dict):
             if method != "get":
                 continue
             for parameter_definition in method_definition.get("parameters", []):
-                if "x-optimeering-comma-separated" in parameter_definition.get("schema", {}):
+                if OptimeeringVendorExtensions.COMMA_SEPARATED_PARAMETER.value in parameter_definition.get(
+                    "schema", {}
+                ):
                     comma_doc = " Multiple values can be specified by separating with a comma."
                     if "description" in parameter_definition:
                         parameter_definition["description"] = parameter_definition["description"].replace(comma_doc, "")
@@ -109,8 +175,8 @@ def remove_hyperlinks_from_docs(openapi_spec: Dict):
             if method != "get":
                 continue
             for parameter_definition in method_definition.get("parameters", []):
-                if "x-optimeering-allowed-parameter-values" in parameter_definition.get("schema", {}):
-                    hyperlink_doc = f" List of available values [here](/api/{api_name}/parameters/{parameter_definition['schema']['x-optimeering-allowed-parameter-values']['parameter-name']})."
+                if OptimeeringVendorExtensions.ALLOWED_PARAMETER_VALUES.value in parameter_definition.get("schema", {}):
+                    hyperlink_doc = f" List of available values [here](/api/{api_name}/parameters/{parameter_definition['schema'][OptimeeringVendorExtensions.ALLOWED_PARAMETER_VALUES.value]['parameter-name']})."
                     if "description" in parameter_definition:
                         parameter_definition["description"] = parameter_definition["description"].replace(
                             hyperlink_doc, ""

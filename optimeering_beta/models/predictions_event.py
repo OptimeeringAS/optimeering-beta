@@ -9,13 +9,14 @@ from __future__ import annotations
 
 import pprint
 import re  # noqa: F401
+import warnings
 from datetime import datetime
-from typing import Any, ClassVar, Dict, List, Optional, Set
+from typing import Any, ClassVar, Dict, Iterator, List, Optional, Set
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.predictions_value import PredictionsValue
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, model_validator
 
 
 class PredictionsEvent(BaseModel):
@@ -105,21 +106,34 @@ class PredictionsEvent(BaseModel):
         )
         return _obj
 
+    @model_validator(mode="before")
+    def validate_extra_fields(cls, values):
+        if len(values) > 1:  # Check if there are extra fields
+            if set(values) - set(cls.model_fields):
+                warnings.warn("Data mismatch, please update the SDK to the latest version")
+        return values
+
     def __len__(self):
-        if "items" in self.model_fields:
-            return sum(len(i) for i in self.items)
-        elif "datapoints" in self.model_fields:
-            return sum(len(i) for i in self.datapoints)
-        elif "predictions" in self.model_fields:
-            return sum(len(i) for i in self.predictions)
-        elif "entities" in self.model_fields:
-            return sum(len(i) for i in self.entities)
-        elif "capacity_restrictions" in self.model_fields:
-            return sum(len(i) for i in self.capacity_restrictions)
-        return 1
+        return sum(len(i) for i in self.predictions)
+
+    def __iter__(self) -> Iterator[PredictionsValue]:  # type: ignore[override]
+        """Iteration method for generated models"""
+        self.__iter_index = 0
+        return self
+
+    def __next__(self) -> PredictionsValue:
+        if not self.predictions:
+            raise StopIteration
+        try:
+            _return = self.predictions[self.__iter_index]
+        except IndexError:
+            raise StopIteration
+        else:
+            self.__iter_index += 1
+            return _return
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

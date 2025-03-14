@@ -9,12 +9,13 @@ from __future__ import annotations
 
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import warnings
+from typing import Any, ClassVar, Dict, Iterator, List, Optional, Set
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.predictions_event import PredictionsEvent
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, field_validator, model_validator
 from typing_extensions import Annotated
 
 
@@ -110,21 +111,55 @@ class PredictionsData(BaseModel):
         )
         return _obj
 
+    @model_validator(mode="before")
+    def validate_extra_fields(cls, values):
+        if len(values) > 1:  # Check if there are extra fields
+            if set(values) - set(cls.model_fields):
+                warnings.warn("Data mismatch, please update the SDK to the latest version")
+        return values
+
     def __len__(self):
-        if "items" in self.model_fields:
-            return sum(len(i) for i in self.items)
-        elif "datapoints" in self.model_fields:
-            return sum(len(i) for i in self.datapoints)
-        elif "predictions" in self.model_fields:
-            return sum(len(i) for i in self.predictions)
-        elif "entities" in self.model_fields:
-            return sum(len(i) for i in self.entities)
-        elif "capacity_restrictions" in self.model_fields:
-            return sum(len(i) for i in self.capacity_restrictions)
-        return 1
+        return sum(len(i) for i in self.events)
+
+    def __iter__(self) -> Iterator[PredictionsEvent]:  # type: ignore[override]
+        """Iteration method for generated models"""
+        self.__iter_index = 0
+        return self
+
+    def __next__(self) -> PredictionsEvent:
+        if not self.events:
+            raise StopIteration
+        try:
+            _return = self.events[self.__iter_index]
+        except IndexError:
+            raise StopIteration
+        else:
+            self.__iter_index += 1
+            return _return
+
+    def filter(
+        self,
+        is_simulated: Optional[List[bool]] = None,
+    ) -> PredictionsData:
+        """Filters items"""
+        properties = [
+            "is_simulated",
+        ]
+        _locals = locals()
+        compare_dict = {i: _locals[i] for i in properties if _locals[i] is not None}
+
+        obj_copy = self.model_copy()
+        obj_copy.events = [
+            item
+            for item in obj_copy
+            if all(
+                getattr(item, property_name) in filter_values for property_name, filter_values in compare_dict.items()
+            )
+        ]
+        return obj_copy
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(self, unpack_value_method: str) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 

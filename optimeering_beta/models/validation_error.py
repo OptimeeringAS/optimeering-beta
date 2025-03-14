@@ -9,12 +9,13 @@ from __future__ import annotations
 
 import pprint
 import re  # noqa: F401
+import warnings
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
 import orjson
 from optimeering_beta.extras import pd, pydantic_to_pandas, require_pandas
 from optimeering_beta.models.validation_error_loc_inner import ValidationErrorLocInner
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr, model_validator
 
 
 class ValidationError(BaseModel):
@@ -100,29 +101,24 @@ class ValidationError(BaseModel):
         )
         return _obj
 
+    @model_validator(mode="before")
+    def validate_extra_fields(cls, values):
+        if len(values) > 1:  # Check if there are extra fields
+            if set(values) - set(cls.model_fields):
+                warnings.warn("Data mismatch, please update the SDK to the latest version")
+        return values
+
     def __len__(self):
-        if "items" in self.model_fields:
-            return sum(len(i) for i in self.items)
-        elif "datapoints" in self.model_fields:
-            return sum(len(i) for i in self.datapoints)
-        elif "predictions" in self.model_fields:
-            return sum(len(i) for i in self.predictions)
-        elif "entities" in self.model_fields:
-            return sum(len(i) for i in self.entities)
-        elif "capacity_restrictions" in self.model_fields:
-            return sum(len(i) for i in self.capacity_restrictions)
         return 1
 
     @require_pandas
-    def to_pandas(self, unpack_value_method: Optional[str] = None) -> "pd.DataFrame":  # type: ignore[name-defined]
+    def to_pandas(
+        self,
+    ) -> "pd.DataFrame":  # type: ignore[name-defined]
         """
         Converts the object into a pandas dataframe.
 
-        :param unpack_value_method:
-            Determines how values are unpacked. Should be one of the following:
-                1. retain_original: Do not unpack the values.
-                2. new_rows: A new row will be created in the dataframe for each unpacked value. A new column `value_category` will be added which determines the category of the value.
-                3. new_columns: A new column will be created in the dataframe for each unpacked value. The columns for unpacked values will be prepended with `value_`.
-        :type unpack_value_method: str
         """
-        return pydantic_to_pandas(self, unpack_value_method)
+        return pydantic_to_pandas(
+            self,
+        )
