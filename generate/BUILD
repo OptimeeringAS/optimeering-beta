@@ -13,7 +13,7 @@ resource(
         len=109337,
     ),
 )
-#resource(name="openapi-schema", source="openapi.json")
+# resource(name="openapi-schema", source="openapi.json")
 
 adhoc_tool(
     name="run-fix-openapi-extensions",
