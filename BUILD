@@ -25,4 +25,3 @@ python_distribution(
 )
 
 file(name="pyproject", source="pyproject.toml")
-
