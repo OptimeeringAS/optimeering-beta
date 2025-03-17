@@ -9,11 +9,10 @@ resource(
     name="openapi-schema",
     source=http_source(
         url="https://beta.optimeering.com/api/docs/openapi.json",
-        sha256="852d13fa221d7d3dd2c5fd9feb208167653b3e7517e692023305c62db7e0366b",
-        len=85348,
+        sha256="78e82a41335ceb84842ed9d7778f05811a4d1e47126080166374b2fa26d827a6",
+        len=109337,
     ),
 )
-
 # resource(name="openapi-schema", source="openapi.json")
 
 adhoc_tool(
