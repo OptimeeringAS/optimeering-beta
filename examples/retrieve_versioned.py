@@ -11,8 +11,7 @@ last_two_versions = versions[-2:]
 
 
 filtered_versioned_series = versioned_series.filter(version=last_two_versions)
-
-data = client.predictions_api.retrieve_versioned(versioned_series=filtered_versioned_series, start="-P1M", include_simulated=True)
+data = versioned_series.retrieve_versioned(start="-P1M", include_simulated=True)
 
 df = data.to_pandas(unpack_value_method="new_rows")
 
