@@ -135,6 +135,10 @@ class PredictionsApi:
             Optional[List[StrictStr]],
             Field(description="The name of the area. If not specified, will return all areas."),
         ] = None,
+        resolution: Annotated[
+            Optional[List[StrictStr]],
+            Field(description="Resolution of the series. If not specified, will return series for all resolutions."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -159,6 +163,8 @@ class PredictionsApi:
         :type statistic: List[StrictStr]
         :param area: The name of the area. If not specified, will return all areas.
         :type area: List[StrictStr]
+        :param resolution: Resolution of the series. If not specified, will return series for all resolutions.
+        :type resolution: List[StrictStr]
         :return: Returns the result object.
         :rtype: PredictionsSeriesList
 
@@ -178,6 +184,7 @@ class PredictionsApi:
             unit_type=unit_type,
             statistic=statistic,
             area=area,
+            resolution=resolution,
             limit=None,
             offset=None,
         )
@@ -241,6 +248,7 @@ class PredictionsApi:
         unit_type,
         statistic,
         area,
+        resolution,
         limit,
         offset,
     ) -> RequestSerialized:
@@ -274,6 +282,10 @@ class PredictionsApi:
         if area is not None:
             area = ",".join(str(i) for i in area)
             _query_params.append(("area", area))
+
+        if resolution is not None:
+            resolution = ",".join(str(i) for i in resolution)
+            _query_params.append(("resolution", resolution))
 
         if limit is not None:
             _query_params.append(("limit", limit))
@@ -324,6 +336,10 @@ class PredictionsApi:
             Optional[List[StrictStr]],
             Field(description="The name of the area. If not specified, will return all areas."),
         ] = None,
+        resolution: Annotated[
+            Optional[List[StrictStr]],
+            Field(description="Resolution of the series. If not specified, will return series for all resolutions."),
+        ] = None,
         limit: Annotated[
             Optional[Annotated[int, Field(le=100000, strict=True, ge=1)]], Field(description="Number of items per page")
         ] = None,
@@ -351,6 +367,8 @@ class PredictionsApi:
         :type statistic: str
         :param area: The name of the area. If not specified, will return all areas.
         :type area: str
+        :param resolution: Resolution of the series. If not specified, will return series for all resolutions.
+        :type resolution: str
         :param limit: Number of items per page
         :type limit: int
         :param offset: Page offset
@@ -374,6 +392,7 @@ class PredictionsApi:
             unit_type=unit_type,
             statistic=statistic,
             area=area,
+            resolution=resolution,
             limit=limit,
             offset=offset,
         )
@@ -398,6 +417,7 @@ class PredictionsApi:
         unit_type,
         statistic,
         area,
+        resolution,
         limit,
         offset,
     ) -> RequestSerialized:
@@ -431,6 +451,10 @@ class PredictionsApi:
         if area is not None:
             area = ",".join(str(i) for i in area)
             _query_params.append(("area", area))
+
+        if resolution is not None:
+            resolution = ",".join(str(i) for i in resolution)
+            _query_params.append(("resolution", resolution))
 
         if limit is not None:
             _query_params.append(("limit", limit))
