@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="PredictionsApi" href="predictions.html" />
-    <link rel="prev" title="Configuration" href="configuration.html" /> 
+    <link rel="prev" title="Code Examples" href="examples.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,15 +50,8 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">AccessApi</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.AccessApi"><code class="docutils literal notranslate"><span class="pre">AccessApi</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.AccessApi.create_api_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.create_api_key()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.AccessApi.delete_key"><code class="docutils literal notranslate"><span class="pre">AccessApi.delete_key()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.AccessApi.list_my_keys"><code class="docutils literal notranslate"><span class="pre">AccessApi.list_my_keys()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Code Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AccessApi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="predictions.html">PredictionsApi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="client.html">Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Client Models</a></li>
@@ -90,97 +83,13 @@
              
   <section id="accessapi">
 <h1>AccessApi<a class="headerlink" href="#accessapi" title="Link to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="optimeering_beta.AccessApi">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">AccessApi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.AccessApi" title="Link to this definition"></a></dt>
-<dd><p>Collection of methods to interact with AccessApi</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.AccessApi.create_api_key">
-<span class="sig-name descname"><span class="pre">create_api_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">access_post_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.AccessApi.create_api_key" title="Link to this definition"></a></dt>
-<dd><p>Post Access</p>
-<p>Creates a new access key</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>access_post_key</strong> (<a class="reference internal" href="models.html#optimeering_beta.models.AccessPostKey" title="optimeering_beta.models.AccessPostKey"><em>AccessPostKey</em></a>) – (required)</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns the result object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyPostResponse" title="optimeering_beta.models.AccessKeyPostResponse">AccessKeyPostResponse</a></p>
-</dd>
-<dt class="field-even">Example<span class="colon">:</span></dt>
-<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Post data point - replace ... with correct dataformat documented above</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_api</span><span class="o">.</span><span class="n">create_api_key</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.AccessApi.delete_key">
-<span class="sig-name descname"><span class="pre">delete_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.AccessApi.delete_key" title="Link to this definition"></a></dt>
-<dd><p>Drop Key</p>
-<p>Deletes an api key.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – (required)</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns the result object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-<dt class="field-even">Example<span class="colon">:</span></dt>
-<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Post data point - replace ... with correct dataformat documented above</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_api</span><span class="o">.</span><span class="n">delete_key</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="optimeering_beta.AccessApi.list_my_keys">
-<span class="sig-name descname"><span class="pre">list_my_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.AccessApi.list_my_keys" title="Link to this definition"></a></dt>
-<dd><p>Get Access</p>
-<p>Lists all the keys owned by the user.</p>
-<dl class="field-list">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns the result object.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="models.html#optimeering_beta.models.AccessKeyCreated" title="optimeering_beta.models.AccessKeyCreated">AccessKeyCreated</a>]</p>
-</dd>
-<dt class="field-odd">Example<span class="colon">:</span></dt>
-<dd class="field-odd"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get filtered data point - replace ... with appropriate filters documented above</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">access_api</span><span class="o">.</span><span class="n">list_my_keys</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-left" title="Code Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="predictions.html" class="btn btn-neutral float-right" title="PredictionsApi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
