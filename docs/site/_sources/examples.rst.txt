@@ -27,18 +27,18 @@ The above returns a dictionary, where the keys are the values that can be used i
 .. code-block:: json
 
     {
-        "SE2": null,
-        "SE1": null,
-        "FI": "Price area for Finland",
-        "NO4": null,
-        "NO3": null,
-        "DK2": null,
-        "SE4": null,
-        "DK1": null,
-        "NO2": null,
-        "NO5": null,
-        "SE3": null,
-        "NO1": null
+        "DK1": "Denmark West",
+        "DK2": "Denmark East",
+        "FI": "Finland",
+        "NO1": "Norway South East",
+        "NO2": "Norway South West",
+        "NO3": "Norway Middle",
+        "NO4": "Norway North",
+        "NO5": "Norway West",
+        "SE1": "Sweden Luleå",
+        "SE2": "Sweden Sundsvall",
+        "SE3": "Sweden Stockholm",
+        "SE4": "Sweden Malmö"
     }
 
 You can then, for example, use list comprehension to filter out only the Norwegian areas:
@@ -80,7 +80,7 @@ Now that we have the appropriate series, we can retrieve the prediction events f
 
 .. code-block:: python
 
-    data = filtered_series.datapoints(start="-P1W")
+    data = filtered_series.retrieve(start="-P1W")
 
 This is the same as calling the ``retrieve()`` method as shown below. Note that here we are using the ``series_ids`` attribute of the :any:`PredictionsSeriesList` object:
 
@@ -113,16 +113,4 @@ To retrieve versioned data you can use the ``retrieve_versioned`` method as show
 
 .. code-block:: python
 
-    data = client.predictions_api.retrieve_versioned(versioned_series=filtered_versions, start="-P1M", include_simulated=True)
-
-Alternatively, you can define the ``versioned_series`` using a list of :any:`VersionedSeries` objects:
-
-.. code-block:: python
-
-    filtered_versions = [
-        VersionedSeries(series_id=47, version="1.2.1"),
-        VersionedSeries(series_id=47, version="1.3.0")
-    ]
-
-    data = client.predictions_api.retrieve_versioned(versioned_series=filtered_versions, start="-P1M", include_simulated=True)
-
+    data = filtered_versions.retrieve_versioned(start="-P1M", include_simulated=True)
