@@ -11,7 +11,7 @@ pex_binary(
         "//:root#azure-identity",
         "//:root#sphinx-rtd-theme",
         "//:root#setuptools",
-        "//:root#toml"
+        "//:root#toml",
     ],
     script="sphinx-build",
 )
