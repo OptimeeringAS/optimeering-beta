@@ -104,18 +104,18 @@
 </div>
 <p>The above returns a dictionary, where the keys are the values that can be used in the filters.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;SE2&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;SE1&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;FI&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Price area for Finland&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;NO4&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;NO3&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;DK2&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;SE4&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;DK1&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;NO2&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;NO5&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;SE3&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;NO1&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="nt">&quot;DK1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Denmark West&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;DK2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Denmark East&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;FI&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Finland&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;NO1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Norway South East&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;NO2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Norway South West&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;NO3&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Norway Middle&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;NO4&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Norway North&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;NO5&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Norway West&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SE1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweden Luleå&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SE2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweden Sundsvall&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SE3&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweden Stockholm&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SE4&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweden Malmö&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -147,7 +147,7 @@
 <p>You should always try to pass as many filters into <code class="docutils literal notranslate"><span class="pre">list_series()</span></code> as possible, as this will reduce the amount of data that needs to be transferred from the server to your client.</p>
 </div>
 <p>Now that we have the appropriate series, we can retrieve the prediction events for these series, by simply calling the following:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">filtered_series</span><span class="o">.</span><span class="n">datapoints</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;-P1W&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">filtered_series</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;-P1W&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This is the same as calling the <code class="docutils literal notranslate"><span class="pre">retrieve()</span></code> method as shown below. Note that here we are using the <code class="docutils literal notranslate"><span class="pre">series_ids</span></code> attribute of the <code class="xref any docutils literal notranslate"><span class="pre">PredictionsSeriesList</span></code> object:</p>
@@ -171,16 +171,7 @@
 </pre></div>
 </div>
 <p>To retrieve versioned data you can use the <code class="docutils literal notranslate"><span class="pre">retrieve_versioned</span></code> method as shown below:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predictions_api</span><span class="o">.</span><span class="n">retrieve_versioned</span><span class="p">(</span><span class="n">versioned_series</span><span class="o">=</span><span class="n">filtered_versions</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;-P1M&quot;</span><span class="p">,</span> <span class="n">include_simulated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Alternatively, you can define the <code class="docutils literal notranslate"><span class="pre">versioned_series</span></code> using a list of <code class="xref any docutils literal notranslate"><span class="pre">VersionedSeries</span></code> objects:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">filtered_versions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">VersionedSeries</span><span class="p">(</span><span class="n">series_id</span><span class="o">=</span><span class="mi">47</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.2.1&quot;</span><span class="p">),</span>
-    <span class="n">VersionedSeries</span><span class="p">(</span><span class="n">series_id</span><span class="o">=</span><span class="mi">47</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.3.0&quot;</span><span class="p">)</span>
-<span class="p">]</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predictions_api</span><span class="o">.</span><span class="n">retrieve_versioned</span><span class="p">(</span><span class="n">versioned_series</span><span class="o">=</span><span class="n">filtered_versions</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;-P1M&quot;</span><span class="p">,</span> <span class="n">include_simulated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">filtered_versions</span><span class="o">.</span><span class="n">retrieve_versioned</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;-P1M&quot;</span><span class="p">,</span> <span class="n">include_simulated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
