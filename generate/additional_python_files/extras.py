@@ -10,6 +10,8 @@ except ImportError:
 else:
     PANDAS_AVAILABLE = True
 
+STRICT_DATETIME_COLUMNS = {"publication_time"}
+
 
 def require_pandas(fn: Callable):
     @functools.wraps(fn)
@@ -55,7 +57,14 @@ def pydantic_to_pandas(obj, unpack_value_method: Optional[str] = None) -> "pd.Da
     if "items" in dict_repr:
         dict_repr = dict_repr["items"]
 
-    df = pd.DataFrame(dict_repr)
+    try:
+        df = pd.DataFrame(dict_repr)
+    except ValueError as err:
+        if 'If using all scalar values, you must pass an index' in str(err):
+            # if dict_repr is a dict, convert to list
+            df=pd.DataFrame([dict_repr])
+        else:
+            raise err
 
     while merge_columns := set(EXPLOSION_COLUMNS).intersection(set(df.columns)):
         for merge_column in merge_columns:
@@ -97,4 +106,7 @@ def pydantic_to_pandas(obj, unpack_value_method: Optional[str] = None) -> "pd.Da
             # All columns that needs to be operated on has been completed
             # Break the while loop.
             break
+    datetime_columns = STRICT_DATETIME_COLUMNS.intersection(df.columns)
+    for col in datetime_columns:
+        df[col] = pd.to_datetime(df[col])
     return df
