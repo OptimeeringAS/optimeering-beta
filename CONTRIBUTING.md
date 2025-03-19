@@ -23,7 +23,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the
-[Code of Conduct](https://github.com/OptimeeringAS/optimeering-betablob/master/CODE_OF_CONDUCT.md).
+[Code of Conduct](https://github.com/OptimeeringAS/optimeering-beta/blob/master/CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior
 to <engineering@optimeering.com>.
 
