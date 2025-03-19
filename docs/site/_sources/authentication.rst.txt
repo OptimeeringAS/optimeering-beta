@@ -32,7 +32,7 @@ The client will automatically use the credentials gained from the step above, so
 
 .. code-block:: python
 
-    from optipyclient import OptimeeringClient
+    from optimeering_beta import OptimeeringClient
     client = OptimeeringClient()
 
 ======================
@@ -51,7 +51,7 @@ Configuring the Client
 
 .. code-block:: python
 
-    from optipyclient import Configuration, OptimeeringClient
+    from optimeering_beta import Configuration, OptimeeringClient
     configuration = Configuration(api_key="SecretKeyHere")
     client = OptimeeringClient(configuration=configuration)
 
