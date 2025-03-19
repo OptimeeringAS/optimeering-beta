@@ -36,6 +36,7 @@ class PredictionsData(BaseModel):
     version: Annotated[str, Field(strict=True)] = Field(
         description="Version of the model that generated the predictions"
     )
+
     __properties: ClassVar[List[str]] = ["events", "series_id", "version"]
 
     @field_validator("version")
@@ -113,8 +114,12 @@ class PredictionsData(BaseModel):
 
     @model_validator(mode="before")
     def validate_extra_fields(cls, values):
-        if len(values) > 1:  # Check if there are extra fields
-            if set(values) - set(cls.model_fields):
+        if isinstance(values, Dict):
+            values_private_removed = {k: v for k, v in values.items() if not k.startswith("_")}
+        else:
+            values_private_removed = values
+        if len(values_private_removed) > 1:  # Check if there are extra fields
+            if set(values_private_removed) - set(cls.model_fields):
                 warnings.warn("Data mismatch, please update the SDK to the latest version")
         return values
 
@@ -132,6 +137,7 @@ class PredictionsData(BaseModel):
         try:
             _return = self.events[self.__iter_index]
         except IndexError:
+            del self.__iter_index
             raise StopIteration
         else:
             self.__iter_index += 1
