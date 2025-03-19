@@ -60,9 +60,9 @@ def pydantic_to_pandas(obj, unpack_value_method: Optional[str] = None) -> "pd.Da
     try:
         df = pd.DataFrame(dict_repr)
     except ValueError as err:
-        if 'If using all scalar values, you must pass an index' in str(err):
+        if "If using all scalar values, you must pass an index" in str(err):
             # if dict_repr is a dict, convert to list
-            df=pd.DataFrame([dict_repr])
+            df = pd.DataFrame([dict_repr])
         else:
             raise err
 
