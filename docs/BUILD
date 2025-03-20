@@ -12,7 +12,7 @@ pex_binary(
         "//:root#sphinx-rtd-theme",
         "//:root#setuptools",
         "//:root#toml",
-        "//optimeering_beta:optimeering_beta"
+        "//optimeering_beta:optimeering_beta",
     ],
     script="sphinx-build",
 )
