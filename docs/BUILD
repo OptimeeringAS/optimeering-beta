@@ -12,6 +12,7 @@ pex_binary(
         "//:root#sphinx-rtd-theme",
         "//:root#setuptools",
         "//:root#toml",
+        "//optimeering_beta:optimeering_beta"
     ],
     script="sphinx-build",
 )
@@ -20,7 +21,7 @@ adhoc_tool(
     name="gen-tool",
     runnable=":sphinx",
     args=["-M", "html", "source", "generated-site"],
-    execution_dependencies=[":source", "//optimeering_beta:optimeering_beta", "//:pyproject"],
+    execution_dependencies=[":source", "//:pyproject"],
     output_directories=[""],
     output_files=["generated-site/**"],
 )

@@ -53,7 +53,28 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Code Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="access.html">AccessApi</a></li>
 <li class="toctree-l1"><a class="reference internal" href="predictions.html">PredictionsApi</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Client</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Client</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#optimeering_beta.OptimeeringClient"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.user_agent"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.user_agent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.get_default"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.get_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.set_default"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.set_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.param_serialize"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.param_serialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.call_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.call_api()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.response_deserialize"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.response_deserialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.sanitize_for_serialization"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.sanitize_for_serialization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.deserialize"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.deserialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.parameters_to_tuples"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.parameters_to_tuples()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.parameters_to_url_query"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.parameters_to_url_query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.files_parameters"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.files_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.select_header_accept"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.select_header_accept()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.select_header_content_type"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.select_header_content_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.update_params_for_auth"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.update_params_for_auth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.access_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.access_api</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimeering_beta.OptimeeringClient.predictions_api"><code class="docutils literal notranslate"><span class="pre">OptimeeringClient.predictions_api</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Client Models</a></li>
 </ul>
 
@@ -83,6 +104,296 @@
              
   <section id="client">
 <h1>Client<a class="headerlink" href="#client" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimeering_beta.</span></span><span class="sig-name descname"><span class="pre">OptimeeringClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookie</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient" title="Link to this definition"></a></dt>
+<dd><p>Main class to interact with the API.</p>
+<p>All APIs are accessible through an instance of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>configuration</strong> (<a class="reference internal" href="configuration.html#optimeering_beta.Configuration" title="optimeering_beta.Configuration"><em>Configuration</em></a>) – The Configuration object to use with the client</p></li>
+<li><p><strong>header_name</strong> – a header to pass when making calls to the API.</p></li>
+<li><p><strong>header_value</strong> – a header value to pass when making calls to
+the API.</p></li>
+<li><p><strong>cookie</strong> – a cookie to include in the header when making calls
+to the API</p></li>
+</ul>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">optimeering_beta</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">OptimeeringClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://beta.optimeering.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">configuration_with_api_key</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;SecretKeyHere&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client_with_api_key</span> <span class="o">=</span> <span class="n">OptimeeringClient</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">configuration_with_api_key</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.user_agent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_agent</span></span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.user_agent" title="Link to this definition"></a></dt>
+<dd><p>User agent for this API client</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.get_default">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.get_default" title="Link to this definition"></a></dt>
+<dd><p>Return new instance of OptimeeringClient.</p>
+<p>This method returns newly created, based on default constructor,
+object of OptimeeringClient class or returns a copy of default
+OptimeeringClient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The OptimeeringClient object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.set_default">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.set_default" title="Link to this definition"></a></dt>
+<dd><p>Set default instance of OptimeeringClient.</p>
+<p>It stores default OptimeeringClient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>default</strong> – object of OptimeeringClient.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.param_serialize">
+<span class="sig-name descname"><span class="pre">param_serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_formats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.param_serialize" title="Link to this definition"></a></dt>
+<dd><p>Builds the HTTP request params needed by the request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> – Method to call.</p></li>
+<li><p><strong>resource_path</strong> – Path to method endpoint.</p></li>
+<li><p><strong>path_params</strong> – Path parameters in the url.</p></li>
+<li><p><strong>query_params</strong> – Query parameters in the url.</p></li>
+<li><p><strong>header_params</strong> – Header parameters to be placed in the request header.</p></li>
+<li><p><strong>body</strong> – Request body.</p></li>
+<li><p><strong>dict</strong> (<em>files</em>) – Request post form parameters, for <cite>application/x-www-form-urlencoded</cite>, <cite>multipart/form-data</cite>.</p></li>
+<li><p><strong>list</strong> (<em>auth_settings</em>) – Auth Settings names for the request.</p></li>
+<li><p><strong>dict</strong> – key -&gt; filename, value -&gt; filepath, for <cite>multipart/form-data</cite>.</p></li>
+<li><p><strong>collection_formats</strong> – dict of collection formats for path, query, header, and post parameters.</p></li>
+<li><p><strong>_request_auth</strong> – set to override the auth_settings for an a single request; this effectively ignores the authentication in the spec for a single request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of form (path, http_method, query_params, header_params, body, post_params, files)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.call_api">
+<span class="sig-name descname"><span class="pre">call_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_request_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.call_api" title="Link to this definition"></a></dt>
+<dd><p>Makes the HTTP request (synchronous)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> – Method to call.</p></li>
+<li><p><strong>url</strong> – Path to method endpoint.</p></li>
+<li><p><strong>header_params</strong> – Header parameters to be placed in the request header.</p></li>
+<li><p><strong>body</strong> – Request body.</p></li>
+<li><p><strong>dict</strong> (<em>post_params</em>) – Request post form parameters, for <cite>application/x-www-form-urlencoded</cite>, <cite>multipart/form-data</cite>.</p></li>
+<li><p><strong>_request_timeout</strong> – timeout setting for this request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>RESTResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.response_deserialize">
+<span class="sig-name descname"><span class="pre">response_deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_types_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.response_deserialize" title="Link to this definition"></a></dt>
+<dd><p>Deserializes response into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response_data</strong> – RESTResponse object to be deserialized.</p></li>
+<li><p><strong>response_types_map</strong> – dict of response types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ApiResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.sanitize_for_serialization">
+<span class="sig-name descname"><span class="pre">sanitize_for_serialization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.sanitize_for_serialization" title="Link to this definition"></a></dt>
+<dd><p>Builds a JSON POST object.</p>
+<p>If obj is None, return None.
+If obj is SecretStr, return obj.get_secret_value()
+If obj is str, int, long, float, bool, return directly.
+If obj is datetime.datetime, datetime.date convert to string in iso8601 format.
+If obj is decimal.Decimal return string representation.
+If obj is list, sanitize each element in the list.
+If obj is dict, return the dict.
+If obj is OpenAPI model, return the properties dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>obj</strong> – The data to serialize.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The serialized form of data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.deserialize">
+<span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.deserialize" title="Link to this definition"></a></dt>
+<dd><p>Deserializes response into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> – RESTResponse object to be deserialized.</p></li>
+<li><p><strong>response_type</strong> – class literal for
+deserialized object, or string of class name.</p></li>
+<li><p><strong>content_type</strong> – content type of response.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>deserialized object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.parameters_to_tuples">
+<span class="sig-name descname"><span class="pre">parameters_to_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_formats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.parameters_to_tuples" title="Link to this definition"></a></dt>
+<dd><p>Get parameters as list of tuples, formatting collections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Parameters as dict or list of two-tuples</p></li>
+<li><p><strong>collection_formats</strong> (<em>dict</em>) – Parameter collection formats</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Parameters as list of tuples, collections formatted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.parameters_to_url_query">
+<span class="sig-name descname"><span class="pre">parameters_to_url_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_formats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.parameters_to_url_query" title="Link to this definition"></a></dt>
+<dd><p>Get parameters as list of tuples, formatting collections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Parameters as dict or list of two-tuples</p></li>
+<li><p><strong>collection_formats</strong> (<em>dict</em>) – Parameter collection formats</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>URL query string (e.g. a=Hello%20World&amp;b=123)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.files_parameters">
+<span class="sig-name descname"><span class="pre">files_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.files_parameters" title="Link to this definition"></a></dt>
+<dd><p>Builds form parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>files</strong> – File parameters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Form parameters with files.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.select_header_accept">
+<span class="sig-name descname"><span class="pre">select_header_accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accepts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.select_header_accept" title="Link to this definition"></a></dt>
+<dd><p>Returns <cite>Accept</cite> based on an array of accepts provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>accepts</strong> – List of headers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Accept (e.g. application/json).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.select_header_content_type">
+<span class="sig-name descname"><span class="pre">select_header_content_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_types</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.select_header_content_type" title="Link to this definition"></a></dt>
+<dd><p>Returns <cite>Content-Type</cite> based on an array of content_types provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content_types</strong> – List of content-types.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Content-Type (e.g. application/json).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.update_params_for_auth">
+<span class="sig-name descname"><span class="pre">update_params_for_auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_settings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.update_params_for_auth" title="Link to this definition"></a></dt>
+<dd><p>Updates header and query params based on authentication setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>headers</strong> – Header parameters dict to be updated.</p></li>
+<li><p><strong>queries</strong> – Query parameters tuple list to be updated.</p></li>
+<li><p><strong>auth_settings</strong> – Authentication setting identifiers list.</p></li>
+<li><p><strong>request_auth</strong> – if set, the provided settings will override the token in the configuration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Resource_path<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representation of the HTTP request resource path.</p>
+</dd>
+<dt class="field-odd">Method<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representation of the HTTP request method.</p>
+</dd>
+<dt class="field-even">Body<span class="colon">:</span></dt>
+<dd class="field-even"><p>A object representing the body of the HTTP request. The object type is the return value of sanitize_for_serialization().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.access_api">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">access_api</span></span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.access_api" title="Link to this definition"></a></dt>
+<dd><p>Collection of methods to interact with AccessApi</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="access.html#optimeering_beta.AccessApi" title="optimeering_beta.AccessApi">AccessApi</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="optimeering_beta.OptimeeringClient.predictions_api">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predictions_api</span></span><a class="headerlink" href="#optimeering_beta.OptimeeringClient.predictions_api" title="Link to this definition"></a></dt>
+<dd><p>Collection of methods to interact with PredictionsApi</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="predictions.html#optimeering_beta.PredictionsApi" title="optimeering_beta.PredictionsApi">PredictionsApi</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
